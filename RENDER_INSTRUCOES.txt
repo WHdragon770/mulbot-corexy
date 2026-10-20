@@ -1,0 +1,122 @@
+MULBOT COREXY 200³ — INSTRUÇÕES PARA RENDERIZAR O VÍDEO DE MONTAGEM
+=====================================================================
+Escrito para outro Claude (ou pessoa) conseguir baixar este repositório e renderizar o vídeo
+EXATAMENTE como foi planejado. Siga na ordem. Não mude parâmetros sem motivo: os tempos e o
+resultado abaixo foram medidos com eles.
+
+---------------------------------------------------------------------
+1. O QUE É O VÍDEO
+---------------------------------------------------------------------
+1280 x 720, 24 fps, 2280 quadros = 95 s, H.264 + som AAC 48 kHz estéreo, legendas desenhadas por cima.
+Render: Blender 4.2.3, Cycles, 24 amostras + denoise OpenImageDenoise, max bounces 4,
+cor AgX "Medium High Contrast", chão cinza, 2 sóis, céu claro. Tudo isso está fixo em scripts/video/anima2.py.
+
+Roteiro (quadros → segundos):
+   1–96     (0–4 s)     título "MULBOT COREXY 200³" sobre o chão vazio, câmera descendo
+   97–960   (4–40 s)    montagem em 9 etapas de 4 s (Quadro, Eixo Z e mesa, Torres e motores A/B,
+                         Vigas Y com guia em V, Pórtico, Carro X e hotend, Polias e correias, Extrusora
+                         direta, Eletrônica e display). Peças voam até o lugar, parafusos chegam por último,
+                         câmera orbita perto de cada conjunto.
+   961–1104 (40–46 s)   máquina montada, órbita
+   1105–1224            close: rodas V do carro Y
+   1225–1344            close: carro X (por trás)
+   1345–1464            close: PRESILHA DO VIDRO — a mesa inteira (suporte, vidro, knobs, localizadores,
+                         presilhas) desce 150 mm, a presilha gira meia volta e volta; câmera por baixo do
+                         pórtico; entra com corte seco
+   1465–1584            vista de cima: caminho das correias (corte seco)
+   1585–1704            caixa da RAMPS e fonte
+   1705–1944 (71–81 s)  FUNCIONANDO: 60 poses reais (out/anim/poses) — cabeça faz um laço em X/Y, a mesa
+                         desce, sobe e desce (10 a 120 mm) com o vidro junto; correias trocadas a cada pose
+   1945–2137            vista explodida (abre, gira, fecha)
+   2138–2280            final com título
+
+Som (scripts/video/som.py, sintetizado, sem arquivo externo): trilha Am–F–C–G a 96 bpm, whoosh quando
+as peças chegam, tique nos parafusos, catraca da presilha, zumbido dos motores de passo com o tom pela
+velocidade real de cada motor (A, B e Z), explosão/encaixe, sino na abertura e no final.
+
+---------------------------------------------------------------------
+2. O QUE PRECISA ESTAR INSTALADO
+---------------------------------------------------------------------
+- Linux x86_64 (Ubuntu 22.04/24.04 ou WSL2). Testado em WSL2 Ubuntu.
+- Blender 4.2.3 (LTS) — versão EXATA:
+    mkdir -p ~/.local/opt && cd ~/.local/opt
+    wget https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz
+    tar xf blender-4.2.3-linux-x64.tar.xz
+  (o script procura em ~/.local/opt/blender-4.2.3-linux-x64/blender; outro lugar: export BLENDER=/caminho/blender)
+  Bibliotecas que o Blender pede no Ubuntu/WSL sem interface:
+    sudo apt install libxi6 libxkbcommon0 libsm6 libgl1 libxrender1 libxxf86vm1 libxfixes3
+- Python 3 com: numpy scipy pillow imageio-ffmpeg
+    pip install numpy scipy pillow imageio-ffmpeg
+  (o imageio-ffmpeg traz o ffmpeg; não precisa instalar ffmpeg no sistema)
+- Fonte DejaVu (legendas): sudo apt install fonts-dejavu-core
+
+---------------------------------------------------------------------
+3. RENDERIZAR (1 comando)
+---------------------------------------------------------------------
+    cd <pasta do repositório>
+    ./scripts/video/render_noite.sh "" cycles
+  Com placa de vídeo (MESMO resultado, bem mais rápido):
+    CYCLES_DEVICE=OPTIX ./scripts/video/render_noite.sh "" cycles      (NVIDIA RTX)
+    CYCLES_DEVICE=CUDA  ...   (NVIDIA antiga)   |   CYCLES_DEVICE=HIP ... (AMD)
+  Agendar pra começar mais tarde:  ./scripts/video/render_noite.sh "19:00" cycles
+
+O que ele faz:
+  a) roda anima2.py em modo "info" (monta a linha do tempo e grava out/anim/linha.json);
+  b) renderiza em blocos de 120 quadros, 1 Blender por bloco, PNGs em out/anim/quadros_cycles/f0001.png...;
+     é RESUMÍVEL: se cair, rode o mesmo comando de novo — quadros prontos são pulados;
+  c) gera o som (som.py → out/anim/som.wav) e monta o MP4 com legendas (monta.py);
+  d) saída: final/video/corexy_video_cycles.mp4
+Progresso: out/anim/progresso_cycles.txt (linha "quadro N de 2280 - termina ~HH:MM"), log em out/anim/render_cycles.log.
+Prévia rápida (Workbench 640x360, ~35 min em CPU): ./scripts/video/render_noite.sh "" previa
+
+IMPORTANTE:
+- NÃO rode 2 Blenders ao mesmo tempo numa máquina com pouca RAM: cada um usa ~1,5 GB (no WSL de 3 GB do
+  Aleixo isso trava o PC).
+- NÃO regenere as poses (scripts/video/poses.py): elas precisam do ambiente completo de geometria (cxy.py +
+  scripts da Mulbot + modelos originais). As poses prontas estão em out/anim/poses e são as certas.
+- NÃO use EEVEE em máquina sem GPU: no WSL ele cai no llvmpipe e fica MAIS lento que o Cycles.
+
+---------------------------------------------------------------------
+4. QUANTO TEMPO LEVA
+---------------------------------------------------------------------
+Medido em CPU (12 threads, WSL2, 1 Blender, processador livre), quadros reais do vídeo:
+   título 13 s | montagem 17–20 s | montada 20 s | closes 22–27 s | presilha ~25 s | funcionando 19 s | explodida/final 18–20 s
+   TOTAL em CPU: ~13 h de quadros + ~10 min de carga dos blocos + ~5 min de som/MP4 ≈ 13,2 h (com margem: 14,8 h)
+Em GPU RTX o normal é 10–30x mais rápido (menos de 1 h).
+A estimativa da barra (scripts/video/estimativa.py) usa o PESO de cada quadro (out/anim/custo.json =
+triângulos visíveis por quadro), não a média simples — o começo do vídeo é leve (máquina vazia) e o
+fim é pesado. Para medir na sua máquina antes de começar (5 min):
+   QUADROS=60,450,900,1160,1420,1800,2050 blender -b final/corexy_montagem_leve.blend \
+      -P scripts/video/anima2.py -- bench out/anim/bench
+   (imprime "TEMPO quadro segundos"; interpole e multiplique por 2280)
+
+---------------------------------------------------------------------
+5. CONFERIR O RESULTADO (checklist)
+---------------------------------------------------------------------
+[ ] MP4 com 95,0 s, 1280x720, 24 fps, áudio AAC estéreo
+     python3 -c "import imageio_ffmpeg,subprocess;print(subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(),'-i','final/video/corexy_video_cycles.mp4'],capture_output=True,text=True).stderr)"
+[ ] 0–4 s: título; 4–40 s: legendas "1/9 Quadro ..." até "9/9 Eletrônica e display"
+[ ] ~56–61 s (presilha): suporte da mesa, vidro e presilhas descem JUNTOS; o botão gira meia volta em
+     volta do pino e volta; nada de tela vermelha/azul cheia (câmera dentro de peça)
+[ ] 71–81 s (funcionando): mesa sobe e desce com o vidro junto, cabeça andando, correias acompanhando,
+     som dos motores mudando de tom
+[ ] 81–89 s: explodida abre e fecha com o baque; final com o título
+[ ] som sem estourar (pico ~0,8), música baixa por baixo dos efeitos
+
+Se algum quadro sair errado, apague só os PNGs daquele trecho em out/anim/quadros_cycles e rode de novo.
+
+---------------------------------------------------------------------
+6. ARQUIVOS DESTE REPOSITÓRIO QUE O RENDER USA
+---------------------------------------------------------------------
+  final/corexy_montagem_leve.blend   montagem inteira (malhas decimadas; o .blend cheio tem 190 MB e não
+                                     é necessário)
+  out/cxy.json                       posição de cada peça na pose padrão (o anima2 calcula os deslocamentos)
+  out/anim/poses/                    poses.json + correiaA/B_000..059.stl (máquina funcionando)
+  out/anim/custo.json                triângulos visíveis por quadro (estimativa de tempo)
+  scripts/video/anima2.py            roteiro, câmeras, luz, render (modos: cycles | previa | info | bench)
+  scripts/video/som.py               trilha sonora
+  scripts/video/monta.py             legendas + MP4
+  scripts/video/estimativa.py        horário de término
+  scripts/video/render_noite.sh      faz tudo
+  scripts/video/custo.py             regera custo.json (só se mudar o roteiro):
+      blender -b final/corexy_montagem_leve.blend -P scripts/video/anima2.py -P scripts/video/custo.py -- info /tmp/x

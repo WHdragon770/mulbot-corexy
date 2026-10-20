@@ -1,0 +1,58 @@
+MULBOT COREXY 200x200x200 - versao CoreXY da Mulbot DL1
+=======================================================
+Versao atual (19/10/2026): X, Y e Z em GUIA EM V impressa (sem trilho/carro de esferas), extrusora direta,
+presilha do vidro em botao excentrico, quadro oco com passagem de cabos.
+Checagem: cabo de 4,5 mm passa por dentro do quadro de todos os motores, fins de curso, fonte e display ate a caixa da RAMPS.
+0 colisoes (22 poses), 0 nas correias, 0 entre os 170 parafusos.
+
+01 Montagem 3D
+   corexy_montagem.blend / .glb (maquina inteira), _leve.glb (malhas decimadas, abre mais rapido),
+   corexy_montagem.3mf (todas as pecas posicionadas) e render/ com 8 vistas (inclui carro_rodas, por tras do carro X).
+
+02 STL para imprimir   (quantidade no nome: "parafuso_M10x40 [24x].stl"; lista_de_impressao.csv tem pasta, qtd,
+                        material, origem (nova / Mulbot original / Mulbot modificada) e coluna pra ir marcando)
+   Separado por conjunto, na ordem de montagem. Tudo FDM, menos a pasta 07 e o fuso em resina (alternativa).
+   01 Quadro .................. bases, postes (Inf/Sup), travessas, torres, pes  (ocos, com passagem de cabo)
+   02 Eixo Y e portico ........ vigas Y com V (trilhoY_D/E) e suportes do portico
+   03 Eixo X e cabeca ......... viga X com V, carroX (prateleira do hotend + torre das correias + braco do fim de curso,
+                                1 peca so), duto da ventoinha, suporte da extrusora direta, presilha do hotend
+   04 Eixo Z e mesa ........... base Z, vigas Z, chapas Z-Y, bracos e suporte da mesa, presilha do vidro (botao),
+                                knob/localizador/porca da mesa
+        Fuso e porca - FDM / Fuso e porca - Resina (alternativa): imprimir SO UMA das duas
+   05 Motores e polias ........ polias loucas da CoreXY e pecas dos motores A/B
+   06 Eletronica e display .... caixa da RAMPS + porta, protecao da fonte, display (base JA FURADA p/ o cabo)
+   07 Roldanas V (X, Y e Z) - Resina:
+       roldanaV_rolamento_1peca_resina [15x]: rolamento de roletes impresso junto, 1 peca so.
+         Imprimir deitada (eixo em pe), levantada uns 5 mm em suporte leve SO no aro de fora.
+         Os 10 roletes nascem presos por pontes finas (0,4 mm) nas 2 pontas.
+         Lavar no IPA > girar com forca ate soltar (quebra as pontes) > lavar de novo girando > curar.
+         Resina tipo ABS-like/tough (a padrao e quebradica pra isso).
+       buchaX/buchaY_excentrica_espacador: sextavado de 6 mm fica entre a placa e a roda; gira com chave 14
+         ate a roda encostar no V sem folga, depois aperta o M6.  buchaZ_excentrica: igual a antiga do Z.
+   08 Parafusos e porcas impressos: M10 no chassi, M6 nas medias
+   Correias, PTFE, motores e eletronica sao comprados (nao estao aqui).
+
+FIRMWARE: fins de curso mudaram de lugar.
+   X: na parede de dentro do suporte esquerdo, o braco do carro aperta com o carro 101,5 mm a esquerda do centro.
+   Y: em pe na torre de tras esquerda, a lingueta do suporte aperta com o portico em Y = +152 (atras).
+
+03 Desenhos de montagem
+   11 folhas A4 no estilo dos desenhos DL1 da Mulbot (PNG 300 dpi + 1 PDF com todas): CXY-00 capa e indice,
+   01 quadro, 02 eixo Y e portico, 03 eixo X e cabeca, 04 eixo Z, 05 mesa, 06 correias e polias, 07 eletronica e display,
+   08 roldana V (com corte), 09 diagrama de ligacao (RAMPS + firmware), 10 passagem de cabos.
+   Cada folha: vistas com baloes numerados + lista de pecas (qtd, peca, descricao, origem).
+
+04 Detalhes (imagens)
+   Guia em V - exemplo, Extrusora direta, Presilha do vidro (botao excentrico: meia volta solta o vidro;
+   risco em relevo apontando pro vidro = travado), Passagem de cabos (rede de canais + corte do canto da RAMPS).
+
+PASSAGEM DE CABOS: bases, postes, travessas, alma das vigas Y e parede das torres de tras sao ocos (parede 2 mm).
+   Tudo desce pelo poste de tras ESQUERDO e entra na caixa da RAMPS pela janela de baixo.
+   Ao lado das porcas-barril sobram ~4 mm: passar fio a fio / cabo sem conector, crimpar os conectores depois.
+   Entrada do cabo da cabeca: furo em cima da travessa de tras, 40 mm a esquerda do centro.
+
+05 Scripts (WSL)
+   Copia dos scripts (originais em ~/corexy/scripts no WSL). pipeline_v.sh regera tudo (inclui cabos_check.py). desenhos/folhas.py regera as folhas.
+
+99 Versoes antigas: TUDO que e antigo fica aqui. v1 a v5, da mais velha pra mais nova, cada uma com Montagem 3D e/ou STL.
+   O video de montagem explodida esta em v3 (e da versao com carros de esferas; ainda nao foi refeito).

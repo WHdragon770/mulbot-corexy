@@ -1,0 +1,9 @@
+out/anim/quadros_*/
+out/anim/bench/
+out/anim/*.log
+out/anim/progresso_*
+out/anim/linha.json
+out/anim/som.wav
+final/video/
+*.blend1
+__pycache__/

@@ -7,9 +7,14 @@ resultado abaixo foram medidos com eles.
 ---------------------------------------------------------------------
 1. O QUE É O VÍDEO
 ---------------------------------------------------------------------
-1280 x 720, 24 fps, 2280 quadros = 95 s, H.264 + som AAC 48 kHz estéreo, legendas desenhadas por cima.
-Render: Blender 4.2.3, Cycles, 24 amostras + denoise OpenImageDenoise, max bounces 4,
-cor AgX "Medium High Contrast", chão cinza, 2 sóis, céu claro. Tudo isso está fixo em scripts/video/anima2.py.
+1280 x 720, 24 fps, 2562 quadros = 106,75 s, H.264 + som AAC 48 kHz estéreo, legendas desenhadas por cima.
+Render: Blender 4.2.3, Cycles, 24 amostras + denoise OpenImageDenoise, max bounces 4, transparent bounces 24,
+cor AgX "Medium High Contrast". Roteiro, câmeras e animação em scripts/video/anima2.py.
+VISUAL (scripts/video/visual.py, pedido do Aleixo — NÃO voltar pro visual chapado da prévia):
+  - fundo CINZA LISO, SEM CHÃO (a câmera vê cinza; as peças recebem luz de estúdio do céu + 3 sóis:
+    principal, contraluz e preenchimento);
+  - plástico impresso com brilho leve (coat), LINHAS DE CAMADA de 0,25 mm (bump) e realce nas quinas (bevel 0,5 mm);
+  - aço / alumínio escovado / latão metálicos, vidro de verdade (transmissão), PCB com verniz, LCD aceso.
 
 Roteiro (quadros → segundos):
    1–96     (0–4 s)     título "MULBOT COREXY 200³" sobre o chão vazio, câmera descendo
@@ -25,10 +30,15 @@ Roteiro (quadros → segundos):
                          pórtico; entra com corte seco
    1465–1584            vista de cima: caminho das correias (corte seco)
    1585–1704            caixa da RAMPS e fonte
-   1705–1944 (71–81 s)  FUNCIONANDO: 60 poses reais (out/anim/poses) — cabeça faz um laço em X/Y, a mesa
+   1705–1896 (71–79 s)  PASSAGEM DE CABOS: o quadro (bases, postes, travessas, trilhos Y, torres) fica translúcido
+                         e os 9 cabos (out/anim/cabos, coloridos e com brilho) são "puxados" um a um do aparelho
+                         até a caixa da RAMPS por dentro do quadro oco; depois o quadro volta sólido
+   1897–2136 (79–89 s)  FUNCIONANDO: 60 poses reais (out/anim/poses) — cabeça faz um laço em X/Y, a mesa
                          desce, sobe e desce (10 a 120 mm) com o vidro junto; correias trocadas a cada pose
-   1945–2137            vista explodida (abre, gira, fecha)
-   2138–2280            final com título
+   2137–2418            vista explodida: abre (aberta em 2197), câmera mergulha no pórtico direito
+                         (2227–2346, 93–98 s): os 10 ROLETES saem de dentro de cada roldana V e cada POLIA LOUCA
+                         se separa em eixo / gaiola de esferas / polia; fecham, câmera volta e a máquina junta
+   2419–2562            final com título
 
 Som (scripts/video/som.py, sintetizado, sem arquivo externo): trilha Am–F–C–G a 96 bpm, whoosh quando
 as peças chegam, tique nos parafusos, catraca da presilha, zumbido dos motores de passo com o tom pela
@@ -66,7 +76,7 @@ O que ele faz:
      é RESUMÍVEL: se cair, rode o mesmo comando de novo — quadros prontos são pulados;
   c) gera o som (som.py → out/anim/som.wav) e monta o MP4 com legendas (monta.py);
   d) saída: final/video/corexy_video_cycles.mp4
-Progresso: out/anim/progresso_cycles.txt (linha "quadro N de 2280 - termina ~HH:MM"), log em out/anim/render_cycles.log.
+Progresso: out/anim/progresso_cycles.txt (linha "quadro N de 2562 - termina ~HH:MM"), log em out/anim/render_cycles.log.
 Prévia rápida (Workbench 640x360, ~35 min em CPU): ./scripts/video/render_noite.sh "" previa
 
 IMPORTANTE:
@@ -80,28 +90,32 @@ IMPORTANTE:
 4. QUANTO TEMPO LEVA
 ---------------------------------------------------------------------
 Medido em CPU (12 threads, WSL2, 1 Blender, processador livre), quadros reais do vídeo:
-   título 13 s | montagem 17–20 s | montada 20 s | closes 22–27 s | presilha ~25 s | funcionando 19 s | explodida/final 18–20 s
-   TOTAL em CPU: ~13 h de quadros + ~10 min de carga dos blocos + ~5 min de som/MP4 ≈ 13,2 h (com margem: 14,8 h)
-Em GPU RTX o normal é 10–30x mais rápido (menos de 1 h).
+Visual novo (vidro, bevel, transparência), medido em 2026-10-20:
+   título 7 s | montagem 12–16 s | montada 15 s | closes 36–44 s | cabos 38–41 s | funcionando 20–23 s |
+   close da explodida 40 s | final 18 s
+   TOTAL em CPU: ~16,6 h de quadros + carga dos blocos + som/MP4 ≈ 17 h (com margem: 19 h)
+   → em CPU NÃO cabe numa noite; use GPU. Em GPU RTX o normal é 10–30x mais rápido (1–2 h).
 A estimativa da barra (scripts/video/estimativa.py) usa o PESO de cada quadro (out/anim/custo.json =
 triângulos visíveis por quadro), não a média simples — o começo do vídeo é leve (máquina vazia) e o
 fim é pesado. Para medir na sua máquina antes de começar (5 min):
-   QUADROS=60,450,900,1160,1420,1800,2050 blender -b final/corexy_montagem_leve.blend \
+   QUADROS=60,450,900,1160,1420,1850,2000,2297,2520 blender -b final/corexy_montagem_leve.blend \
       -P scripts/video/anima2.py -- bench out/anim/bench
-   (imprime "TEMPO quadro segundos"; interpole e multiplique por 2280)
+   (imprime "TEMPO quadro segundos"; interpole entre eles e some os 2562 quadros)
 
 ---------------------------------------------------------------------
 5. CONFERIR O RESULTADO (checklist)
 ---------------------------------------------------------------------
-[ ] MP4 com 95,0 s, 1280x720, 24 fps, áudio AAC estéreo
+[ ] MP4 com 106,75 s, 1280x720, 24 fps, áudio AAC estéreo
      python3 -c "import imageio_ffmpeg,subprocess;print(subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(),'-i','final/video/corexy_video_cycles.mp4'],capture_output=True,text=True).stderr)"
 [ ] 0–4 s: título; 4–40 s: legendas "1/9 Quadro ..." até "9/9 Eletrônica e display"
 [ ] ~56–61 s (presilha): suporte da mesa, vidro e presilhas descem JUNTOS; o botão gira meia volta em
      volta do pino e volta; nada de tela vermelha/azul cheia (câmera dentro de peça)
-[ ] 71–81 s (funcionando): mesa sobe e desce com o vidro junto, cabeça andando, correias acompanhando,
+[ ] fundo cinza liso em TODO o vídeo, sem chão; plástico com brilho e linhas de camada nos closes
+[ ] 71–79 s (cabos): quadro translúcido, 9 cabos coloridos aparecem um a um e chegam na caixa da RAMPS
+[ ] 79–89 s (funcionando): mesa sobe e desce com o vidro junto, cabeça andando, correias acompanhando,
      som dos motores mudando de tom
-[ ] 81–89 s: explodida abre e fecha com o baque; NENHUMA peça entra no chão (as de baixo param 3 mm acima
-     dele: anima2.py limita o deslocamento pela altura do chão, CHAO = -25); final com o título
+[ ] 89–101 s: explodida abre; close no pórtico com os roletes fora da roldana e a polia separada; fecha
+     com o baque (nenhuma peça desce abaixo de z = -22: anima2.py, CHAO = -25); final com o título
 [ ] som sem estourar (pico ~0,8), música baixa por baixo dos efeitos
 
 Se algum quadro sair errado, apague só os PNGs daquele trecho em out/anim/quadros_cycles e rode de novo.
@@ -114,7 +128,10 @@ Se algum quadro sair errado, apague só os PNGs daquele trecho em out/anim/quadr
   out/cxy.json                       posição de cada peça na pose padrão (o anima2 calcula os deslocamentos)
   out/anim/poses/                    poses.json + correiaA/B_000..059.stl (máquina funcionando)
   out/anim/custo.json                triângulos visíveis por quadro (estimativa de tempo)
-  scripts/video/anima2.py            roteiro, câmeras, luz, render (modos: cycles | previa | info | bench)
+  out/anim/cabos/                    cabos.json + 9 tubos STL da cena de passagem de cabos (prontos; o gerador
+                                     scripts/video/cabos_caminhos.py precisa da geometria completa, NÃO regenere)
+  scripts/video/anima2.py            roteiro, câmeras, animação, render (modos: cycles | previa | info | bench)
+  scripts/video/visual.py            fundo cinza, luz de estúdio e materiais (chamado pelo anima2.py)
   scripts/video/som.py               trilha sonora
   scripts/video/monta.py             legendas + MP4
   scripts/video/estimativa.py        horário de término
@@ -131,3 +148,8 @@ Se algum quadro sair errado, apague só os PNGs daquele trecho em out/anim/quadr
   tem 1 chave por quadro (a origem da peça fica longe do pino; com poucas chaves ela "voava").
 - Vista explodida: o deslocamento vertical de cada peça é limitado pra ela parar 3 mm acima do chão.
 - Funcionando: a mesa desce, sobe e desce (10 a 120 mm), com o vidro junto.
+- Cena dos cabos: o quadro usa CÓPIAS dos materiais ("cinza_quadro" etc., slot ligado ao objeto) com um nó Value
+  "fantasma" animado; a prévia (Workbench) usa o alfa da cor de viewport. Os cabos aparecem com o modificador
+  Build (as faces do tubo estão em ordem do aparelho até a RAMPS) e somem quando a máquina começa a andar.
+- Explodida fina: o eixo de cada anel de roletes / gaiola é a direção de menor espalhamento dos vértices
+  (anima2.py, eixo()); roletes saem 32 mm, peças da polia louca abrem 16 mm + 14 mm por camada.

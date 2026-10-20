@@ -1,14 +1,18 @@
 # Video da CoreXY (v2): montagem por etapas com a camera indo em cada conjunto, closes de detalhe, presilha do vidro
-# girando, maquina funcionando (poses reais do cxy.py, correias trocadas a cada pose), vista explodida e final.
+# girando, passagem de cabos (quadro translucido), maquina funcionando (poses reais do cxy.py, correias trocadas a cada pose),
+# vista explodida (com close das roldanas V e polias abertas) e final. Visual (fundo cinza, materiais) em visual.py.
 # blender -b final/corexy_montagem_leve.blend -P anima2.py -- MODO saida_dir [f_ini f_fim]
 #   MODO = cycles (720p, render final, PNG resumivel) | previa (workbench 640x360 rapido) | info (so grava a linha do tempo)
 # Grava tambem out/anim/linha.json (legendas e eventos de som) pro som.py e o monta.py.
-import bpy, sys, math, json, os, random
+import bpy, sys, math, json, os, random, re
+import numpy as np
 from mathutils import Vector, Matrix
 a = sys.argv[sys.argv.index("--") + 1:]
 MODO, OUTD = a[0], a[1]
 FPS = 24
 CX = os.environ.get("CXY_DIR") or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))   # raiz do projeto
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import visual
 sc = bpy.context.scene
 random.seed(7)
 
@@ -22,10 +26,13 @@ F_A0, DUR_ET = 97, 96
 F_A1 = F_A0 + DUR_ET * len(ETAPAS)            # 961  montada
 F_D0 = F_A1 + 144                             # 1105 closes
 DET = 120
-F_W0 = F_D0 + 5 * DET                         # 1705 funcionando
-F_W1 = F_W0 + 240                             # 1945
-F_E0, F_E1, F_E2, F_E3 = F_W1 + 10, F_W1 + 60, F_W1 + 150, F_W1 + 192   # explode / abre / segura / fecha
-F_FIM = F_E3 + 143                            # 2280
+F_CB0, DUR_CB = F_D0 + 5 * DET, 192            # 1705 passagem de cabos (quadro translucido)
+F_W0 = F_CB0 + DUR_CB                         # 1897 funcionando
+F_W1 = F_W0 + 240                             # 2137
+F_E0, F_E1 = F_W1 + 10, F_W1 + 60             # explode / aberta
+F_SUB, DUR_SUB = F_E1 + 30, 120               # close: roletes saem da roldana V, polia louca se separa
+F_E2 = F_SUB + DUR_SUB + 30; F_E3 = F_E2 + 42 # segura / fecha
+F_FIM = F_E3 + 143                            # 2562
 sc.frame_start, sc.frame_end = 1, F_FIM
 sc.render.fps = FPS
 
@@ -34,10 +41,11 @@ sc.render.fps = FPS
 for o in list(bpy.data.objects):
     if " | " in o.name: o.name = o.name.split(" | ")[-1]
 objs = [o for o in bpy.data.objects if o.type == 'MESH']
+visual.materiais(MODO)                         # cycles: materiais de verdade (antes das copias fantasma)
 def centro(o):
     bb = [o.matrix_world @ Vector(v) for v in o.bound_box]; return sum(bb, Vector()) / 8
 cent = {o.name: centro(o) for o in objs}
-CHAO = -25.0                                   # altura do plano do chao (o mesmo do render)
+CHAO = -25.0                                   # onde ficava o chao: na explodida nenhuma peca desce abaixo disso
 zmin = {o.name: min((o.matrix_world @ Vector(v)).z for v in o.bound_box) for o in objs}
 grupo = {o.name: o.users_collection[0].name for o in objs}
 C = Vector((0, 15, 280))
@@ -48,6 +56,29 @@ for o in objs:
     if g == FIX: g = grupo[min(base, key=lambda b: (cent[b.name] - cent[o.name]).length).name]
     etapa[o.name] = ([e[0] for e in ETAPAS].index(g), grupo[o.name] == FIX)
 L0 = {o.name: o.location.copy() for o in objs}
+
+# ---------------- explodida fina: roletes saem da roldana V, polia louca abre em eixo / gaiola / polia ----------------
+def eixo(o):                                   # direcao de menor espalhamento dos vertices = eixo de um anel
+    X = np.array([(o.matrix_world @ v.co)[:] for v in o.data.vertices]); X -= X.mean(0)
+    return Vector(np.linalg.eigh(X.T @ X)[1][:, 0])
+SUB = {}
+for o in objs:
+    if o.name.endswith("_roletes"):
+        ax = eixo(o); r = cent[o.name] - C
+        if abs(ax.z) > 0.7: ax = ax if ax.z > 0 else -ax
+        elif ax.dot(Vector((r.x, r.y, 0))) < 0: ax = -ax
+        SUB[o.name] = ax * 32
+LOUCAS = {}
+for o in objs:
+    m_ = re.match(r"(louca\w+?_[AB]_[DE])_", o.name)
+    if m_: LOUCAS.setdefault(m_.group(1), []).append(o.name)
+for g, ns in LOUCAS.items():
+    pol = next(n for n in ns if n.endswith("poliaLouca")); ax = eixo(bpy.data.objects[next(n for n in ns if n.endswith("gaiolaLouca_0"))])
+    if ax.z < 0: ax = -ax
+    pr = {n: (cent[n] - cent[pol]).dot(ax) for n in ns}
+    for lado in (1, -1):
+        for k, n in enumerate(sorted([n for n in ns if n != pol and pr[n] * lado > 0], key=lambda n: abs(pr[n]))):
+            SUB[n] = ax * lado * (16 + 14 * k)
 
 # ---------------- poses da maquina funcionando ----------------
 PZ = json.load(open(f"{CX}/out/anim/poses/poses.json"))["poses"]
@@ -77,6 +108,7 @@ GIRO = [(F_P + 30, 0.0), (F_P + 58, 180.0), (F_P + 78, 180.0), (F_P + 104, 0.0)]
 
 # ---------------- keyframes das pecas ----------------
 eventos = []                                     # (quadro, tipo, intensidade) p/ o som
+EX = {}
 def k_loc(o, f, v): o.location = v; o.keyframe_insert("location", frame=f)
 for o in objs:
     ei, fix = etapa[o.name]
@@ -91,6 +123,7 @@ for o in objs:
     ex.z += {"Eixo Z e mesa": -60, "Portico": 150, "Carro do hotend": 250, "Polias e correias": 180, "Torres e motores CoreXY": 110,
              "Trilhos Y": 70, "Extrusora": 220, "Eletronica e display": -40}.get(ETAPAS[ei][0], 0)
     ex.z = max(ex.z, CHAO + 3 - zmin[o.name])   # explodida: nenhuma peca atravessa o chao
+    EX[o.name] = ex
     o.hide_render = True; o.keyframe_insert("hide_render", frame=1)
     o.hide_render = False; o.keyframe_insert("hide_render", frame=f0)
     k_loc(o, f0, L + voo); k_loc(o, f1, L)
@@ -115,6 +148,9 @@ for o in objs:
             k_loc(o, f_pose(k), L + desloc(o.name, p["T"][o.name]))
         k_loc(o, F_W1, L)
     k_loc(o, F_E0, L); k_loc(o, F_E1, L + ex); k_loc(o, F_E2, L + ex); k_loc(o, F_E3, L)
+    if o.name in SUB:                           # abre no close e fecha antes da maquina juntar
+        k_loc(o, F_SUB + 20, L + ex); k_loc(o, F_SUB + 50, L + ex + SUB[o.name])
+        k_loc(o, F_SUB + DUR_SUB - 30, L + ex + SUB[o.name]); k_loc(o, F_SUB + DUR_SUB, L + ex)
     if o.animation_data:
         for fc in o.animation_data.action.fcurves:
             for kp in fc.keyframe_points:
@@ -123,6 +159,34 @@ for o in objs:
                 elif o.name in pres and F_P - 24 <= kp.co[0] <= F_P + DET + 16: kp.interpolation = 'LINEAR'
                 else: kp.interpolation = 'BEZIER'; kp.handle_left_type = kp.handle_right_type = 'AUTO_CLAMPED'
 eventos += [(f, "giro", 1.0) for f, _ in GIRO[::2]] + [(F_E0 + 5, "explode", 1.0), (F_E2 + 5, "fecha", 1.0), (F_E3, "baque", 1.0)]
+eventos += [(F_SUB + 22, "chega", 1.0), (F_SUB + DUR_SUB - 28, "click", 1.0)]
+
+# ---------------- passagem de cabos: quadro translucido e os cabos correndo do aparelho ate a RAMPS ----------------
+FANT = {n for n in etapa if etapa[n][0] == 0 or n.startswith(("trilhoY_", "torre"))}
+copias = {}
+for n in FANT:
+    for sl in bpy.data.objects[n].material_slots:
+        if not sl.material: continue
+        if sl.material.name not in copias: copias[sl.material.name] = visual.fantasma(sl.material)
+        sl.link = 'OBJECT'; sl.material = copias[sl.material.name]
+for c in copias.values():
+    for f, k in ((F_CB0, 0.0), (F_CB0 + 24, 0.95), (F_W0 - 24, 0.95), (F_W0, 0.0)): visual.chave_fantasma(c, f, k)
+    if c.animation_data:
+        for fc in c.animation_data.action.fcurves:
+            for kp in fc.keyframe_points: kp.interpolation = 'BEZIER'; kp.handle_left_type = kp.handle_right_type = 'AUTO_CLAMPED'
+    if c.use_nodes and c.node_tree.animation_data:
+        for fc in c.node_tree.animation_data.action.fcurves:
+            for kp in fc.keyframe_points: kp.interpolation = 'BEZIER'; kp.handle_left_type = kp.handle_right_type = 'AUTO_CLAMPED'
+CABOS = json.load(open(f"{CX}/out/anim/cabos/cabos.json"))
+for i, cb in enumerate(CABOS):
+    bpy.ops.wm.stl_import(filepath=f"{CX}/out/anim/cabos/{cb['nome']}.stl"); ob = bpy.context.selected_objects[0]
+    ob.name = "cabo_" + cb["nome"]; ob.data.materials.append(visual.plastico("cabo_" + cb["nome"], cb["cor"]))
+    fa = F_CB0 + 30 + 9 * i                      # cada cabo "e puxado" do aparelho ate a RAMPS (faces em ordem ao longo do tubo)
+    bd = ob.modifiers.new("puxa", 'BUILD'); bd.frame_start = fa; bd.frame_duration = 60
+    for f, h in ((1, True), (F_CB0, False), (F_W0, True)): ob.hide_render = h; ob.keyframe_insert("hide_render", frame=f)
+    for fc in ob.animation_data.action.fcurves:
+        for kp in fc.keyframe_points: kp.interpolation = 'CONSTANT'
+    eventos.append((fa, "chega", 1.0))
 
 # correias por pose (as da montagem somem enquanto a maquina anda)
 mat_c = next((s.material for o in objs if o.name.startswith("correia") for s in o.material_slots if s.material), None)
@@ -157,23 +221,31 @@ TOMADAS = [(1, F_A0, lambda u: (Vector((-500, -1500, 1500 - 600 * u)), Vector((0
 for i in range(len(ETAPAS)):
     c_ = centro_etapa(i); c_ = (c_ * 0.6 + C * 0.4)
     TOMADAS.append((F_A0 + i * DUR_ET, F_A0 + (i + 1) * DUR_ET, orbita(c_, 1350, 520, -40 + 38 * i, -22 + 38 * i, 40)))
+def alvo_sub():                                 # roldana V e polia louca do portico direito, ja na posicao explodida
+    ps = [cent[n] + EX[n] for n in ("rodaY_D0", "loucaPortico_A_D_poliaLouca")]
+    return tuple((ps[0] + ps[1]) / 2)
 TOMADAS += [(F_A1, F_D0, orbita(C, 1500, 600, 302, 395, 38)),
             (F_D0, F_D0 + DET, orbita((176, 47.6, 425), 230, 30, 60, 110, 45)),                      # rodas do carro Y
             (F_D0 + DET, F_D0 + 2 * DET, orbita((0, 40, 480), 330, 90, 200, 140, 42)),              # carro X e hotend
             (F_P, F_P + DET, orbita((pino["mesa_presilha_1"].x - 4, pino["mesa_presilha_1"].y - 4, pino["mesa_presilha_1"].z + 12 - DESCE), 190, 95, 300, 330, 50)),
             (F_D0 + 3 * DET, F_D0 + 4 * DET, lambda u: (Vector((0, 20, 1650)), Vector((0, 21, 400)), 32 + 4 * u)),   # correias de cima
-            (F_D0 + 4 * DET, F_W0, orbita((-150, 250, 150), 650, 220, 150, 205, 40)),               # caixa da RAMPS e fonte
+            (F_D0 + 4 * DET, F_CB0, orbita((-150, 250, 150), 650, 220, 150, 205, 40)),              # caixa da RAMPS e fonte
+            (F_CB0, F_W0, orbita((-20, 90, 260), 1350, 430, 205, 255, 38)),                        # passagem de cabos
             (F_W0, F_W1, orbita((0, 30, 380), 1050, 380, -25, 25, 40)),                              # funcionando
-            (F_W1, F_E3, orbita(C, 2300, 900, 40, 220, 38)),                                         # explodida
+            (F_W1, F_SUB, orbita(C, 2300, 900, 40, 110, 38)),                                       # explodida
+            (F_SUB, F_SUB + DUR_SUB, orbita(alvo_sub(), 420, 150, 55, 85, 50)),                      # close: roldana e polia abertas
+            (F_SUB + DUR_SUB, F_E3, orbita(C, 2300, 900, 120, 220, 38)),
             (F_E3, F_FIM + 1, orbita(C, 1450, 520, 220, 300, 38))]
 TR = 20
+TR_LONGA = {F_SUB: 30, F_SUB + DUR_SUB: 30}   # mergulho ate o close da explodida e volta
 CORTE = {F_P, F_D0 + 3 * DET}                 # entra com corte seco (a transicao atravessaria pecas)
 def cam_em(f):
     for j, (a0, a1, fn) in enumerate(TOMADAS):
         if a0 <= f < a1:
             u = (f - a0) / (a1 - a0); l, t, ln = fn(u)
-            if j and f - a0 < TR and a0 not in CORTE:                # mistura com o fim da tomada anterior
-                s = (f - a0) / TR; s = s * s * (3 - 2 * s)
+            tr = TR_LONGA.get(a0, TR)
+            if j and f - a0 < tr and a0 not in CORTE:                # mistura com o fim da tomada anterior
+                s = (f - a0) / tr; s = s * s * (3 - 2 * s)
                 l0, t0, ln0 = TOMADAS[j - 1][2](1.0)
                 l, t, ln = l0.lerp(l, s), t0.lerp(t, s), ln0 + (ln - ln0) * s
             return l, t, ln
@@ -191,9 +263,12 @@ LEG += [(F_A1 + 6, F_D0 - 6, "Montada", "área de impressão 200 x 200 x 200 mm"
         (F_D0 + DET + 6, F_D0 + 2 * DET - 6, "Carro X", "hotend, extrusora direta, torre das correias e fim de curso numa peça"),
         (F_P + 6, F_P + DET - 6, "Presilha do vidro", "meia volta solta, meia volta trava"),
         (F_D0 + 3 * DET + 6, F_D0 + 4 * DET - 6, "CoreXY", "2 correias de 1418 mm, motores A e B parados no quadro"),
-        (F_D0 + 4 * DET + 6, F_W0 - 6, "Eletrônica", "cabos passam por dentro do quadro até a caixa da RAMPS"),
+        (F_D0 + 4 * DET + 6, F_CB0 - 6, "Eletrônica", "RAMPS, Mega e fonte na caixa de trás"),
+        (F_CB0 + 10, F_W0 - 8, "Passagem de cabos", f"{len(CABOS)} cabos por dentro do quadro oco até a caixa da RAMPS"),
         (F_W0 + 6, F_W1 - 6, "Funcionando", "X e Y pela soma das 2 correias, Z pelos 2 fusos"),
-        (F_E0, F_E3 - 6, "Vista explodida", ""),
+        (F_E0, F_SUB - 4, "Vista explodida", ""),
+        (F_SUB + 24, F_SUB + DUR_SUB - 6, "Roldana V e polia louca", "10 roletes impressos dentro da roldana; polia com gaiola de esferas"),
+        (F_SUB + DUR_SUB + 6, F_E3 - 6, "Vista explodida", ""),
         (F_E3 + 10, F_FIM, "MULBOT COREXY 200³", "quadro, guias, fusos e parafusos impressos")]
 VEL = []                                        # velocidade dos motores A, B e Z por quadro (som de passo)
 for k in range(len(PZ) - 1):
@@ -206,15 +281,7 @@ json.dump(dict(fps=FPS, fim=F_FIM, legendas=LEG, eventos=eventos, vel=VEL, etapa
           open(f"{CX}/out/anim/linha.json", "w"))
 
 # ---------------- cena / render ----------------
-w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True
-bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = (0.78, 0.82, 0.86, 1); bg.inputs[1].default_value = 0.8
-for rot, en in (((50, 10, -35), 3.0), ((60, -10, 140), 1.2)):
-    lz = bpy.data.lights.new("s", 'SUN'); lz.energy = en; lz.angle = math.radians(3)
-    ob = bpy.data.objects.new("s", lz); sc.collection.objects.link(ob); ob.rotation_euler = [math.radians(x) for x in rot]
-bpy.ops.mesh.primitive_plane_add(size=8000, location=(0, 15, -25))
-ch = bpy.context.active_object; m = bpy.data.materials.new("chao"); m.use_nodes = True
-p_ = m.node_tree.nodes["Principled BSDF"]; p_.inputs["Base Color"].default_value = (0.55, 0.57, 0.6, 1); p_.inputs["Roughness"].default_value = 0.35
-ch.data.materials.append(m)
+visual.cena(sc, MODO)                            # fundo cinza liso, sem chao, luz de estudio
 sc.view_settings.view_transform = 'AgX'; sc.view_settings.look = 'AgX - Medium High Contrast'
 if MODO in ("cycles", "bench"):
     sc.render.engine = 'CYCLES'; cy = sc.cycles; cy.device = 'CPU'; cy.samples = 24; cy.use_denoising = True
@@ -230,6 +297,7 @@ else:
     sh.light = 'STUDIO'; sh.color_type = 'MATERIAL'; sh.show_cavity = True; sh.show_shadows = False
     sc.display.render_aa = 'FXAA'                  # previa: 1 amostra (o padrao 8 deixava 7 s/quadro)
     sc.view_settings.view_transform = 'Standard'; sc.view_settings.look = 'None'
+    sh.show_shadows = False; sc.render.film_transparent = False
     sc.render.resolution_x, sc.render.resolution_y = 640, 360
 sc.render.image_settings.file_format = 'PNG'
 sc.render.use_overwrite = False; sc.render.use_placeholder = True      # resumivel: pula quadro que ja existe
@@ -242,4 +310,4 @@ if MODO == "bench":                      # cronometra quadros soltos (QUADROS=1,
         sc.frame_set(q); sc.render.filepath = f"{OUTD}/b{q:04d}.png"; t0 = time.time()
         bpy.ops.render.render(write_still=True); print(f"TEMPO {q} {time.time() - t0:.1f}", flush=True)
 elif MODO != "info": bpy.ops.render.render(animation=True)
-print("LINHA", F_FIM, "quadros")
+print("LINHA", F_FIM, "quadros", "SUB", len(SUB), "LOUCAS", len(LOUCAS), "FANT", len(FANT), "ALVO", [round(x) for x in alvo_sub()])

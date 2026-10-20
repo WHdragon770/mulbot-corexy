@@ -1,0 +1,92 @@
+[
+ {
+  "nome": "motorA",
+  "cor": [
+   0.95,
+   0.45,
+   0.05
+  ],
+  "comprimento": 895.212400826347,
+  "ordem": 0
+ },
+ {
+  "nome": "motorB",
+  "cor": [
+   0.98,
+   0.8,
+   0.1
+  ],
+  "comprimento": 441.91349675859266,
+  "ordem": 1
+ },
+ {
+  "nome": "motorZ_E",
+  "cor": [
+   0.2,
+   0.75,
+   0.25
+  ],
+  "comprimento": 319.1176913614139,
+  "ordem": 2
+ },
+ {
+  "nome": "motorZ_D",
+  "cor": [
+   0.2,
+   0.75,
+   0.25
+  ],
+  "comprimento": 660.9076111337464,
+  "ordem": 3
+ },
+ {
+  "nome": "fonte",
+  "cor": [
+   0.85,
+   0.1,
+   0.1
+  ],
+  "comprimento": 501.70358608436584,
+  "ordem": 4
+ },
+ {
+  "nome": "display",
+  "cor": [
+   0.45,
+   0.55,
+   0.95
+  ],
+  "comprimento": 1280.6833338459369,
+  "ordem": 5
+ },
+ {
+  "nome": "fimCursoZ",
+  "cor": [
+   0.95,
+   0.95,
+   0.95
+  ],
+  "comprimento": 647.0324320639551,
+  "ordem": 6
+ },
+ {
+  "nome": "fimCursoY",
+  "cor": [
+   0.95,
+   0.95,
+   0.95
+  ],
+  "comprimento": 395.65801017019487,
+  "ordem": 7
+ },
+ {
+  "nome": "cabeca",
+  "cor": [
+   0.7,
+   0.3,
+   0.9
+  ],
+  "comprimento": 592.7194892062219,
+  "ordem": 8
+ }
+]

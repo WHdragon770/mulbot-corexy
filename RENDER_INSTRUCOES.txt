@@ -100,7 +100,8 @@ fim é pesado. Para medir na sua máquina antes de começar (5 min):
      volta do pino e volta; nada de tela vermelha/azul cheia (câmera dentro de peça)
 [ ] 71–81 s (funcionando): mesa sobe e desce com o vidro junto, cabeça andando, correias acompanhando,
      som dos motores mudando de tom
-[ ] 81–89 s: explodida abre e fecha com o baque; final com o título
+[ ] 81–89 s: explodida abre e fecha com o baque; NENHUMA peça entra no chão (as de baixo param 3 mm acima
+     dele: anima2.py limita o deslocamento pela altura do chão, CHAO = -25); final com o título
 [ ] som sem estourar (pico ~0,8), música baixa por baixo dos efeitos
 
 Se algum quadro sair errado, apague só os PNGs daquele trecho em out/anim/quadros_cycles e rode de novo.
@@ -120,3 +121,13 @@ Se algum quadro sair errado, apague só os PNGs daquele trecho em out/anim/quadr
   scripts/video/render_noite.sh      faz tudo
   scripts/video/custo.py             regera custo.json (só se mudar o roteiro):
       blender -b final/corexy_montagem_leve.blend -P scripts/video/anima2.py -P scripts/video/custo.py -- info /tmp/x
+
+---------------------------------------------------------------------
+7. CORREÇÕES JÁ FEITAS (não desfazer)
+---------------------------------------------------------------------
+- Peças da Mulbot no .blend se chamam "DL1-03-04_110 | mesa_suporteMesa": o anima2.py tira o prefixo, senão
+  mesa/knobs/polias não acham as poses e ficam paradas enquanto o vidro anda.
+- Close da presilha: a mesa desce 150 mm (no alto ela fica colada no pórtico e a câmera não via nada) e o giro
+  tem 1 chave por quadro (a origem da peça fica longe do pino; com poucas chaves ela "voava").
+- Vista explodida: o deslocamento vertical de cada peça é limitado pra ela parar 3 mm acima do chão.
+- Funcionando: a mesa desce, sobe e desce (10 a 120 mm), com o vidro junto.

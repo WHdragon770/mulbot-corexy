@@ -37,6 +37,8 @@ objs = [o for o in bpy.data.objects if o.type == 'MESH']
 def centro(o):
     bb = [o.matrix_world @ Vector(v) for v in o.bound_box]; return sum(bb, Vector()) / 8
 cent = {o.name: centro(o) for o in objs}
+CHAO = -25.0                                   # altura do plano do chao (o mesmo do render)
+zmin = {o.name: min((o.matrix_world @ Vector(v)).z for v in o.bound_box) for o in objs}
 grupo = {o.name: o.users_collection[0].name for o in objs}
 C = Vector((0, 15, 280))
 base = [o for o in objs if grupo[o.name] != FIX]
@@ -88,6 +90,7 @@ for o in objs:
     r = cent[o.name] - C; ex = Vector((r.x * 0.8, r.y * 0.8, r.z * 0.65)) * (1.35 if fix else 1)
     ex.z += {"Eixo Z e mesa": -60, "Portico": 150, "Carro do hotend": 250, "Polias e correias": 180, "Torres e motores CoreXY": 110,
              "Trilhos Y": 70, "Extrusora": 220, "Eletronica e display": -40}.get(ETAPAS[ei][0], 0)
+    ex.z = max(ex.z, CHAO + 3 - zmin[o.name])   # explodida: nenhuma peca atravessa o chao
     o.hide_render = True; o.keyframe_insert("hide_render", frame=1)
     o.hide_render = False; o.keyframe_insert("hide_render", frame=f0)
     k_loc(o, f0, L + voo); k_loc(o, f1, L)

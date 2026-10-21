@@ -31,7 +31,8 @@ YS = YG - 24.0                # linha das correias no sentido X (na frente do tr
 D_HOT = REF["HOT"][1] - 44.763   # bico em Y relativo ao centro do trilho X (-47.63)
 ZBICO = ZH - 27.0
 ZVIDRO = ZBICO - ZM           # topo do vidro
-ZPLACA = ZVIDRO - 31.175      # fundo do suporte da mesa (DL1-03-04)
+import mesa_aquecida as maq   # MESA=fria (padrao) | 220 (12 V) | 235 (24 V): placa de aluminio de maq.HM mm embaixo do vidro
+ZPLACA = ZVIDRO - 31.175 - maq.HM   # fundo do suporte da mesa (DL1-03-04)
 ZCZ = ZPLACA - 42.0           # centro do carro Z
 QT = {"mundo": np.eye(4), "portico": tr((0, YG, 0)), "carro": tr((XC, YG, 0)), "mesa": tr((0, 0, ZCZ))}
 
@@ -395,7 +396,7 @@ if GUIAZ == "v":
                 junta_passante([], (X, yp_ - 4.0, z), (0, 1, 0), 4.0 + 11.5 + 2 * zv.HW, d=6, q="mesa")
 
 # ================= mesa da Mulbot (vidro flutuante, presilhas, molas)
-dM = tr((0, 0, ZVIDRO - (REF["ZVID"] + 3.3)))
+dM = tr((0, 0, ZVIDRO - (REF["ZVID"] + 3.3) - maq.HM))   # mesa aquecida: tudo abaixo do vidro desce a espessura da placa
 PRESILHA = os.environ.get("PRESILHA", "disco")   # disco = botao excentrico serrilhado | baixa = aba chata giratoria | gancho = DL1-03-07 original
 def suporte_mesa_110():
     fn = f"{DER}/DL1-03-04_110.stl"
@@ -407,8 +408,15 @@ add("mesa_vidro", f"{VT}/vidro.stl", np.diag([VID / 203.2, VID / 203.2, 1, 1]) @
 for n in RI:
     if n.split("_")[0] in ("knob", "mola", "localizador", "presilha", "porcaPresilha"):
         p, t, c = RI[n]; k = int(n.split("_")[1]); sx, sy = ((1, -1), (1, 1), (-1, 1), (-1, -1))[k]
-        if n.startswith("presilha_") and PRESILHA != "gancho": p = f"{DER}/presilha_{PRESILHA}.stl"   # scripts/presilha_mesa.py
-        add("mesa_" + n, p, tr((sx * 92.3 * (EM - 1), sy * 92.3 * (EM - 1), 0)) @ dM @ t, c)
+        if n.startswith("presilha_") and PRESILHA != "gancho":
+            p = maq.presilha(PRESILHA) if maq.LADO else f"{DER}/presilha_{PRESILHA}.stl"   # scripts/presilha_mesa.py
+        T_ = tr((sx * 92.3 * (EM - 1), sy * 92.3 * (EM - 1), 0)) @ dM @ t
+        if n.startswith("localizador_") and maq.LADO:
+            if "_loc" not in globals():          # feito no canto 1 (+X+Y), os 4 usam a mesma peca
+                _p, _t, _ = RI["localizador_1"]; _loc = maq.localizador(tr((92.3 * (EM - 1), 92.3 * (EM - 1), 0)) @ dM @ _t, ZVIDRO - 3.3 - maq.HM)
+            p = _loc
+        add("mesa_" + n, p, T_, c)
+if maq.LADO: add("mesa_aquecida", maq.placa(ZVIDRO - 3.3), QT["mundo"], "alu")
 
 # ================= CoreXY: polias, motores, correias
 GI = {"A_D": (XI, YS + RP, ZA), "B_D": (XI, YS - RP, ZB), "A_E": (-XI, YS - RP, ZA), "B_E": (-XI, YS + RP, ZB)}
@@ -435,7 +443,10 @@ def grupo_mulbot(nomes, T, pref=""):
 grupo_mulbot(["displayBase", "displayTampa", "lcd_placa", "lcd_tela", "lcd_moldura", "botaoReset", "knobDisplay", "roboDisplay"],
              tr((0, YFR0 - (-156.6) - 0.5, 0)))
 grupo_mulbot(["caixaRAMPS", "portaRAMPS", "roboGrande", "mega", "ramps_pcb", "ramps_comp"], tr((0, YFR1 - 117.66, 0)))
-grupo_mulbot(["fonte", "protecaoFonte", "tomadaIEC"], tr((0, YFR1 - 117.66, 0)))
+if maq.LADO:   # mesa aquecida: fonte de 360 W + protecao nova + MOSFET (scripts/fonte_maior.py)
+    import fonte_maior; fonte_maior.aplica(globals(), maq.TENSAO)
+else:
+    grupo_mulbot(["fonte", "protecaoFonte", "tomadaIEC"], tr((0, YFR1 - 117.66, 0)))
 TEX = tr((208.75, YFR1 + 14 - 117.66, (ZBASE + 20) - 334.1))
 EZR = ["ezr_corpo", "motorE", "motorE_corpo", "roboExtrusora"]
 if EXTRUSORA == "bowden":
@@ -479,7 +490,11 @@ fim_curso("fimCursoX", rot("Y", "Z", "X"), (-145.0, YG + 2.0, sum(ZBR) / 2))
 # Y: na parede de tras da torre de tras esquerda (em pe, entre a porca da travessa e a borda); a lingueta da base do suporte aperta com YG = 152
 fim_curso("fimCursoY", rot("Z", "-X", "-Y"), (-160.5, 208.0, ZBASE + TPL / 2))
 # Z: embaixo do trilho Y esquerdo, o braco da mesa aperta no topo do curso
-fim_curso("fimCursoZ", rot("X", "-Y", "-Z"), (-176.0, YZB - CARRO_TOPO - 4.74, Z0))
+fim_curso("fimCursoZ", rot("X", "-Y", "-Z"), (-176.0, YZB - CARRO_TOPO - 4.74, Z0 - maq.HM))
+if maq.HM:   # mesa aquecida: a mesa desceu HM em relacao ao vidro -> fim de curso desce junto (calco), senao o vidro passa do bico
+    _c = caixa((-196.0, -58.4, Z0 - maq.HM), (-161.0, -42.4, Z0))   # para em x=-161: a alma do braco da mesa sobe ate ai
+    for dx in (-9.5, 9.5): _c -= furo_v(-176.0 + dx, -50.4, Z0 - maq.HM - 1, Z0 + 1, 3.4)   # 2x M3 da placa do fim de curso (furos a 19 mm)
+    reg("calcoFimCursoZ", _c, "verm")
 
 # ================= esteira porta-cabos da cabeca (scripts/esteira.py; ESTEIRA=0 volta o umbilical pela travessa de tras)
 ESTEIRA = os.environ.get("ESTEIRA", "1") == "1"

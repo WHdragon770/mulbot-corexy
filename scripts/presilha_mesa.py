@@ -1,13 +1,15 @@
 # Trava baixa do vidro (substitui o ganchinho DL1-03-07): aba chata giratoria, 2.4 mm acima do vidro.
 # Reaproveita o pino roscado da DL1-03-07 e a porca serrilhada DL1-03-08. Girar 90 graus solta o vidro.
 # Saida: derived/presilha_baixa.stl no mesmo quadro local da DL1-03-07 (as 4 transformacoes da Mulbot continuam valendo)
-import sys, json; sys.path.insert(0, "/home/lucas/corexy/scripts")
+import sys, os, json; sys.path.insert(0, "/home/lucas/corexy/scripts")
 from base import *
 import manifold3d as mf
 
 J = {j["nome"]: j for j in json.load(open("/home/lucas/corexy/out/cxy.json"))}
 T1 = np.array(J["mesa_presilha_1"]["T"])        # canto +X+Y, em coordenadas de mundo
-ZLOC = 389.05 - T1[2, 3]; ZVID = 389.81 - T1[2, 3]   # topo do localizador e do vidro, relativos a T1 (independe da pose da mesa)
+HM = float(os.environ.get("HM", 0))            # mesa aquecida: placa de HM mm entre o localizador e o vidro (scripts/mesa_aquecida.py)
+SUF = "_aq" if HM else ""
+ZLOC = 389.05 - T1[2, 3]; ZVID = 389.81 + HM - T1[2, 3]   # topo do localizador e do vidro, relativos a T1 (independe da pose da mesa)
 Ti = np.linalg.inv(T1)[:3].tolist()
 original = peca_mf(J["mesa_presilha_1"]["stl"], np.eye(4))   # fica no quadro local: transformar a rosca arredonda vertices e abre a malha
 z0 = T1[2, 3]
@@ -30,11 +32,12 @@ def fecha(novo, nome):
     m = pino + novo.transform(Ti)
     m = mf.Manifold.batch_boolean([c for c in m.decompose() if c.volume() > 0.01], mf.OpType.Add)
     assert len(m.decompose()) == 1, nome + " em pedacos"
-    t = Tm(m); assert trimesh.Trimesh(t.vertices, t.faces).is_watertight, nome + " aberta"
+    t = Tm(m.simplify(1e-3)); assert t.is_watertight, nome + " aberta"   # mesma malha que o salva() grava
     return salva(m, nome)
 m = espacador + aba + calco
-fn = fecha(m, "presilha_baixa")
-print(fn, "topo acima do vidro:", round(H + 0.05, 2), "mm (original 6.35)")
+if not HM:                                      # mesa aquecida: so o disco (padrao)
+    fn = fecha(m, "presilha_baixa" + SUF)
+    print(fn, "topo acima do vidro:", round(H + 0.05, 2), "mm (original 6.35)")
 
 # ---------- disco: botao excentrico serrilhado. Centro deslocado E do pino para dentro do vidro; meia volta solta.
 d = np.array([-1.0, -1.0]) / np.sqrt(2)          # do pino para o canto do vidro
@@ -51,6 +54,6 @@ disco_m -= cil((C[0], C[1], z1 + HD - 0.5), (C[0], C[1], z1 + HD + 1), R - 3.2, 
 seta = (   # risco em relevo apontando para o vidro: mostra se esta travado
     disco(P + 5.0 * d, 0.9, z1 + HD - 0.6, z1 + HD - 0.1) + disco(P + 10.0 * d, 0.9, z1 + HD - 0.6, z1 + HD - 0.1)).hull()
 CQ = P + 11.0 * d                                # calco sobre o vidro (canto em 8.0 do pino)
-fn = fecha(espacador + disco_m + seta + disco(CQ, 2.2, ZV - PRE, ZV + 0.1, 3.0), "presilha_disco")
+fn = fecha(espacador + disco_m + seta + disco(CQ, 2.2, ZV - PRE, ZV + 0.1, 3.0), "presilha_disco" + SUF)
 print(fn, "sobre o vidro:", round(E + R - 8.0, 1), "mm no canto; solto apos meia volta, folga", round(8.0 + E - R, 1), "mm")
 

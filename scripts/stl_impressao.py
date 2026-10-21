@@ -17,16 +17,16 @@ CONJ = {G_QUA: ("baseFrente", "baseTras", "baseLatF", "baseLatT", "posteFrenteIn
                 "travFrente", "travTras", "torreFrente", "torreTras", "pe"),
         G_Y: ("trilhoY", "suportePortico"),
         G_X: ("trilhoX", "carroX", "bracoFimCursoX", "dutoCoreXY", "suporteExtrusoraDireta", "presilhaHotend"),
-        G_Z: ("baseZ", "baseZInf", "baseZSup", "trilhoZ", "chapaZY", "bracoMesa", "mesa"),
+        G_Z: ("baseZ", "baseZInf", "baseZSup", "trilhoZ", "chapaZY", "bracoMesa", "mesa", "calcoFimCursoZ"),
         G_MOT: ("loucaFrente", "loucaPortico", "motorA", "motorB"),
         G_EST: ("eloX", "eloY", "pontaFixaX", "pontaFixaY", "bandejaX", "bandejaY", "bracoEsteiraX", "suporteEsteiraY"),
-        G_ELE: ("caixaRAMPS", "portaRAMPS", "roboGrande", "protecaoFonte", "displayBase", "displayTampa", "botaoReset", "knobDisplay", "roboDisplay")}
+        G_ELE: ("caixaRAMPS", "portaRAMPS", "roboGrande", "protecaoFonte", "protecaoFonte360", "displayBase", "displayTampa", "botaoReset", "knobDisplay", "roboDisplay")}
 GRUPO = {k: g for g, ks in CONJ.items() for k in ks}
 def origem(f): return "Mulbot original" if "/mulbot/" in f else "Mulbot modificada" if os.path.basename(f).startswith("DL1-") else "nova"
 cont = collections.OrderedDict()
 for e in J:
     n, f = e["nome"], e["stl"]
-    if n.startswith(Z_NOVO + ("esfera", "correia", "bowden", "caboEsteira")) or f.startswith(VT): continue   # correias e bowden sao comprados
+    if n.startswith(Z_NOVO + ("esfera", "correia", "bowden", "caboEsteira", "mesa_aquecida", "fonte", "moduloMOSFET")) or f.startswith(VT): continue   # correias, bowden, mesa aquecida e fonte sao comprados
     g = G_FIX if "/fixadores/" in f else GRUPO.get(n.split("_")[0], "10 Outros")
     if g == "10 Outros": print("AVISO sem conjunto:", n)
     cont.setdefault((g, f), 0); cont[(g, f)] += 1

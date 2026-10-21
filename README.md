@@ -11,6 +11,7 @@ extrusora direta, presilha do vidro em botão excêntrico, parafusos M10/M6 impr
 |---|---|
 | `entrega/02 STL para imprimir` | todas as peças, separadas por conjunto, com a quantidade no nome + `lista_de_impressao.csv` |
 | `entrega/03 Desenhos de montagem` | 12 folhas A4 (PNG 300 dpi + PDF): capa, quadro, eixos, mesa, correias, eletrônica, roldana V, ligação, passagem de cabos, esteira porta-cabos |
+| `entrega/07 Mesa aquecida (opcional)` | mesa aquecida em 2 opções (220×220 12 V e 235×235 24 V): peças que mudam, imagens, `.glb`, LEIA-ME com links e firmware |
 | `entrega/04 Detalhes (imagens)` | closes da esteira porta-cabos (elo, esteira X, esteira Y, entrada do cabo na torre) |
 | `entrega/render` | renders da montagem + vídeo de montagem renderizado (versão de 20/10, antes da esteira) |
 | `entrega/video` | prévia do vídeo de montagem (rascunho rápido, **versão antiga**, antes da esteira e do reprojeto sem suporte) |
@@ -27,6 +28,15 @@ extrusora direta, presilha do vidro em botão excêntrico, parafusos M10/M6 impr
   do lado direito (12 elos), o mesmo elo impresso em pé, pino de filamento 1,75 mm. O cabo da cabeça entra no quadro pela
   parede de fora da torre de trás direita. `ESTEIRA=0` volta o cabo solto (umbilical) da versão anterior.
 - Os elos mudam de forma em cada pose: a colisão deles é conferida à parte por `scripts/colisao_esteira.py` (0 interferências em 22 poses).
+
+## Mesa aquecida (opcional, 21/10/2026)
+
+`MESA=220` (placa de alumínio 220×220×3 12 V, recomendada) ou `MESA=235` (235×235×3 24 V, mesa da Ender 3) antes do `cxy.py`;
+sem `MESA` a máquina continua como antes. Scripts: `scripts/mesa_aquecida.py` e `scripts/fonte_maior.py`.
+- A placa fica entre o localizador e o vidro; o topo do vidro continua no mesmo lugar e o resto da mesa desce 3 mm.
+- Localizador novo (bordas 3 mm mais altas; na 220 com calço em L), presilha com pescoço 3 mm maior, calço de 3 mm no fim de curso Z.
+- Fonte de 360 W (12 V 30 A ou 24 V 15 A, 215×115×50) com proteção nova impressa (IEC em pé) e módulo MOSFET da mesa.
+- Conferido: sem colisão (mesa em 0/100/200), peças novas sem suporte (0 ilhas, ponte 10). `scripts/checa_mesa.py` confere a mesa.
 
 ## Renderizar o vídeo
 

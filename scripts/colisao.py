@@ -7,10 +7,10 @@ QPEC = {n_: d_["q"] for n_, d_ in PEC.items()}
 def g(n):
     if n in QFIX: return {"portico": "portico", "carro": "carro", "mesa": "mesa"}.get(QFIX[n], "fixo")
     if n in QPEC and QPEC[n] != "mundo": return QPEC[n]
-    if n.startswith(("rodaY", "buchaY", "suportePortico", "trilhoX", "loucaPortico", "fimCursoX")): return "portico"
+    if n.startswith(("rodaY", "buchaY", "suportePortico", "trilhoX", "loucaPortico", "fimCursoX", "pontaFixaX", "caboEsteira_XY")): return "portico"
     if n.startswith(("carroX", "rodaX", "buchaX", "hotend", "presilhaHotend", "dutoCoreXY", "ventoinha", "ezr", "motorE", "suporteExtrusoraDireta")): return "carro"
     if n.startswith(("mesa", "carroZ", "porcaZ", "bracoMesa", "rodaZ", "buchaZ")): return "mesa"
-    if n.startswith(("correia", "bowden")): return "correia"
+    if n.startswith(("correia", "bowden", "eloX", "eloY")): return "correia"   # elos mudam de forma em cada pose: colisao_esteira.py
     return "fixo"
 # caixa envolvente pelos 8 cantos (barato); o solido so e montado para pares candidatos (RAM do WSL = 3 GB)
 MF = {}; BB = {}; PT = {n: (p, t) for n, p, t, c in P}
@@ -29,7 +29,8 @@ IGN = [("porcaZ", "fusoZ"), ("carroY", "trilhoY"), ("carroZ", "trilhoZ"), ("carr
        ("motorZ", "baseZ"), ("fusoZ", "baseZ"), ("fimCursoX", "tampaX_chave"), ("fimCursoX", "suportePortico_E"), ("fimCursoY", "carroY_E"), ("fimCursoZ", "bracoMesa_E"), ("rodaZ", "trilhoZ"), ("rodaZ", "fix_M6"), ("buchaZ", "fix_M6"), ("rodaZ", "bracoMesa"), ("buchaZ", "bracoMesa"),
        ("rodaX", "trilhoX"), ("rodaY", "trilhoY"), ("rodaX", "carroX"), ("buchaX", "carroX"), ("rodaX", "buchaX"), ("buchaX", "fix_M6"),
        ("rodaY", "suportePortico"), ("buchaY", "suportePortico"), ("rodaY", "buchaY"), ("buchaY", "fix_M6"), ("rodaX", "fix_M6"), ("rodaY", "fix_M6"),
-       ("fimCursoX", "carroX"), ("fimCursoY", "suportePortico_E")]
+       ("fimCursoX", "carroX"), ("fimCursoX", "bracoFimCursoX"), ("fimCursoY", "suportePortico_E"),
+       ("caboEsteira", "pontaFixa"), ("caboEsteira", "bandeja"), ("caboEsteira", "suporteEsteiraY"), ("caboEsteira", "torreTras_D"), ("pontaFixa", "bandeja")]
 def ign(a, b):
     return any((a.startswith(x) or ("_" + x) in a) and (b.startswith(y) or ("_" + y) in b) or
                (b.startswith(x) or ("_" + x) in b) and (a.startswith(y) or ("_" + y) in a) for x, y in IGN)

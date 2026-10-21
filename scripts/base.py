@@ -21,7 +21,8 @@ def M(t):
 def Tm(m):
     g = m.to_mesh(); return trimesh.Trimesh(np.asarray(g.vert_properties)[:, :3], np.asarray(g.tri_verts), process=False)
 def salva(m, nome):
-    fn = f"{DER}/{nome}.stl"; Tm(m).export(fn); return fn
+    fn = f"{DER}/{nome}.stl"
+    Tm(m.simplify(1e-3)).export(fn); return fn          # simplify: tira triangulo de area 0 que sobra de booleana (malha continua fechada)
 def caixa(a, b):
     a = np.array(a, float); b = np.array(b, float); lo = np.minimum(a, b); hi = np.maximum(a, b)
     return mf.Manifold.cube((hi - lo).tolist()).translate(lo.tolist())

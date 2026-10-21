@@ -36,6 +36,7 @@ ZCZ = ZPLACA - 42.0           # centro do carro Z
 QT = {"mundo": np.eye(4), "portico": tr((0, YG, 0)), "carro": tr((XC, YG, 0)), "mesa": tr((0, 0, ZCZ))}
 
 def furo_v(x, y, z0, z1, d): return cil((x, y, z0), (x, y, z1), d / 2, 32)
+FUROS_DESENHO = {}   # peca -> [(p0, p1, r)] furos do proprio desenho (fora das juntas) que viram gota na impressao
 def espelhaX(m): return m.mirror([1, 0, 0])
 Dstem = 8.9
 LST_PL, LST_PM = 10.0, 14.0   # comprimento dos eixos das polias loucas (cortados) nas placas fina/do meio
@@ -46,7 +47,7 @@ def ambos(f):
 # ================= guias em V impressas no X e no Y (mesma roldana do Z, zv.py; versao com esferas: cxy.py.bak_esferasXY)
 # viga em T: aba com V nas 2 bordas + alma; 3 roldanas por carro (2 fixas num lado, excentrica do outro),
 # bucha excentrica tipo espacador (sextavado de 6 mm entre placa e roldana, chave entra pelo lado)
-import zv
+import zv, semsup
 ZWY = ZBASE - zv.ESP - zv.HW              # plano das roldanas Y (embaixo da base do suporte do portico)
 def viga_y(x0):
     """aba em cima (V nas bordas +-x), alma descendo ate Z0; secao em (x, -z) extrudada ao longo de Y"""
@@ -88,13 +89,14 @@ def duto():
     for sx in (-12.7, 12.7): m -= cil((sx, -19, 56.19), (sx, -12, 56.19), 1.7, 24)
     m -= cil((XFV + 20.3, -19, ZFV - 20.3), (XFV + 20.3, -12, ZFV - 20.3), 1.6, 24)   # orelhas da 5015
     m -= cil((XFV - 20.3, -19, ZFV + 20.3), (XFV - 20.3, -12, ZFV + 20.3), 1.6, 24)
-    m += caixa((12, -17.7, 15), (18, -15.5, 35))                                   # tirante espinha -> soquete
-    m += caixa((-12, -35, 15), (12, -15.5, 23))                                    # soquete na boca da ventoinha
-    m += caixa((-9.5, -33, 8.5), (9.5, -16, 15.5))                                 # descida
-    m += caixa((-6.5, -33, 2.0), (6.5, -6.5, 10.0))                                # bico estreito
+    # sem suporte: tirante, soquete, descida e bico vao ate o plano de tras da espinha (y = -12.7) -> imprime deitado nele
+    m += caixa((12, -17.7, 15), (18, -12.7, 35))                                   # tirante espinha -> soquete
+    m += caixa((-12, -35, 15), (12, -12.7, 23))                                    # soquete na boca da ventoinha
+    m += caixa((-9.5, -33, 8.5), (9.5, -12.7, 15.5))                               # descida
+    m += caixa((-6.5, -33, 2.0), (6.5, -12.7, 10.0))                               # bico estreito (saida a 12.7 mm do bico)
     m -= caixa((-10.3, -33.0, 14.9), (10.3, -17.4, 23.1))
     m -= caixa((-7.5, -31, 10.0), (7.5, -18, 15.2))
-    m -= caixa((-4.5, -31, 4.0), (4.5, -18, 10.2)) + caixa((-4.5, -31, 4.0), (4.5, -6.0, 8.0))
+    m -= caixa((-4.5, -31, 4.0), (4.5, -18, 10.2)) + caixa((-4.5, -31, 4.0), (4.5, -12.0, 8.0))
     return m
 TN0 = tr((0, D_HOT, ZBICO))       # quadro do bico com XC=0, YG=0
 reg("dutoCoreXY", duto().transform(TN0[:3].tolist()), "azul", "carro")
@@ -105,19 +107,38 @@ YLING = 25.4 + 17.1           # ponta da lingueta do fim de curso Y (aperta a ch
 def suporte_portico(yB, yA, lingueta=False):
     """lado direito no quadro YG=0. yB/yA: y das polias dos planos B/A"""
     m = caixa((145, -44, ZBASE), (XR + 25.4, 25.4, ZBASE + TPL))
-    m += caixa((XR + 20, -15, ZBASE), (XR + zv.XCW + 10, 15, ZBASE + TPL))             # orelha da roldana excentrica (fora)
+    m += caixa((XR + 20, -44, ZBASE), (XR + zv.XCW + 10, 15, ZBASE + TPL))             # orelha da roldana excentrica (fora); vai ate y=-44: imprime em pe sem suporte
     if lingueta: m += caixa((156.5, 25.4, ZBASE), (164.5, YLING, ZBASE + TPL))       # aperta o fim de curso Y
     m += caixa((145, -13, ZBASE), (155, 13, ZTOP))                                     # parede: ponta da viga X
     m += caixa((130, -12, ZCX + HAX), (155, 12, ZCX + HAX + 10))                        # aba por cima da alma da viga X
+    tri = mf.CrossSection([[(145.0, -13.0), (145.0, -12.0), (128.0, 5.0), (128.0, -13.0)]])         # sem suporte: ponta da aba chanfrada a 45 graus (impressao com +Y pra cima)
+    m -= tri.extrude(12).translate([0, 0, ZCX + HAX - 1])
     m += caixa((145, -44, ZB + GAP), (184, -5, ZB + GAP + TPM))                         # placa do meio
     m += caixa((145, -44, ZA + GAP), (184, -5, ZTOP))                                   # placa de cima
     m += caixa((150, -44, ZBASE), (158, -36, ZTOP))                                     # coluna
-    m -= furo_v(XI, yB, ZBASE - 1, ZBASE + TPL + 1, Dstem)
-    m -= furo_v(XI, yB, ZB + GAP - 1, ZB + GAP + TPM + 1, Dstem); m -= furo_v(XI, yA, ZB + GAP - 1, ZB + GAP + TPM + 1, Dstem)
-    m -= furo_v(XI, yA, ZA + GAP - 1, ZTOP + 1, Dstem)
-    for x, y in RODAS_Y[:2]: m += cil((x, y, ZBASE - zv.ESP), (x, y, ZBASE + 0.5), 4.6, 32)   # espacador das fixas (so na pista interna)
+    # sem suporte (imprime com +Y pra cima): o fundo da parede entre as placas era ponte de ~40 mm -> 2 aguas de 45 graus
+    # saindo de cada placa, sobra ponte de semsup.PONTE no meio (correias passam em y -17 / -31, abaixo das aguas)
+    for z0, z1 in ((ZBASE + TPL, ZB + GAP), (ZB + GAP + TPM, ZA + GAP)):
+        dr = (z1 - z0 - semsup.PONTE) / 2
+        for zb, s_ in ((z0, 1), (z1, -1)):
+            pts = [(zb, -13.0 + 0.01), (zb, -13.0 - dr), (zb + s_ * dr, -13.0 + 0.01)]          # (z, y)
+            ar = sum(pts[i][0] * pts[(i + 1) % 3][1] - pts[(i + 1) % 3][0] * pts[i][1] for i in range(3))
+            cs = mf.CrossSection([pts if ar > 0 else pts[::-1]])
+            m += cs.extrude(10.0).transform([[0, 0, -1, 155.0], [0, 1, 0, 0], [1, 0, 0, 0]])  # (z, y, w) -> (155 - w, y, z), destro
+    for x, y in RODAS_Y[:2]:                                                           # folga da cabeca do M6 das roldanas fixas
+        m -= cil((x, y, ZBASE + TPL - 0.01), (x, y, ZBASE + TPL + 20), 6.0, 48)
+        if y < 0:                                                                      # a de y=-19 fica embaixo da parede: alivio vai ate ela, teto em V 45
+            pent = mf.CrossSection([[(x - 6, y), (x + 6, y), (x + 6, -13.0), (x, -7.0), (x - 6, -13.0)]])
+            fim = ZB + GAP - (ZB + GAP - ZBASE - TPL - semsup.PONTE) / 2          # ate o comeco da agua de cima (sem trecho chato em balanco)
+            m -= pent.extrude(fim - (ZBASE + TPL) + 0.02).translate([0, 0, ZBASE + TPL - 0.01])
+    fs = [((XI, yB, ZBASE - 1), (XI, yB, ZBASE + TPL + 1), Dstem / 2), ((XI, yB, ZB + GAP - 1), (XI, yB, ZB + GAP + TPM + 1), Dstem / 2),
+          ((XI, yA, ZB + GAP - 1), (XI, yA, ZB + GAP + TPM + 1), Dstem / 2), ((XI, yA, ZA + GAP - 1), (XI, yA, ZTOP + 1), Dstem / 2)]
+    up = np.array([0, 1.0, 0])                                                         # imprime com +Y pra cima (em pe na borda da frente)
+    for x, y in RODAS_Y[:2]:                                                           # espacador das fixas (so na pista interna)
+        m += semsup.pino((x, y, ZBASE + 0.5), (x, y, ZBASE - zv.ESP), 4.6, up)       # quilha + mao-francesa 45 graus (param 0.5 antes da roda)
     bx, by = RODAS_Y[2]                                                                # excentrica: ressalto da bucha + folga do M6
-    m -= cil((bx - zv.EXC, by, ZBASE - 1), (bx - zv.EXC, by, ZBASE + TPL + 1), 6.0 + zv.TOL["fdm"]["bucha"], 64)
+    fs.append(((bx - zv.EXC, by, ZBASE - 1), (bx - zv.EXC, by, ZBASE + TPL + 1), 6.0 + zv.TOL["fdm"]["bucha"]))
+    for a, b, r in fs: m -= semsup.gota(a, b, r, up, 64)
     return m
 for lado, sx, yB, yA in (("D", 1, -31, -17), ("E", -1, -17, -31)):
     m = suporte_portico(yB, yA, lingueta=(lado == "E"))
@@ -137,7 +158,7 @@ def torre_presilha():
     m = caixa((-30, -37, ZT0 - 1.0), (30, -19, ZTP))   # desce 1 mm dentro da prateleira (vira 1 peca so)
     for z in (ZA, ZB):
         for s in (-1, 1):
-            m -= caixa((s * (PINX - RO - 1.2), -24 - 2 * RO - 1.3, z - 6.4), (s * 31, -24 + 1.3, z + 6.4))
+            m -= semsup.telhado((s * (PINX - RO - 1.2), -24 - 2 * RO - 1.3, z - 6.4), (s * 31, -24 + 1.3, z + 6.4), (1, 0, 0))   # fundo da fenda: teto 45 graus (carro imprime com +X pra cima)
     for s in (-1, 1):
         m += cil((s * PINX, -24 - RO, ZT0), (s * PINX, -24 - RO, ZA + 8), 3.0)
         if EXTRUSORA == "direta": m -= furo_v(s * XI3, YI3, ZTP - 6, ZTP + 1, 4.0)
@@ -145,17 +166,31 @@ def torre_presilha():
 # ================= carro X (1 peca): prateleira do hotend da Mulbot (frente do carroHotend, sem o carro de esferas)
 # + torre de presilhas + espacadores das roldanas + braco que aperta o fim de curso X
 YBR = (-19.0, 18.0); ZBR = (512.0, 520.0)              # braco do fim de curso X (atras da torre, por cima da viga)
+XIB, ZIB = -24.0, (508.0, 531.0)                       # 2 insertos M3 (latao 4.0 x 6) na face de tras da torre p/ o braco (fora das fendas das correias)
+def braco_fim_x():
+    """braco que aperta o fim de curso X: peca separada (imprime deitada na face x=-30), aparafusada na face de tras da torre"""
+    m = caixa((-30, YCX, 503.0), (-18, YCX + 4.0, 535.0))                 # flange encostada na torre (4 mm)
+    m += caixa((-30, YCX + 4.0 - 0.01, ZBR[0]), (-24, YBR[1], ZBR[1]))    # braco (mesma face x = -30 que aperta a chave)
+    for z in ZIB:
+        m -= semsup.gota((XIB, YCX - 1, z), (XIB, YCX + 5, z), 1.7, (1, 0, 0), 24)   # M3 passante
+    return m
 def carro_x():
     p, t, c = RI["carroHotend"]
     m = peca_mf(p, tr((0, -44.763, ZH - 197.5)) @ t) ^ caixa((-40, -60, ZT0 - 20), (40, -25.4, ZT0 + 1))
     m += torre_presilha()
-    m += caixa((-30, YBR[0] - 0.5, ZBR[0]), (-24, YBR[1], ZBR[1]))
-    for x, z in RODAS_X[:2]: m += cil((x, YCX - 0.5, z), (x, YCX + zv.ESP, z), 4.6, 32)
+    for z in ZIB: m -= semsup.gota((XIB, YCX + 0.01, z), (XIB, YCX - 6.0, z), 2.0, (1, 0, 0), 24)   # insertos M3 do braco do fim de curso
+    sl = m ^ caixa((-25.2, -60, ZT0 - 20), (-24.4, -25.4, ZT0 - 1.0))          # sem suporte (imprime deitado na face x=-30 da torre):
+    for k in range(7): m += sl.translate([-0.8 * (k + 1), 0, 0])              # a prateleira (borda em x=-25.4) desce ate x=-30 (ficava 4.6 mm no ar)
+    m -= caixa((-40, -60, ZT0 - 21), (-30, 0, ZT0 + 1))
+    for x, z in RODAS_X[:2]:
+        m += semsup.pino((x, YCX - 0.5, z), (x, YCX + zv.ESP, z), 4.6, (1, 0, 0))   # quilha + mao-francesa 45 graus (param 0.5 antes da roda)
+    m -= caixa((-40, -70, ZT0 - 30), (-30, 30, ZTP + 10))                   # nada abaixo da face x=-30 (mesa da impressao)
     bx, bz = RODAS_X[2]                                   # excentrica: ressalto raso (3 mm, fora da fenda da correia A) + folga do M6
     m -= cil((bx, YCX + 0.01, bz - zv.EXC), (bx, YCX - 3.0, bz - zv.EXC), 6.0 + zv.TOL["fdm"]["bucha"], 64)
     m -= cil((bx, YCX + 1, bz - zv.EXC), (bx, -38, bz - zv.EXC), 4.2, 32)
     return m
 reg("carroX", carro_x(), "azul", "carro")
+reg("bracoFimCursoX", braco_fim_x(), "azul", "carro")
 
 # ================= roldanas X e Y (rolamento de roletes impresso em resina, 1 peca so) + buchas excentricas + M6
 _rr = zv.roldana_resina(partes=True)
@@ -194,8 +229,10 @@ def torre_tras(zface, baixo):
     zp0, zp1 = (zface, zface + 6.0) if baixo else (zface - 6.0, zface)
     m = caixa((158, 156, zp0), (206, 222, zp1))                                          # placa do motor
     m += caixa((158, 208, Z0 + H_TRILHO), (206, 222, zp1))                               # parede de tras (em cima do poste)
-    m += caixa((158, 156, ZBASE + 12), (166, 222, zp1))                                  # parede interna
+    m += caixa((158, 156, ZBASE + 12), (162.5, 222, zp1))                                # parede interna (4.5: o corpo do motor comeca em x=162.85)
     m += caixa((155, 208, Z0 + H_TRILHO - 25), (161, 222, Z0 + H_TRILHO)) + caixa((191, 200, Z0 + H_TRILHO - 25), (197, 222, Z0 + H_TRILHO))
+    ch = mf.CrossSection([[(154.0, Z0 + H_TRILHO - 4.0), (158.0, Z0 + H_TRILHO + 0.01), (154.0, Z0 + H_TRILHO + 0.01)]])  # (x, z)
+    m -= ch.extrude(16).transform([[1, 0, 0, 0], [0, 0, -1, 223], [0, 1, 0, 0]])   # chanfro 45 graus no topo de fora da saia (y 207..223)
     m -= cil((XM, YM, zp0 - 1), (XM, YM, zp1 + 1), 11.5)
     for dx in (-15.5, 15.5):
         for dy in (-15.5, 15.5): m -= furo_v(XM + dx, YM + dy, zp0 - 1, zp1 + 1, 3.4)
@@ -219,7 +256,7 @@ def base_z(zf):
     m += caixa((XZ - 16, -12, ZTZ), (XZ - 9.825, 46, ZTZ + 25)) + caixa((XZ + 9.825, -12, ZTZ), (XZ + 16, 46, ZTZ + 25))
     m += caixa((XZ - 16, YZB + 0.3, ZTZ), (XZ + 16, 46, ZTZ + 25))                           # soquete do trilho Z
     m -= caixa((XZ - 21.6, YFUSO - 21.6, -1), (XZ + 21.6, YFUSO + 21.6, zf))         # alojamento do motor
-    m -= caixa((XZ - 15, YFUSO - 30, -1), (XZ + 15, YFUSO, 12))                       # passagem do cabo (frente)
+    m -= semsup.telhado((XZ - 15, YFUSO - 30, -1), (XZ + 15, YFUSO, 12), (0, 0, 1))  # passagem do cabo (frente), teto em 45 graus
     m -= cil((XZ, YFUSO, zf - 1), (XZ, YFUSO, zf + 3), 11.5)                            # ressalto do motor
     m -= cil((XZ, YFUSO, zf + 2), (XZ, YFUSO, 67), 14.3)                                # colar do fuso
     for dx in (-15.5, 15.5):
@@ -266,15 +303,25 @@ for lado, sx in (("D", 1), ("E", -1)):
     junta_passante(["torreTras_" + lado, pt], (X(155), 215, Z0 + H_TRILHO - 12.5), (sx, 0, 0), 42)
     # travessas de cima: passantes em Y (porca do lado de dentro, fora dos planos das correias)
     for z in (Z0 + 100, Z0 + 152): junta_passante(["travFrente", "torreFrente_" + lado], (X(152), YFR0 - 14, z), (0, 1, 0), 28, d=6)
-    for x in (175, 196): junta_passante(["travTras", "torreTras_" + lado], (X(x), YFR1 + 14, ZBASE + 11), (0, -1, 0), 28, d=6)
+    for x in (175, 196): junta_passante(["travTras", "torreTras_" + lado], (X(x), YFR1 + 14, ZBASE + 16), (0, -1, 0), 28, d=6)   # +16: porca acima da rampa da ponte da torre
 # divisoes para caber numa mesa de 220 (emenda sobreposta + 2 passantes)
 for lado in ("D", "E"):
     emenda("posteFrente_" + lado, "posteFrenteInf_" + lado, "posteFrenteSup_" + lado, 2, 235.0, 60, 0, XR * (1 if lado == "D" else -1))
     emenda("posteTras_" + lado, "posteTrasInf_" + lado, "posteTrasSup_" + lado, 2, 226.0, 60, 0, XR * (1 if lado == "D" else -1))
-emenda("baseFrente", "baseFrente_E", "baseFrente_D", 0, 0.0, 60, 2, 15.0)
+emenda("baseFrente", "baseFrente_E", "baseFrente_D", 0, 45.0, 60, 2, 15.0)    # fora do meio: a passagem do cabo do display (x -10..10) nao cai no septo da emenda
 emenda("baseTras", "baseTras_E", "baseTras_D", 0, 0.0, 60, 2, 15.0)
 emenda("travFrente", "travFrente_E", "travFrente_D", 0, 0.0, 60, 2, ZBASE + 30, d=6)
 emenda("travTras", "travTras_E", "travTras_D", 0, 0.0, 60, 2, ZBASE + 25, d=6)
+# base Z em 2 pecas na face do motor Z: embaixo um anel aberto (alojamento sem teto), em cima a tampa onde o motor parafusa
+# (as 2 imprimem em pe sem suporte); 4 x M6 de cima pra baixo com porca-barril na de baixo
+from juntas import corta
+for lado, sx in (("D", 1), ("E", -1)):
+    X = lambda x: sx * x
+    bi, bs = "baseZInf_" + lado, "baseZSup_" + lado
+    corta("baseZ_" + lado, bi, bs, 2, ZFACE_MZ)
+    for dx in (-21, 21):
+        junta_barril(bs, bi, (X(XZ + dx), -20, ZTZ), (0, 0, -1), 65, (0, 1, 0), 16, d=6)      # corpo (fora do soquete do trilho Z e da cavidade)
+        junta_barril(bs, bi, (X(XZ + dx), -38, 66.0), (0, 0, -1), 50, (0, 1, 0), 16, d=6)     # bloco da frente (parede atras do motor)
 
 # ================= Z: porca/fuso da Mulbot + motores
 def fuso_longo():
@@ -310,13 +357,13 @@ def braco_mesa():
     else:
         m = caixa((XZ - 25.4, yp, -46), (XZ + 25.4, yf, 25.4))   # placa vertical (carro + porca)
     m += caixa((150.6, yp, 25.4), (160, yf, 42))             # alma
-    m += caixa((41, yp, 32), (160, -31, 42)) + caixa((41, yp, 32), (100, 28, 42))   # braco horizontal sob a mesa
-    m += caixa((60, -41, 12), (130 if GUIAZ == "v" else 148, -31, 32))   # nervura (curta: roldana de dentro passa)
+    m += caixa((41, yp, 32), (160, -31, 42)) + caixa((41, yp, 32), (102, 28, 42))   # braco horizontal sob a mesa (ate x=102: o furo M3 em x=99.1 nao estoura a borda)
+    m += caixa((60, yp, 12), (130 if GUIAZ == "v" else 148, -31, 32))   # nervura (curta: roldana de dentro passa); desce ate a face da placa: imprime deitado nela
     if GUIAZ != "v":
         for dx in (-CARRO_FX, CARRO_FX):                      # carro Z: furos ao longo de Y
             for dz in (-CARRO_FY, CARRO_FY): m -= cil((XZ + dx, yp - 1, dz), (XZ + dx, yf + 1, dz), 1.7, 24)
-    for dx in (-20.64, 20.64):                                # suporte da mesa (furos dos carros Y da Mulbot, ampliados)
-        for dy in (-17.46, 17.46): m -= furo_v((69.45 + dx) * EM, dy * EM, 31, 43, 3.4)
+    for dx in (-20.64, 20.64):                                # suporte da mesa (furos dos carros Y da Mulbot, ampliados); gota: imprime com +Y pra cima
+        for dy in (-17.46, 17.46): m -= semsup.gota(((69.45 + dx) * EM, dy * EM, 31), ((69.45 + dx) * EM, dy * EM, 43), 1.7, (0, 1, 0), 24)
     if GUIAZ != "v":
         _Fz = R4(RZ, (XZ, YZB, ZZT)) @ Tcarro(ZZT)            # alivio p/ as tampas do carro Z
         for _T in (_Fz @ T1c, _Fz @ T2c):
@@ -434,9 +481,18 @@ fim_curso("fimCursoY", rot("Z", "-X", "-Y"), (-160.5, 208.0, ZBASE + TPL / 2))
 # Z: embaixo do trilho Y esquerdo, o braco da mesa aperta no topo do curso
 fim_curso("fimCursoZ", rot("X", "-Y", "-Z"), (-176.0, YZB - CARRO_TOPO - 4.74, Z0))
 
+# ================= esteira porta-cabos da cabeca (scripts/esteira.py; ESTEIRA=0 volta o umbilical pela travessa de tras)
+ESTEIRA = os.environ.get("ESTEIRA", "1") == "1"
+if ESTEIRA:
+    import esteira; esteira.aplica(globals())
 # ================= quadro oco: passagem de cabos + menos filamento (scripts/cabos.py; CABOS=0 desliga)
 if os.environ.get("CABOS", "1") == "1":
     import cabos; cabos.aplica(globals())
+# ================= sem suporte: bico de 45 graus nos furos deitados (na posicao de impressao de cada peca, scripts/semsup.py)
+import semsup
+from juntas import GOTAS
+print("sem suporte: furos em gota", semsup.aplica_gotas(PEC, GOTAS, FUROS_DESENHO))
+for _d in PEC.values(): _d["m"] = semsup.limpa(_d["m"])
 
 # ================= salva as pecas novas e os fixadores
 for n, d in PEC.items():

@@ -1,4 +1,4 @@
-# blender -b arquivo.blend -P render_final.py -- outdir engine samples res
+# blender -b arquivo.blend -P render_final.py -- outdir engine(CYCLES|EEVEE|WORKBENCH) samples res
 import bpy, sys, math, os
 from mathutils import Vector
 a = sys.argv[sys.argv.index("--")+1:]
@@ -9,6 +9,9 @@ if eng == "CYCLES":
     sc.render.engine = 'CYCLES'; sc.cycles.device = 'CPU'; sc.cycles.samples = spp; sc.cycles.use_denoising = os.environ.get("DENOISE", "0") == "1"
     sc.cycles.use_auto_tile = True; sc.cycles.tile_size = 256
     sc.cycles.max_bounces = 4; sc.cycles.transmission_bounces = 4; sc.render.film_transparent = False
+elif eng == "EEVEE":                                 # GPU: rodar com ~/bin/blender_gpu (Blender do Windows)
+    sc.render.engine = 'BLENDER_EEVEE' if bpy.app.version >= (5, 0) else 'BLENDER_EEVEE_NEXT'
+    sc.eevee.taa_render_samples = spp; sc.eevee.use_raytracing = os.environ.get("RT", "1") == "1"; sc.render.film_transparent = False
 else:
     sc.render.engine = 'BLENDER_WORKBENCH'; sh = sc.display.shading
     sh.light = 'STUDIO'; sh.color_type = 'MATERIAL'; sh.show_cavity = True; sh.show_object_outline = True; sh.show_shadows = True

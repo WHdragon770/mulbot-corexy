@@ -15,7 +15,7 @@ P = json.load(open(f"{CX}/out/cabos_pontos.json"))
 CABOS = [("motorA", "motorA", (0.95, 0.45, 0.05)), ("motorB", "motorB", (0.98, 0.80, 0.10)), ("motorZ_E", "motorZ_E", (0.20, 0.75, 0.25)),
          ("motorZ_D", "motorZ_D", (0.20, 0.75, 0.25)), ("fonte", "fonte", (0.85, 0.10, 0.10)), ("display", "display", (0.45, 0.55, 0.95)),
          ("fimCursoZ", "fimCursoZ", (0.95, 0.95, 0.95)), ("fimCursoY", "fimCursoY", (0.95, 0.95, 0.95)),
-         ("cabeca", "cabeca (umbilical)", (0.70, 0.30, 0.90))]
+         ("cabeca", "cabeca (esteira)" if "cabeca (esteira)" in P else "cabeca (umbilical)", (0.70, 0.30, 0.90))]
 
 # ---- voxeliza o ar
 b = np.array(ar.bounding_box()); lo, hi = b[:3] - 3, b[3:] + 3

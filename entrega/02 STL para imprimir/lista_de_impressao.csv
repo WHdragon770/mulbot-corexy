@@ -29,6 +29,7 @@
 02 Eixo Y e portico;trilhoY_D;1;FDM;nova;
 02 Eixo Y e portico;trilhoY_E;1;FDM;nova;
 03 Eixo X e cabeca;DL1-04-07;1;FDM;Mulbot original;
+03 Eixo X e cabeca;bracoFimCursoX;1;FDM;nova;
 03 Eixo X e cabeca;carroX;1;FDM;nova;
 03 Eixo X e cabeca;dutoCoreXY;1;FDM;nova;
 03 Eixo X e cabeca;suporteExtrusoraDireta;1;FDM;nova;
@@ -37,8 +38,10 @@
 04 Eixo Z e mesa;DL1-03-05;4;FDM;Mulbot original;
 04 Eixo Z e mesa;DL1-03-06;4;FDM;Mulbot original;
 04 Eixo Z e mesa;DL1-03-08;4;FDM;Mulbot original;
-04 Eixo Z e mesa;baseZ_D;1;FDM;nova;
-04 Eixo Z e mesa;baseZ_E;1;FDM;nova;
+04 Eixo Z e mesa;baseZInf_D;1;FDM;nova;
+04 Eixo Z e mesa;baseZInf_E;1;FDM;nova;
+04 Eixo Z e mesa;baseZSup_D;1;FDM;nova;
+04 Eixo Z e mesa;baseZSup_E;1;FDM;nova;
 04 Eixo Z e mesa;bracoMesa_D;1;FDM;nova;
 04 Eixo Z e mesa;bracoMesa_E;1;FDM;nova;
 04 Eixo Z e mesa;chapaZY_D;1;FDM;nova;
@@ -75,6 +78,7 @@
 08 Parafusos e porcas impressos;barril_M10_D14x19;8;FDM;nova;
 08 Parafusos e porcas impressos;barril_M10_D14x30;12;FDM;nova;
 08 Parafusos e porcas impressos;barril_M6_D9x10;2;FDM;nova;
+08 Parafusos e porcas impressos;barril_M6_D9x16;8;FDM;nova;
 08 Parafusos e porcas impressos;barril_M6_D9x19;4;FDM;nova;
 08 Parafusos e porcas impressos;parafuso_M10x40;24;FDM;nova;
 08 Parafusos e porcas impressos;parafuso_M10x45;6;FDM;nova;
@@ -84,7 +88,17 @@
 08 Parafusos e porcas impressos;parafuso_M6x30;14;FDM;nova;
 08 Parafusos e porcas impressos;parafuso_M6x35;10;FDM;nova;
 08 Parafusos e porcas impressos;parafuso_M6x40;3;FDM;nova;
+08 Parafusos e porcas impressos;parafuso_M6x45;4;FDM;nova;
+08 Parafusos e porcas impressos;parafuso_M6x50;4;FDM;nova;
 08 Parafusos e porcas impressos;parafuso_M6x60;2;FDM;nova;
+08 Parafusos e porcas impressos;parafuso_M6x65;4;FDM;nova;
 08 Parafusos e porcas impressos;parafuso_M6x70;2;FDM;nova;
 08 Parafusos e porcas impressos;porca_M10;32;FDM;nova;
-08 Parafusos e porcas impressos;porca_M6;27;FDM;nova;
+08 Parafusos e porcas impressos;porca_M6;31;FDM;nova;
+09 Esteira porta-cabos;bandejaX;1;FDM;nova;
+09 Esteira porta-cabos;bandejaY_F;1;FDM;nova;
+09 Esteira porta-cabos;bandejaY_T;1;FDM;nova;
+09 Esteira porta-cabos;bracoEsteiraX;1;FDM;nova;
+09 Esteira porta-cabos;elo_esteira;23;FDM;nova;
+09 Esteira porta-cabos;pontaFixa_esteira;2;FDM;nova;
+09 Esteira porta-cabos;suporteEsteiraY;1;FDM;nova;

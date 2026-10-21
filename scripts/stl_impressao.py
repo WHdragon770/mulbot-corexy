@@ -12,21 +12,23 @@ Z_NOVO = ("fusoZ_", "porcaZ_", "rodaZ", "buchaZ", "rodaX", "rodaY", "buchaX", "b
 # pastas por conjunto da maquina (na ordem de montagem); a chave e o comeco do nome na montagem (antes do 1o "_")
 G_QUA, G_Y, G_X, G_Z, G_MOT, G_ELE = "01 Quadro", "02 Eixo Y e portico", "03 Eixo X e cabeca", "04 Eixo Z e mesa", "05 Motores e polias", "06 Eletronica e display"
 G_ROL, G_FIX = "07 Roldanas V (X, Y e Z) - Resina", "08 Parafusos e porcas impressos"
+G_EST = "09 Esteira porta-cabos"
 CONJ = {G_QUA: ("baseFrente", "baseTras", "baseLatF", "baseLatT", "posteFrenteInf", "posteFrenteSup", "posteTrasInf", "posteTrasSup",
                 "travFrente", "travTras", "torreFrente", "torreTras", "pe"),
         G_Y: ("trilhoY", "suportePortico"),
-        G_X: ("trilhoX", "carroX", "dutoCoreXY", "suporteExtrusoraDireta", "presilhaHotend"),
-        G_Z: ("baseZ", "trilhoZ", "chapaZY", "bracoMesa", "mesa"),
+        G_X: ("trilhoX", "carroX", "bracoFimCursoX", "dutoCoreXY", "suporteExtrusoraDireta", "presilhaHotend"),
+        G_Z: ("baseZ", "baseZInf", "baseZSup", "trilhoZ", "chapaZY", "bracoMesa", "mesa"),
         G_MOT: ("loucaFrente", "loucaPortico", "motorA", "motorB"),
+        G_EST: ("eloX", "eloY", "pontaFixaX", "pontaFixaY", "bandejaX", "bandejaY", "bracoEsteiraX", "suporteEsteiraY"),
         G_ELE: ("caixaRAMPS", "portaRAMPS", "roboGrande", "protecaoFonte", "displayBase", "displayTampa", "botaoReset", "knobDisplay", "roboDisplay")}
 GRUPO = {k: g for g, ks in CONJ.items() for k in ks}
 def origem(f): return "Mulbot original" if "/mulbot/" in f else "Mulbot modificada" if os.path.basename(f).startswith("DL1-") else "nova"
 cont = collections.OrderedDict()
 for e in J:
     n, f = e["nome"], e["stl"]
-    if n.startswith(Z_NOVO + ("esfera", "correia", "bowden")) or f.startswith(VT): continue   # correias e bowden sao comprados
-    g = G_FIX if "/fixadores/" in f else GRUPO.get(n.split("_")[0], "09 Outros")
-    if g == "09 Outros": print("AVISO sem conjunto:", n)
+    if n.startswith(Z_NOVO + ("esfera", "correia", "bowden", "caboEsteira")) or f.startswith(VT): continue   # correias e bowden sao comprados
+    g = G_FIX if "/fixadores/" in f else GRUPO.get(n.split("_")[0], "10 Outros")
+    if g == "10 Outros": print("AVISO sem conjunto:", n)
     cont.setdefault((g, f), 0); cont[(g, f)] += 1
 linhas = []   # (pasta, peca, qtd, material, origem)
 for (g, f), q in cont.items():

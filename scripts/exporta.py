@@ -6,7 +6,7 @@ ENV = dict(os.environ, LD_LIBRARY_PATH=os.path.expanduser("~/.local/opt/blibs/ro
 GR = [("Quadro", ("base", "poste", "trav", "chapaZY", "pe")),
       ("Torres e motores CoreXY", ("torre", "motorA", "motorB")),
       ("Portico", ("suportePortico", "rodaY", "buchaY", "trilhoX", "loucaPortico", "fimCursoX")),
-      ("Carro do hotend", ("carroX", "rodaX", "buchaX", "hotend", "presilhaHotend", "duto", "ventoinha")),
+      ("Carro do hotend", ("carroX", "bracoFimCursoX", "rodaX", "buchaX", "hotend", "presilhaHotend", "duto", "ventoinha")),
       ("Polias e correias", ("louca", "correia")),
       ("Eixo Z e mesa", ("trilhoZ", "carroZ", "rodaZ", "buchaZ", "motorZ", "fusoZ", "porcaZ", "bracoMesa", "mesa", "fimCursoZ")),
       ("Trilhos Y", ("trilhoY", "fimCursoY")),

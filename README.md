@@ -15,6 +15,7 @@ extrusora direta, presilha do vidro em botão excêntrico, parafusos M10/M6 impr
 | `entrega/04 Detalhes (imagens)` | closes da esteira porta-cabos (elo, esteira X, esteira Y, entrada do cabo na torre) |
 | `entrega/render` | renders da montagem + vídeo de montagem renderizado (versão de 20/10, antes da esteira) |
 | `entrega/video` | prévia do vídeo de montagem (rascunho rápido, **versão antiga**, antes da esteira e do reprojeto sem suporte) |
+| `final/corexy_celular.glb` | **versão pra celular** (13,7 MB, ~900 mil triângulos, tamanho real em metros): abre em qualquer visualizador 3D/AR do celular. Gerada por `scripts/glb_celular.py` |
 | `final/corexy_montagem_leve.blend` | montagem 3D inteira (malhas leves) — base do vídeo |
 | `scripts/` | gerador paramétrico da CoreXY (`cxy.py`), passagem de cabos, STL, desenhos (`desenhos/`), vídeo (`video/`) |
 | `scripts_mulbot/` | scripts auxiliares da montagem da Mulbot original (dependência de `cxy.py`) |

@@ -12,7 +12,7 @@ extrusora direta, presilha do vidro em botão excêntrico, parafusos M10/M6 impr
 | `entrega/02 STL para imprimir` | todas as peças, separadas por conjunto, com a quantidade no nome + `lista_de_impressao.csv` |
 | `entrega/03 Desenhos de montagem` | 12 folhas A4 (PNG 300 dpi + PDF): capa, quadro, eixos, mesa, correias, eletrônica, roldana V, ligação, passagem de cabos, esteira porta-cabos |
 | `entrega/04 Detalhes (imagens)` | closes da esteira porta-cabos (elo, esteira X, esteira Y, entrada do cabo na torre) |
-| `entrega/render` | renders da montagem |
+| `entrega/render` | renders da montagem + vídeo de montagem renderizado (versão de 20/10, antes da esteira) |
 | `entrega/video` | prévia do vídeo de montagem (rascunho rápido, **versão antiga**, antes da esteira e do reprojeto sem suporte) |
 | `final/corexy_montagem_leve.blend` | montagem 3D inteira (malhas leves) — base do vídeo |
 | `scripts/` | gerador paramétrico da CoreXY (`cxy.py`), passagem de cabos, STL, desenhos (`desenhos/`), vídeo (`video/`) |

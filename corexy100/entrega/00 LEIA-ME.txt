@@ -1,0 +1,13 @@
+CoreXY 100 (mesa 120 aquecida)
+
+EM ANDAMENTO
+- Parte 1 (26/10): montagem 3D roda (render em 01 Montagem 3D).
+- Parte 2 (26/10): esteira porta-cabos e passagem de cabos conferidas. 0 colisoes em 22 posicoes,
+  esteira sem interferencia, os 10 cabos chegam na RAMPS (inclusive o do display).
+
+- STL (27/10): 02 STL para imprimir = 102 arquivos em 9 conjuntos + lista_de_impressao.csv
+  (quantidade no nome [Nx]; roldanas V e fuso/porca tem versao Resina).
+- Video: renderizando, vai pra 04 Video quando terminar.
+
+Falta: placas fatiadas, desenhos de montagem.
+Quando sair, as pastas seguem o mesmo padrao da CoreXY 200.

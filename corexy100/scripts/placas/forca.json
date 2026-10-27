@@ -1,0 +1,100 @@
+{
+ "_nota": "fusos de pe (rosca redonda sem apoio deitada; o autor da Mulbot imprimiu o DL1-02-06 de pe), porcas deitadas, presilha no quadro da DL1-03-07 (disco embaixo, pino pra cima); posteFrente de lado: o canal de cabos (60 x 26) vira ponte de 26 mm em vez de 56 mm",
+ "manual": {
+  "fusoZ_250mm": [
+   0,
+   0,
+   0
+  ],
+  "fusoZ_metade_baixo_125mm": [
+   0,
+   0,
+   0
+  ],
+  "fusoZ_metade_cima_125mm": [
+   0,
+   0,
+   0
+  ],
+  "porca_M10": [
+   0,
+   0,
+   0
+  ],
+  "porca_M6": [
+   0,
+   0,
+   0
+  ],
+  "presilha_disco": [
+   0,
+   0,
+   0
+  ],
+  "DL1-02-09_caixa_ramps": [
+   -90,
+   0,
+   0
+  ],
+  "DL1-02-10_porta_fechada": [
+   90,
+   0,
+   0
+  ]
+ },
+ "depois": {
+  "posteFrenteInf_D": [
+   90,
+   0,
+   0
+  ],
+  "posteFrenteInf_E": [
+   90,
+   0,
+   0
+  ],
+  "posteFrenteSup_D": [
+   90,
+   0,
+   0
+  ],
+  "posteFrenteSup_E": [
+   90,
+   0,
+   0
+  ]
+ },
+ "cunhas": {
+  "DL1-02-09_caixa_ramps": [
+   [
+    56.2,
+    65.9,
+    2.5,
+    5.5,
+    61.95
+   ],
+   [
+    139.3,
+    148.4,
+    2.5,
+    5.5,
+    61.95
+   ],
+   [
+    58.0,
+    66.8,
+    2.5,
+    5.5,
+    13.95
+   ],
+   [
+    133.3,
+    141.5,
+    2.5,
+    5.5,
+    13.95
+   ]
+  ]
+ },
+ "_nota_cunhas": "cunha de 45 graus embaixo dos espacadores da placa da caixa da RAMPS (desenho Mulbot: ressalto de 3 mm com fundo chato); fica abaixo do plano da placa"
+}

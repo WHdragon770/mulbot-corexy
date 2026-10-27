@@ -1,0 +1,202 @@
+{
+"baseFrente_D": [
+0.0,
+0.0,
+-1.0
+],
+"baseFrente_E": [
+0.0,
+0.0,
+1.0
+],
+"baseLatF_D": [
+0.0,
+0.0,
+-1.0
+],
+"baseLatF_E": [
+0.0,
+0.0,
+-1.0
+],
+"baseLatT_D": [
+0.0,
+0.0,
+-1.0
+],
+"baseLatT_E": [
+0.0,
+0.0,
+-1.0
+],
+"baseTras_D": [
+0.0,
+0.0,
+-1.0
+],
+"baseTras_E": [
+0.0,
+0.0,
+1.0
+],
+"posteFrenteInf_D": [
+0.0,
+1.0,
+0.0
+],
+"posteFrenteInf_E": [
+0.0,
+1.0,
+0.0
+],
+"posteFrenteSup_D": [
+0.0,
+1.0,
+0.0
+],
+"posteFrenteSup_E": [
+0.0,
+1.0,
+0.0
+],
+"posteTrasInf_D": [
+1.0,
+0.0,
+0.0
+],
+"posteTrasInf_E": [
+1.0,
+0.0,
+0.0
+],
+"posteTrasSup_D": [
+-1.0,
+0.0,
+0.0
+],
+"posteTrasSup_E": [
+-1.0,
+0.0,
+0.0
+],
+"torreFrente_D": [
+0.0,
+1.0,
+0.0
+],
+"torreFrente_E": [
+0.0,
+1.0,
+0.0
+],
+"torreTras_D": [
+0.0,
+-1.0,
+0.0
+],
+"torreTras_E": [
+0.0,
+0.0,
+-1.0
+],
+"travFrente_D": [
+0.0,
+0.0,
+-1.0
+],
+"travFrente_E": [
+0.0,
+0.0,
+1.0
+],
+"travTras_D": [
+0.0,
+0.0,
+-1.0
+],
+"travTras_E": [
+0.0,
+0.0,
+1.0
+],
+"suportePortico_D": [
+0.0,
+1.0,
+0.0
+],
+"suportePortico_E": [
+0.0,
+1.0,
+0.0
+],
+"trilhoY_D": [
+0.0,
+0.0,
+1.0
+],
+"trilhoY_E": [
+0.0,
+0.0,
+1.0
+],
+"carroX": [
+1.0,
+0.0,
+0.0
+],
+"dutoCoreXY": [
+-1.0,
+0.0,
+0.0
+],
+"suporteExtrusoraDireta": [
+0.0,
+0.0,
+1.0
+],
+"trilhoX": [
+0.0,
+-1.0,
+0.0
+],
+"baseZ_D": [
+0.0,
+0.0,
+1.0
+],
+"baseZ_E": [
+0.0,
+0.0,
+1.0
+],
+"bracoMesa_D": [
+0.0,
+0.0,
+-1.0
+],
+"bracoMesa_E": [
+0.0,
+0.0,
+-1.0
+],
+"chapaZY_D": [
+-1.0,
+0.0,
+0.0
+],
+"chapaZY_E": [
+1.0,
+0.0,
+0.0
+],
+"trilhoZ_D": [
+0.0,
+-1.0,
+0.0
+],
+"trilhoZ_E": [
+0.0,
+-1.0,
+0.0
+]
+}

@@ -18,13 +18,13 @@ done
 TOT=$(python3 -c "import json;print(json.load(open('$CXY_LINHA'))['fim'])")
 for ((a=1; a<=TOT; a+=120)); do
   b=$((a+119)); [ $b -gt $TOT ] && b=$TOT
-  [ -s $Q/f$(printf %04d $b).png ] && [ $(find $Q -name 'f*.png' -size +0 | wc -l) -ge $b ] && continue
-  ( while true; do n=$(find $Q -name 'f*.png' -size +0 | wc -l); echo "$n $TOT Extras CoreXY: quadro $n de $TOT" > $PR; sleep 20; done ) & W=$!
+  [ -s $Q/f$(printf %04d $b).png ] && [ $(find $Q/ -name 'f*.png' -size +0 | wc -l) -ge $b ] && continue
+  ( while true; do n=$(find $Q/ -name 'f*.png' -size +0 | wc -l); echo "$n $TOT Extras CoreXY: quadro $n de $TOT" > $PR; sleep 20; done ) & W=$!
   "$BL" -b $BLEND -P scripts/video/extras.py -- $MODO $Q $a $b >> $LOG 2>&1
   kill $W 2>/dev/null
-  find $Q -name 'f*.png' -size 0 -delete
+  find $Q/ -name 'f*.png' -size 0 -delete
 done
-n=$(find $Q -name 'f*.png' -size +0 | wc -l)
+n=$(find $Q/ -name 'f*.png' -size +0 | wc -l)
 [ $n -lt $TOT ] && { echo "ERRO render parou em $n de $TOT quadros (ver $LOG)" > $PR; exit 1; }
 echo "$TOT $TOT Gerando som e montando o MP4" > $PR
 python3 scripts/video/som.py $CX/out/anim/som_extras.wav >> $LOG 2>&1 || { echo "ERRO som.py" > $PR; exit 1; }

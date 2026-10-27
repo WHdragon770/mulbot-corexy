@@ -41,6 +41,8 @@ sem `MESA` a máquina continua como antes. Scripts: `scripts/mesa_aquecida.py` e
 
 ## Renderizar o vídeo
 
+**Com GPU grátis no Google Colab:** abra [render_colab.ipynb](https://colab.research.google.com/github/WHdragon770/mulbot-corexy/blob/main/render_colab.ipynb), escolha o vídeo (100_montagem, 200_montagem ou 100_extras) e Executar tudo. Os quadros ficam no seu Google Drive e o render continua de onde parou se a sessão cair.
+
 Leia **[RENDER_INSTRUCOES.txt](RENDER_INSTRUCOES.txt)** — começando pela seção 0 (o que mudou na máquina e o que refazer antes de renderizar). Tem tudo: o que instalar (Blender 4.2.3), o comando,
 quanto tempo leva (≈13 h em CPU, < 1 h com GPU via `CYCLES_DEVICE=OPTIX`), como retomar se cair e o checklist do resultado.
 

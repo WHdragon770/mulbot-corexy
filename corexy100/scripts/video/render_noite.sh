@@ -20,17 +20,17 @@ TOT=$(python3 -c "import json;print(json.load(open('$CX/out/anim/linha.json'))['
 rm -f $PR.eta; python3 scripts/video/estimativa.py $Q --vigiar $PR >> $LOG 2>&1 &     # termino pelo peso de cada quadro
 for ((a=1; a<=TOT; a+=120)); do
   b=$((a+119)); [ $b -gt $TOT ] && b=$TOT
-  feitos=$(find $Q -name 'f*.png' -size +0 | wc -l)
+  feitos=$(find $Q/ -name 'f*.png' -size +0 | wc -l)
   [ $feitos -ge $b ] && [ -s $Q/f$(printf %04d $b).png ] && continue
   ( while true; do                                    # progresso enquanto o bloco roda
-      n=$(find $Q -name 'f*.png' -size +0 | wc -l)
+      n=$(find $Q/ -name 'f*.png' -size +0 | wc -l)
       eta=""; [ -s $PR.eta ] && eta=" - termina ~$(cat $PR.eta)"
       echo "$n $TOT Video CoreXY: quadro $n de $TOT$eta" > $PR; sleep 20; done ) & W=$!
   "$BL" -b $BLEND -P scripts/video/anima2.py -- $MODO $Q $a $b >> $LOG 2>&1
   kill $W 2>/dev/null
-  find $Q -name 'f*.png' -size 0 -delete               # placeholder de bloco interrompido
+  find $Q/ -name 'f*.png' -size 0 -delete               # placeholder de bloco interrompido
 done
-n=$(find $Q -name 'f*.png' -size +0 | wc -l)
+n=$(find $Q/ -name 'f*.png' -size +0 | wc -l)
 [ $n -lt $TOT ] && { echo "ERRO render parou em $n de $TOT quadros (ver $LOG)" > $PR; exit 1; }
 echo "$TOT $TOT Gerando som e montando o MP4" > $PR
 python3 scripts/video/som.py >> $LOG 2>&1 || { echo "ERRO som.py" > $PR; exit 1; }

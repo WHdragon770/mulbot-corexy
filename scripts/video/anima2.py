@@ -20,7 +20,7 @@ random.seed(7)
 ETAPAS = [("Quadro", "Quadro (oco, com passagem de cabos)"), ("Eixo Z e mesa", "Eixo Z e mesa"),
           ("Torres e motores CoreXY", "Torres e motores A/B"), ("Trilhos Y", "Vigas Y com guia em V"),
           ("Portico", "Pórtico"), ("Carro do hotend", "Carro X e hotend"), ("Polias e correias", "Polias e correias CoreXY"),
-          ("Extrusora", "Extrusora direta"), ("Eletronica e display", "Eletrônica e display")]
+          ("Extrusora", "Extrusora direta"), ("Eletronica e display", "Eletrônica, esteira e display")]
 FIX = "Fixadores impressos"
 F_A0, DUR_ET = 97, 96
 F_A1 = F_A0 + DUR_ET * len(ETAPAS)            # 961  montada
@@ -84,7 +84,7 @@ for g, ns in LOUCAS.items():
 PZ = json.load(open(f"{CX}/out/anim/poses/poses.json"))["poses"]
 PASSO = (F_W1 - F_W0 - 30) // (len(PZ) - 1)    # 15 quadros pra sair/voltar da pose padrao
 def f_pose(k): return F_W0 + 15 + k * PASSO
-mov = set(PZ[0]["T"])
+mov = set().union(*(p["T"] for p in PZ))      # elos da esteira so mudam em parte das poses
 TB = {j["nome"]: j["T"] for j in json.load(open(f"{CX}/out/cxy.json"))}   # pose padrao (o .blend foi exportado nela)
 def desloc(n, T): return Vector(tuple(T[i][3] - TB[n][i][3] for i in range(3)))
 
@@ -144,9 +144,13 @@ for o in objs:
         k_loc(o, F_P - 24, L); k_loc(o, F_P, L + zoff(F_P)); k_loc(o, F_P + DET - 12, L + zoff(F_P)); k_loc(o, F_P + DET + 16, L)
     k_loc(o, F_W0, L)
     if o.name in mov:                           # funcionando: segue as poses
-        for k, p in enumerate(PZ):
-            k_loc(o, f_pose(k), L + desloc(o.name, p["T"][o.name]))
-        k_loc(o, F_W1, L)
+        M0 = o.matrix_world.copy(); R0 = o.rotation_euler.copy(); ib = Matrix(TB[o.name]).inverted(); r = R0
+        o.keyframe_insert("rotation_euler", frame=F_W0)
+        for k, p in enumerate(PZ):              # pose completa (elos da esteira giram): W = T_k . T_base^-1 . M0
+            W = Matrix(p["T"].get(o.name, TB[o.name])) @ ib @ M0
+            k_loc(o, f_pose(k), W.to_translation() if not o.parent else L + desloc(o.name, p["T"].get(o.name, TB[o.name])))
+            if not o.parent: r = W.to_euler(o.rotation_mode if o.rotation_mode in ("XYZ", "XZY", "YXZ", "YZX", "ZXY", "ZYX") else "XYZ", r); o.rotation_euler = r; o.keyframe_insert("rotation_euler", frame=f_pose(k))
+        k_loc(o, F_W1, L); o.rotation_euler = R0; o.keyframe_insert("rotation_euler", frame=F_W1)
     k_loc(o, F_E0, L); k_loc(o, F_E1, L + ex); k_loc(o, F_E2, L + ex); k_loc(o, F_E3, L)
     if o.name in SUB:                           # abre no close e fecha antes da maquina juntar
         k_loc(o, F_SUB + 20, L + ex); k_loc(o, F_SUB + 50, L + ex + SUB[o.name])
@@ -191,16 +195,17 @@ for i, cb in enumerate(CABOS):
 # correias por pose (as da montagem somem enquanto a maquina anda)
 mat_c = next((s.material for o in objs if o.name.startswith("correia") for s in o.material_slots if s.material), None)
 for o in objs:
-    if o.name.startswith("correia"):
+    if o.name.startswith(("correia", "caboEsteira")):   # cabos da esteira mudam de forma como as correias
         for f, h in ((F_W0 + 15, True), (F_W1 - 15, False)): o.hide_render = h; o.keyframe_insert("hide_render", frame=f)
         for fc in o.animation_data.action.fcurves:
             if fc.data_path == "hide_render":
                 for kp in fc.keyframe_points: kp.interpolation = 'CONSTANT'
 for k in range(len(PZ)):
-    for c in ("correiaA", "correiaB"):
+    for c in ("correiaA", "correiaB", "caboEsteira_XY", "caboEsteira_Y"):
         bpy.ops.wm.stl_import(filepath=f"{CX}/out/anim/poses/{c}_{k:03d}.stl"); ob = bpy.context.selected_objects[0]
         ob.name = f"{c}_pose{k}"
-        if mat_c: ob.data.materials.append(mat_c)
+        mt = next((sl.material for o in objs if o.name == c for sl in o.material_slots if sl.material), mat_c)
+        if mt: ob.data.materials.append(mt)
         a0 = f_pose(k) - PASSO // 2 if k else F_W0 + 15; a1 = f_pose(k) + PASSO - PASSO // 2 if k < len(PZ) - 1 else F_W1 - 15
         for f, h in ((1, True), (a0, False), (a1, True)): ob.hide_render = h; ob.keyframe_insert("hide_render", frame=f)
         for fc in ob.animation_data.action.fcurves:
@@ -209,7 +214,9 @@ for k in range(len(PZ)):
 # ---------------- camera: tomadas em sequencia com transicao suave ----------------
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); sc.collection.objects.link(cam); sc.camera = cam
 cam.data.clip_start = 2; cam.data.clip_end = 50000; cam.data.sensor_width = 36
+K = 1.0                                         # 200 (100: 0.75, tomadas gerais mais perto)
 def orbita(alvo, dist, alt, ang0, ang1, lens=40):
+    if dist >= 1000: dist, alt = dist * K, alt * K
     def f(u):
         t = math.radians(ang0 + (ang1 - ang0) * u)
         return (Vector((alvo[0] + dist * math.sin(t), alvo[1] - dist * math.cos(t), alvo[2] + alt)), Vector(alvo), lens)
@@ -225,7 +232,7 @@ def alvo_sub():                                 # roldana V e polia louca do por
     ps = [cent[n] + EX[n] for n in ("rodaY_D0", "loucaPortico_A_D_poliaLouca")]
     return tuple((ps[0] + ps[1]) / 2)
 TOMADAS += [(F_A1, F_D0, orbita(C, 1500, 600, 302, 395, 38)),
-            (F_D0, F_D0 + DET, orbita((176, 47.6, 425), 230, 30, 60, 110, 45)),                      # rodas do carro Y
+            (F_D0, F_D0 + DET, orbita((-176, 47.6, 425), 230, 30, -60, -110, 45)),  # lado E (esteira Y tapa o D)       # rodas do carro Y
             (F_D0 + DET, F_D0 + 2 * DET, orbita((0, 40, 480), 330, 90, 200, 140, 42)),              # carro X e hotend
             (F_P, F_P + DET, orbita((pino["mesa_presilha_1"].x - 4, pino["mesa_presilha_1"].y - 4, pino["mesa_presilha_1"].z + 12 - DESCE), 190, 95, 300, 330, 50)),
             (F_D0 + 3 * DET, F_D0 + 4 * DET, lambda u: (Vector((0, 20, 1650)), Vector((0, 21, 400)), 32 + 4 * u)),   # correias de cima
@@ -284,13 +291,14 @@ json.dump(dict(fps=FPS, fim=F_FIM, legendas=LEG, eventos=eventos, vel=VEL, etapa
 visual.cena(sc, MODO)                            # fundo cinza liso, sem chao, luz de estudio
 sc.view_settings.view_transform = 'AgX'; sc.view_settings.look = 'AgX - Medium High Contrast'
 if MODO in ("cycles", "bench"):
-    sc.render.engine = 'CYCLES'; cy = sc.cycles; cy.device = 'CPU'; cy.samples = 24; cy.use_denoising = True
+    sc.render.engine = 'CYCLES'; cy = sc.cycles; cy.device = 'CPU'; cy.samples = int(os.environ.get("CXY_SAMPLES", 24)); cy.use_denoising = True
     DEV = os.environ.get("CYCLES_DEVICE", "CPU").upper()        # OPTIX / CUDA / HIP / ONEAPI / METAL: usa a placa de video (mesmo resultado, bem mais rapido)
     if DEV != "CPU":
         pr = bpy.context.preferences.addons["cycles"].preferences; pr.compute_device_type = DEV; pr.get_devices()
         for d in pr.devices: d.use = d.type != "CPU"
         cy.device = 'GPU'
-    cy.denoiser = 'OPENIMAGEDENOISE'; cy.max_bounces = 4; cy.use_auto_tile = True; cy.tile_size = 256
+    cy.denoiser = 'OPENIMAGEDENOISE'; cy.denoising_quality = os.environ.get("CXY_DENOISE", "HIGH"); cy.max_bounces = int(os.environ.get("CXY_BOUNCES", 4)); cy.use_auto_tile = True; cy.tile_size = int(os.environ.get("CXY_TILE", 256))
+    cy.adaptive_threshold = float(os.environ.get("CXY_NOISE", cy.adaptive_threshold)); sc.render.use_persistent_data = os.environ.get("CXY_PERSIST") == "1"
     sc.render.resolution_x, sc.render.resolution_y = 1280, 720
 else:
     sc.render.engine = 'BLENDER_WORKBENCH'; sh = sc.display.shading
@@ -303,11 +311,16 @@ sc.render.image_settings.file_format = 'PNG'
 sc.render.use_overwrite = False; sc.render.use_placeholder = True      # resumivel: pula quadro que ja existe
 sc.render.filepath = f"{OUTD}/f"
 if len(a) > 3: sc.frame_start, sc.frame_end = int(a[2]), int(a[3])
-if MODO == "bench":                      # cronometra quadros soltos (QUADROS=1,200,...) com o mesmo ajuste do render final
+if MODO in ("bench", "folha"):                    # cronometra quadros soltos (QUADROS=1,200,...) com o mesmo ajuste do render final
     import time
     sc.render.use_overwrite = True
     for q in [int(x) for x in os.environ["QUADROS"].split(",")]:
         sc.frame_set(q); sc.render.filepath = f"{OUTD}/b{q:04d}.png"; t0 = time.time()
+        if MODO == "folha":                  # diagnostico: onde a camera esta e dentro de que peca
+            dg = bpy.context.evaluated_depsgraph_get(); cl = cam.matrix_world.translation
+            den = [o.name for o in objs if not o.hide_render and o.type == 'MESH' and all(min(v[i] for v in [o.matrix_world @ Vector(b) for b in o.bound_box]) < cl[i] < max(v[i] for v in [o.matrix_world @ Vector(b) for b in o.bound_box]) for i in range(3))]
+            print("CAM", q, [round(x) for x in cl], "DENTRO", den[:6], flush=True)
         bpy.ops.render.render(write_still=True); print(f"TEMPO {q} {time.time() - t0:.1f}", flush=True)
 elif MODO != "info": bpy.ops.render.render(animation=True)
+print("CENT", {n: [round(x) for x in cent[n]] for n in ("rodaY_D0", "rodaY_E0", "carroX", "mesa_presilha_1") if n in cent}, "PINO", [round(x) for x in pino.get("mesa_presilha_1", (0,0,0))])
 print("LINHA", F_FIM, "quadros", "SUB", len(SUB), "LOUCAS", len(LOUCAS), "FANT", len(FANT), "ALVO", [round(x) for x in alvo_sub()])

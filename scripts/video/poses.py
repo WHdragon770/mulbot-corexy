@@ -12,15 +12,16 @@ def roda(env):
     subprocess.run(["python3", f"{CX}/scripts/cxy.py"], env=dict(os.environ, ESFERAS="0", **env), check=True, capture_output=True)
     return {j["nome"]: j["T"] for j in json.load(open(f"{CX}/out/cxy.json"))}
 base = roda({})
-poses = []
-for k in range(N):
+PAR = f"{OUT}/poses_parcial.json"                       # retoma se cair no meio
+poses = json.load(open(PAR)) if os.path.exists(PAR) else []
+for k in range(len(poses), N):
     open(PR, "w").write(f"{k + 1} {N + 1} pose {k + 1} de {N}")
     xc, yg, zm = caminho(k / (N - 1))
     T = roda(dict(XC=f"{xc:.3f}", YG=f"{yg:.3f}", ZM=f"{zm:.3f}"))
-    mov = {n: t for n, t in T.items() if not n.startswith("correia") and not np.allclose(t, base.get(n, t), atol=1e-4)}
-    for c in ("correiaA", "correiaB"): shutil.copy(f"{CX}/derived/{c}.stl", f"{OUT}/{c}_{k:03d}.stl")
-    poses.append(dict(xc=xc, yg=yg, zm=zm, T=mov))
+    mov = {n: t for n, t in T.items() if not n.startswith(("correia", "caboEsteira")) and not np.allclose(t, base.get(n, t), atol=1e-4)}
+    for c in ("correiaA", "correiaB", "caboEsteira_XY", "caboEsteira_Y"): shutil.copy(f"{CX}/derived/{c}.stl", f"{OUT}/{c}_{k:03d}.stl")
+    poses.append(dict(xc=xc, yg=yg, zm=zm, T=mov)); json.dump(poses, open(PAR, "w"))
 json.dump(dict(caminho="lissajous", poses=poses), open(f"{OUT}/poses.json", "w"))
-roda({})                                                   # volta a montagem na pose padrao
+os.remove(PAR); roda({})                                   # volta a montagem na pose padrao
 open(PR, "w").write(f"FIM poses do video prontas ({N}), {len(poses[-1]['T'])} pecas se mexem")
 print("ok", N, len(poses[-1]["T"]))

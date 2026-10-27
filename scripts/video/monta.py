@@ -5,7 +5,7 @@ CX = os.environ.get("CXY_DIR") or os.path.abspath(os.path.join(os.path.dirname(o
 from PIL import Image, ImageDraw, ImageFont
 Q, OUT = sys.argv[1], sys.argv[2]
 SOM = sys.argv[3] if len(sys.argv) > 3 else f"{CX}/out/anim/som.wav"
-L = json.load(open(f"{CX}/out/anim/linha.json")); FPS = L["fps"]
+L = json.load(open(os.environ.get("CXY_LINHA") or f"{CX}/out/anim/linha.json")); FPS = L["fps"]
 F = "/usr/share/fonts/truetype/dejavu/DejaVuSans"
 fs = sorted(int(n[1:5]) for n in os.listdir(Q) if n.startswith("f") and n.endswith(".png") and os.path.getsize(f"{Q}/{n}") > 0)
 ult = 0

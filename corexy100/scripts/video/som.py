@@ -5,7 +5,7 @@ import sys, os, json, wave, numpy as np
 CX = os.environ.get("CXY_DIR") or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))   # raiz do projeto
 from scipy import signal
 SR = 48000
-L = json.load(open(f"{CX}/out/anim/linha.json"))
+L = json.load(open(os.environ.get("CXY_LINHA") or f"{CX}/out/anim/linha.json"))
 FPS = L["fps"]; DUR = L["fim"] / FPS + 1.0
 N = int(DUR * SR); mix = np.zeros((N, 2))
 rng = np.random.default_rng(3)

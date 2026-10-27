@@ -46,6 +46,14 @@ quanto tempo leva (≈13 h em CPU, < 1 h com GPU via `CYCLES_DEVICE=OPTIX`), com
 
 Resumo: `./scripts/video/render_noite.sh "" cycles` → `final/video/corexy_video_cycles.mp4`
 
+## CoreXY 100³ e vídeo extra (pasta corexy100/)
+
+Versão 100x100x100 da mesma máquina em `corexy100/` (STL, montagem, blend). Lá dentro, **[corexy100/RENDER_INSTRUCOES.txt](corexy100/RENDER_INSTRUCOES.txt)** explica os 2 vídeos da 100:
+- montagem: `./scripts/video/render_noite.sh "" cycles`
+- extras (close do bico imprimindo um 3DBenchy em 8x, a 100 imprimindo uma peça da 200 cortada, 100 x 200 lado a lado): `./scripts/video/render_extras.sh cycles`
+
+A 200 cortada pra imprimir na 100 está em `entrega/` (02b). 3DBenchy por Creative Tools (3dbenchy.com), CC BY-ND 4.0, sem modificação.
+
 ## Regerar a geometria (opcional)
 
 `scripts/cxy.py` regera a montagem inteira, mas precisa dos modelos originais da Mulbot DL1 (repositório público da

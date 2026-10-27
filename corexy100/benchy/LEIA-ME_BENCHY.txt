@@ -1,0 +1,5 @@
+3DBenchy.stl: 3DBenchy por Creative Tools (www.3dbenchy.com), licença CC BY-ND 4.0
+(https://creativecommons.org/licenses/by-nd/4.0/). Arquivo ORIGINAL, sem modificação, baixado de
+https://github.com/CreativeTools/3DBenchy (Single-part/3DBenchy.stl). Usado só como objeto impresso no vídeo.
+peca200_baseFrente_D_parte1.stl: peça da CoreXY 200 cortada pra caber na 100 (02b STL para imprimir na 100).
+*_caminho.npz: caminho do bico gerado por scripts/video/fatia.py (refeito sozinho pelo render_extras.sh se faltar).

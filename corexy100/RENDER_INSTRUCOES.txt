@@ -1,0 +1,65 @@
+MULBOT COREXY 100³ — INSTRUÇÕES PARA RENDERIZAR OS VÍDEOS (OUTRO PC)
+=====================================================================
+Escrito para outro Claude (ou pessoa) renderizar os vídeos da 100 a partir deste repositório.
+Tudo roda a partir da pasta corexy100/ (é o CXY_DIR). Não mude parâmetros sem motivo.
+
+---------------------------------------------------------------------
+1. PROGRAMAS
+---------------------------------------------------------------------
+- Blender 4.2.3 (exatamente essa: https://download.blender.org/release/Blender4.2/). Aponte com BLENDER=/caminho/blender.
+- Python 3.10+ com: numpy scipy trimesh shapely networkx rtree manifold3d pillow imageio-ffmpeg
+    pip install numpy scipy trimesh shapely networkx rtree manifold3d pillow imageio-ffmpeg
+- GPU: CYCLES_DEVICE=OPTIX (RTX) ou CUDA / HIP / ONEAPI / METAL. Sem a variável roda na CPU (bem mais lento).
+- Linux ou WSL (scripts em bash). No Windows puro use Git Bash ou WSL.
+
+---------------------------------------------------------------------
+2. VÍDEO 1: MONTAGEM DA 100 (scripts/video/anima2.py)
+---------------------------------------------------------------------
+1280x720, 24 fps, 2562 quadros (106,75 s), Cycles 24 amostras + denoise, som e legendas.
+    cd corexy100
+    CYCLES_DEVICE=OPTIX BLENDER=/opt/blender-4.2.3/blender ./scripts/video/render_noite.sh "" cycles
+Saída: final/video/corexy_video_cycles.mp4. Progresso em out/anim/progresso_cycles.txt, log em render_cycles.log.
+Resumível: se parar, rode o mesmo comando (quadro pronto é pulado). O 1º argumento é HH:MM de início
+("" começa já).
+Teste rápido antes (workbench, 640x360): ./scripts/video/render_noite.sh "" previa
+Obs.: o Aleixo já renderizou este no PC dele (out/anim/quadros_cycles não vem no git); só refaça se for pedido.
+
+---------------------------------------------------------------------
+3. VÍDEO 2: EXTRAS (scripts/video/extras.py) — Benchy 8x, peça da 200 na 100, 100 x 200
+---------------------------------------------------------------------
+1280x720, 24 fps, 1981 quadros (82,5 s). Roteiro:
+   1-72     título
+   73-600   close do bico imprimindo o 3DBenchy em velocidade 8x (filete laranja aparecendo camada a camada)
+   601-1020 continua o Benchy, câmera abrindo
+   1021-1092 timelapse até o Benchy pronto (cabeça estaciona)
+   1093-1380 a 100 imprimindo a peça baseFrente_D parte 1 da CoreXY 200 (cortada pra caber na 100)
+   1381-1620 a 200 montada, peça impressa acesa no lugar dela
+   1621-1981 100 e 200 lado a lado
+Precisa do blend da 200 (final/corexy_montagem_leve.blend na RAIZ do repo, já é o padrão de CXY_200).
+    cd corexy100
+    ./scripts/video/render_extras.sh previa                                  # teste, ~10-40 s/quadro na CPU
+    CYCLES_DEVICE=OPTIX BLENDER=/opt/blender-4.2.3/blender ./scripts/video/render_extras.sh cycles
+Saída: final/video/corexy_extras_cycles.mp4. Progresso: out/anim/progresso_extras.txt. Log: out/anim/render_extras_cycles.log.
+Resumível igual ao vídeo 1. Se benchy/*_caminho.npz faltar, o script refaz com fatia.py (~90 s cada).
+Só um pedaço: blender -b final/corexy_montagem_leve.blend -P scripts/video/extras.py -- previa <pasta> 73 600
+(com QUADROS="100,450,1900" no ambiente renderiza só esses quadros).
+Limitações conhecidas (aceitas):
+  - correias, cabos e elos da esteira usam a pose pré-calculada mais próxima (out/anim/poses); o resto mexe contínuo.
+  - fatiador próprio e simples (2 paredes, 15% infill a ±45°, camada 0,2): não é G-code de verdade, é visual.
+
+---------------------------------------------------------------------
+4. VÍDEO DA 200
+---------------------------------------------------------------------
+Está em ../RENDER_INSTRUCOES.txt (raiz do repo). Ler a seção 0 de lá antes (poses/cabos da esteira a refazer).
+
+---------------------------------------------------------------------
+5. TEMPO ESTIMADO
+---------------------------------------------------------------------
+No PC do Aleixo (CPU de notebook, 8 GB, WSL): ~21 s por quadro em Cycles (medido). Com GPU deve cair bastante.
+Vídeo 1 ≈ 2562 quadros, vídeo 2 ≈ 1981 quadros.
+
+---------------------------------------------------------------------
+6. CRÉDITO
+---------------------------------------------------------------------
+3DBenchy por Creative Tools (www.3dbenchy.com), CC BY-ND 4.0, usado sem modificação (benchy/LEIA-ME_BENCHY.txt).
+Colocar esse crédito na descrição de onde o vídeo for publicado.

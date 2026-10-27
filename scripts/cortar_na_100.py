@@ -8,6 +8,8 @@ MAXL = 95.0          # maior medida de cada parte (area 100, sobra pra saia/brim
 PINOS = [(4.0, 8.0), (3.0, 6.0), (2.0, 5.0)]   # (diametro do pino, profundidade do furo em cada lado)
 FOLGA = 0.2          # furo = pino + 2*FOLGA
 PAREDE = 1.2         # parede minima em volta do furo
+LUVA_E, LUVA_L = 2.0, 20.0   # corte sem lugar pra pino: luva por dentro da parede (espessura, comprimento total)
+LUVAS = []                   # (nome, manifold em pe) das luvas soltas
 RD, PINO_L = 4.6, 24.0   # fuso: pino em D no furo central (igual ao fuso de resina em 2 metades, zv.divide_fuso)
 SRC, DST = sys.argv[1], sys.argv[2]
 
@@ -89,6 +91,21 @@ def escolher_cortes(m, tm, eixo):
         cortes.append((melhor[1], melhor[2])); ant = melhor[1]
     return cortes
 
+def luva(m, tm, eixo, pos):
+    """anel de LUVA_E mm encostado no lado de dentro da parede (dentro do casco convexo da secao), folga FOLGA,
+    LUVA_L de comprimento centrado no corte; o que bate em material da peca e removido. Devolve (luva em pe, T)"""
+    from shapely.geometry.polygon import orient
+    sec, T = secao(tm, eixo, pos)
+    if sec is None: return None, None
+    anel = sec.buffer(FOLGA + LUVA_E, join_style=2).difference(sec.buffer(FOLGA, join_style=2)).intersection(sec.convex_hull.buffer(-0.5))
+    gs = [orient(g, 1.0) for g in getattr(anel, 'geoms', [anel]) if g.geom_type == 'Polygon' and g.area > 4]
+    if not gs: return None, None
+    cs = mf.CrossSection([np.array(c.coords)[:-1] for g in gs for c in [g.exterior, *g.interiors]], mf.FillRule.EvenOdd)
+    Ti = np.linalg.inv(T)
+    lu = cs.extrude(LUVA_L) - m.transform(Ti[:3, :4]).translate([0, 0, LUVA_L / 2])
+    lu = mf.Manifold.batch_boolean([c for c in lu.decompose() if c.volume() > 20], mf.OpType.Add) if lu.volume() > 20 else None
+    return (lu if lu is not None and lu.volume() > 50 else None), T
+
 def cortar(m, nome, pinos_tot, rel):
     """corta recursivamente pelo maior eixo ate tudo caber"""
     tm = para_tm(m)
@@ -96,6 +113,7 @@ def cortar(m, nome, pinos_tot, rel):
     if ext.max() <= MAXL: return [m]
     eixo = int(np.argmax(ext))
     cortes = escolher_cortes(m, tm, eixo)
+    machos = []
     for pos, pin in cortes:
         if pin is None and 'fuso' in nome and eixo == 2:
             c = tm.bounds.mean(0)
@@ -104,7 +122,18 @@ def cortar(m, nome, pinos_tot, rel):
             rel.append(f"  {nome}: corte em Z={pos:.0f}, pino em D no furo central")
             continue
         if pin is None:
-            rel.append(f"  {nome}: corte em {'XYZ'[eixo]}={pos:.0f} sem pino (so cola)")
+            lu, T = luva(m, tm, eixo, pos)
+            if lu is None:
+                rel.append(f"  {nome}: corte em {'XYZ'[eixo]}={pos:.0f} sem pino nem luva (so cola)")
+                continue
+            if eixo == 2:   # corte horizontal: macho em pe na parte de baixo (imprime sem suporte), entra na de cima
+                n = [0, 0, 0]; n[eixo] = 1
+                macho = lu.translate([0, 0, -LUVA_L / 2]).transform(T[:3, :4]).trim_by_plane(n, pos)
+                machos.append((pos, macho))
+                rel.append(f"  {nome}: corte em Z={pos:.0f}, encaixe macho na parte de baixo")
+            else:
+                LUVAS.append((nome, lu))
+                rel.append(f"  {nome}: corte em {'XYZ'[eixo]}={pos:.0f}, luva de emenda por dentro")
             continue
         d, prof, pts = pin
         for q in pts: m = m - cil(eixo, q, d / 2 + FOLGA, 2 * prof)
@@ -114,6 +143,10 @@ def cortar(m, nome, pinos_tot, rel):
     for pos, _ in cortes:
         n = [0, 0, 0]; n[eixo] = 1
         a, b = resto.split_by_plane(n, pos)   # a = lado +, b = lado -
+        for pm, mc in machos:
+            if pm == pos:
+                if para_tm(b + mc).extents.max() <= MAXL + 0.5: b = b + mc
+                else: LUVAS.append((nome, mc.translate([0, 0, -pos])))   # nao cabe com o macho: vira luva solta
         partes.append(b); resto = a
     partes.append(resto)
     out = []
@@ -139,6 +172,10 @@ def main():
             t = para_tm(p); t.apply_translation([-t.bounds[0][0], -t.bounds[0][1], -t.bounds[0][2]])
             t.export(os.path.join(os.path.dirname(dest), f"{base} parte {i}de{len(partes)} [{q}x].stl"))
             assert t.extents.max() <= MAXL + 0.5, (base, i, t.extents)
+        luv = [l for n_, l in LUVAS if n_ == base]
+        for i, l in enumerate(luv, 1):
+            t = para_tm(l); t.apply_translation(-t.bounds[0])
+            t.export(os.path.join(os.path.dirname(dest), f"{base} luva {i} [{q}x].stl"))
         ncort += 1
         print(f"{base}: {len(partes)} partes", flush=True)
     pd = os.path.join(DST, '00 Pinos'); os.makedirs(pd, exist_ok=True)

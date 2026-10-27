@@ -1,0 +1,215 @@
+﻿pasta;arquivo;qtd;medida (mm)
+00 Pinos;pino 2x9.4 mm [4x].stl;4;2x2x9
+00 Pinos;pino 3x11.4 mm [13x].stl;13;3x3x11
+00 Pinos;pino 4x15.4 mm [123x].stl;123;4x4x15
+00 Pinos;pino D fuso 9.2x24 mm [5x].stl;5;8x9x24
+01 Quadro;DL1-01-08 [6x].stl;6;20x20x10
+01 Quadro;baseFrente_D parte 1de2 [1x].stl;1;73x30x30
+01 Quadro;baseFrente_D parte 2de2 [1x].stl;1;73x30x30
+01 Quadro;baseFrente_E parte 1de3 [1x].stl;1;79x30x30
+01 Quadro;baseFrente_E parte 2de3 [1x].stl;1;71x30x30
+01 Quadro;baseFrente_E parte 3de3 [1x].stl;1;86x30x30
+01 Quadro;baseLatF_D [1x].stl;1;30x67x30
+01 Quadro;baseLatF_E [1x].stl;1;30x67x30
+01 Quadro;baseLatT_D parte 1de2 [1x].stl;1;30x88x30
+01 Quadro;baseLatT_D parte 2de2 [1x].stl;1;30x88x30
+01 Quadro;baseLatT_E parte 1de2 [1x].stl;1;30x88x30
+01 Quadro;baseLatT_E parte 2de2 [1x].stl;1;30x88x30
+01 Quadro;baseTras_D parte 1de3 [1x].stl;1;70x30x30
+01 Quadro;baseTras_D parte 2de3 [1x].stl;1;60x30x30
+01 Quadro;baseTras_D parte 3de3 [1x].stl;1;61x30x30
+01 Quadro;baseTras_E parte 1de3 [1x].stl;1;64x30x30
+01 Quadro;baseTras_E parte 2de3 [1x].stl;1;57x30x30
+01 Quadro;baseTras_E parte 3de3 [1x].stl;1;70x30x30
+01 Quadro;posteFrenteInf_D parte 1de3 [1x].stl;1;30x66x78
+01 Quadro;posteFrenteInf_D parte 2de3 [1x].stl;1;30x66x89
+01 Quadro;posteFrenteInf_D parte 3de3 [1x].stl;1;30x66x68
+01 Quadro;posteFrenteInf_E parte 1de3 [1x].stl;1;30x66x89
+01 Quadro;posteFrenteInf_E parte 2de3 [1x].stl;1;30x66x71
+01 Quadro;posteFrenteInf_E parte 3de3 [1x].stl;1;30x66x75
+01 Quadro;posteFrenteSup_D parte 1de3 [1x].stl;1;30x66x87
+01 Quadro;posteFrenteSup_D parte 2de3 [1x].stl;1;30x66x69
+01 Quadro;posteFrenteSup_D parte 3de3 [1x].stl;1;30x66x80
+01 Quadro;posteFrenteSup_E parte 1de3 [1x].stl;1;30x66x79
+01 Quadro;posteFrenteSup_E parte 2de3 [1x].stl;1;30x66x77
+01 Quadro;posteFrenteSup_E parte 3de3 [1x].stl;1;30x66x80
+01 Quadro;posteTrasInf_D parte 1de3 [1x].stl;1;30x29x75
+01 Quadro;posteTrasInf_D parte 2de3 [1x].stl;1;30x29x76
+01 Quadro;posteTrasInf_D parte 3de3 [1x].stl;1;30x29x75
+01 Quadro;posteTrasInf_E parte 1de3 [1x].stl;1;30x29x75
+01 Quadro;posteTrasInf_E parte 2de3 [1x].stl;1;30x29x76
+01 Quadro;posteTrasInf_E parte 3de3 [1x].stl;1;30x29x75
+01 Quadro;posteTrasSup_D parte 1de3 [1x].stl;1;30x29x75
+01 Quadro;posteTrasSup_D parte 2de3 [1x].stl;1;30x29x76
+01 Quadro;posteTrasSup_D parte 3de3 [1x].stl;1;30x29x76
+01 Quadro;posteTrasSup_E parte 1de3 [1x].stl;1;30x29x75
+01 Quadro;posteTrasSup_E parte 2de3 [1x].stl;1;30x29x76
+01 Quadro;posteTrasSup_E parte 3de3 [1x].stl;1;30x29x76
+01 Quadro;torreFrente_D parte 1de2 [1x].stl;1;50x40x74
+01 Quadro;torreFrente_D parte 2de2 [1x].stl;1;50x40x60
+01 Quadro;torreFrente_E parte 1de2 [1x].stl;1;50x40x74
+01 Quadro;torreFrente_E parte 2de2 [1x].stl;1;50x40x60
+01 Quadro;torreTras_D parte 1de2 [1x].stl;1;51x66x72
+01 Quadro;torreTras_D parte 2de2 [1x].stl;1;48x66x44
+01 Quadro;torreTras_E [1x].stl;1;51x66x94
+01 Quadro;travFrente_D parte 1de3 [1x].stl;1;77x14x60
+01 Quadro;travFrente_D parte 2de3 [1x].stl;1;76x14x60
+01 Quadro;travFrente_D parte 3de3 [1x].stl;1;77x14x60
+01 Quadro;travFrente_E parte 1de3 [1x].stl;1;77x14x60
+01 Quadro;travFrente_E parte 2de3 [1x].stl;1;76x14x60
+01 Quadro;travFrente_E parte 3de3 [1x].stl;1;77x14x60
+01 Quadro;travTras_D luva 1 [1x].stl;1;46x10x20
+01 Quadro;travTras_D luva 2 [1x].stl;1;46x10x20
+01 Quadro;travTras_D parte 1de3 [1x].stl;1;79x14x50
+01 Quadro;travTras_D parte 2de3 [1x].stl;1;78x14x50
+01 Quadro;travTras_D parte 3de3 [1x].stl;1;79x14x50
+01 Quadro;travTras_E luva 1 [1x].stl;1;46x10x20
+01 Quadro;travTras_E luva 2 [1x].stl;1;46x10x20
+01 Quadro;travTras_E parte 1de3 [1x].stl;1;79x14x50
+01 Quadro;travTras_E parte 2de3 [1x].stl;1;79x14x50
+01 Quadro;travTras_E parte 3de3 [1x].stl;1;78x14x50
+02 Eixo Y e portico;suportePortico_D parte 1de2 [1x].stl;1;82x69x67
+02 Eixo Y e portico;suportePortico_D parte 2de2 [1x].stl;1;54x57x48
+02 Eixo Y e portico;suportePortico_E parte 1de2 [1x].stl;1;82x86x67
+02 Eixo Y e portico;suportePortico_E parte 2de2 [1x].stl;1;54x57x48
+02 Eixo Y e portico;trilhoY_D parte 1de4 [1x].stl;1;25x73x80
+02 Eixo Y e portico;trilhoY_D parte 2de4 [1x].stl;1;25x61x80
+02 Eixo Y e portico;trilhoY_D parte 3de4 [1x].stl;1;25x78x80
+02 Eixo Y e portico;trilhoY_D parte 4de4 [1x].stl;1;25x78x80
+02 Eixo Y e portico;trilhoY_E parte 1de4 [1x].stl;1;25x73x80
+02 Eixo Y e portico;trilhoY_E parte 2de4 [1x].stl;1;25x72x80
+02 Eixo Y e portico;trilhoY_E parte 3de4 [1x].stl;1;25x72x80
+02 Eixo Y e portico;trilhoY_E parte 4de4 [1x].stl;1;25x73x80
+03 Eixo X e cabeca;DL1-04-07 [1x].stl;1;13x38x13
+03 Eixo X e cabeca;bracoFimCursoX [1x].stl;1;12x37x32
+03 Eixo X e cabeca;carroX parte 1de2 [1x].stl;1;60x35x52
+03 Eixo X e cabeca;carroX parte 2de2 [1x].stl;1;60x18x51
+03 Eixo X e cabeca;dutoCoreXY [1x].stl;1;59x22x83
+03 Eixo X e cabeca;suporteExtrusoraDireta [1x].stl;1;60x47x48
+03 Eixo X e cabeca;trilhoX parte 1de4 [1x].stl;1;73x26x25
+03 Eixo X e cabeca;trilhoX parte 2de4 [1x].stl;1;72x26x25
+03 Eixo X e cabeca;trilhoX parte 3de4 [1x].stl;1;73x26x25
+03 Eixo X e cabeca;trilhoX parte 4de4 [1x].stl;1;72x26x25
+04 Eixo Z e mesa;DL1-03-04_110 parte 1de9 [1x].stl;1;65x77x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 2de9 [1x].stl;1;65x77x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 3de9 [1x].stl;1;65x77x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 4de9 [1x].stl;1;72x78x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 5de9 [1x].stl;1;72x75x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 6de9 [1x].stl;1;72x78x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 7de9 [1x].stl;1;94x66x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 8de9 [1x].stl;1;94x85x10
+04 Eixo Z e mesa;DL1-03-04_110 parte 9de9 [1x].stl;1;94x80x10
+04 Eixo Z e mesa;DL1-03-05 [4x].stl;4;25x25x13
+04 Eixo Z e mesa;DL1-03-06 [4x].stl;4;43x43x9
+04 Eixo Z e mesa;DL1-03-08 [4x].stl;4;19x19x8
+04 Eixo Z e mesa/Fuso e porca - FDM;fusoZ_250mm parte 1de3 [2x].stl;2;27x27x83
+04 Eixo Z e mesa/Fuso e porca - FDM;fusoZ_250mm parte 2de3 [2x].stl;2;18x18x83
+04 Eixo Z e mesa/Fuso e porca - FDM;fusoZ_250mm parte 3de3 [2x].stl;2;18x18x84
+04 Eixo Z e mesa/Fuso e porca - FDM;porcaZ_DL1-04-06_rosca_nova [2x].stl;2;51x32x21
+04 Eixo Z e mesa/Fuso e porca - Resina (alternativa);fusoZ_metade_baixo_125mm [2x].stl;2;27x27x125
+04 Eixo Z e mesa/Fuso e porca - Resina (alternativa);fusoZ_metade_cima_125mm [2x].stl;2;18x18x125
+04 Eixo Z e mesa/Fuso e porca - Resina (alternativa);fusoZ_pino_D [2x].stl;2;8x9x24
+04 Eixo Z e mesa/Fuso e porca - Resina (alternativa);porcaZ_DL1-04-06_rosca_nova [2x].stl;2;51x32x21
+04 Eixo Z e mesa;baseZInf_D parte 1de3 [1x].stl;1;56x83x43
+04 Eixo Z e mesa;baseZInf_D parte 2de3 [1x].stl;1;56x64x43
+04 Eixo Z e mesa;baseZInf_D parte 3de3 [1x].stl;1;56x65x43
+04 Eixo Z e mesa;baseZInf_E parte 1de3 [1x].stl;1;56x83x43
+04 Eixo Z e mesa;baseZInf_E parte 2de3 [1x].stl;1;56x64x43
+04 Eixo Z e mesa;baseZInf_E parte 3de3 [1x].stl;1;56x65x43
+04 Eixo Z e mesa;baseZSup_D parte 1de2 [1x].stl;1;56x71x37
+04 Eixo Z e mesa;baseZSup_D parte 2de2 [1x].stl;1;56x71x62
+04 Eixo Z e mesa;baseZSup_E parte 1de2 [1x].stl;1;56x71x37
+04 Eixo Z e mesa;baseZSup_E parte 2de2 [1x].stl;1;56x71x62
+04 Eixo Z e mesa;bracoMesa_D parte 1de2 [1x].stl;1;85x83x30
+04 Eixo Z e mesa;bracoMesa_D parte 2de2 [1x].stl;1;86x24x88
+04 Eixo Z e mesa;bracoMesa_E parte 1de2 [1x].stl;1;85x24x88
+04 Eixo Z e mesa;bracoMesa_E parte 2de2 [1x].stl;1;86x83x30
+04 Eixo Z e mesa;chapaZY_D parte 1de2 [1x].stl;1;10x52x54
+04 Eixo Z e mesa;chapaZY_D parte 2de2 [1x].stl;1;10x52x54
+04 Eixo Z e mesa;chapaZY_E parte 1de2 [1x].stl;1;10x52x54
+04 Eixo Z e mesa;chapaZY_E parte 2de2 [1x].stl;1;10x52x54
+04 Eixo Z e mesa;presilha_disco [4x].stl;4;22x22x25
+04 Eixo Z e mesa;trilhoZ_D parte 1de3 [1x].stl;1;25x84x92
+04 Eixo Z e mesa;trilhoZ_D parte 2de3 [1x].stl;1;25x84x91
+04 Eixo Z e mesa;trilhoZ_D parte 3de3 [1x].stl;1;25x84x92
+04 Eixo Z e mesa;trilhoZ_E parte 1de3 [1x].stl;1;25x84x92
+04 Eixo Z e mesa;trilhoZ_E parte 2de3 [1x].stl;1;25x84x91
+04 Eixo Z e mesa;trilhoZ_E parte 3de3 [1x].stl;1;25x84x92
+05 Motores e polias;DL1-04-08 [2x].stl;2;17x17x26
+05 Motores e polias;DL1-06-01 [8x].stl;8;21x21x36
+05 Motores e polias;DL1-06-02_L10.0 [4x].stl;4;16x16x10
+05 Motores e polias;DL1-06-02_L14.0 [4x].stl;4;16x16x14
+05 Motores e polias;DL1-06-03_L10.0 [4x].stl;4;16x16x10
+05 Motores e polias;DL1-06-03_L14.0 [4x].stl;4;16x16x14
+05 Motores e polias;DL1-06-04 [16x].stl;16;16x16x8
+06 Eletronica e display;DL1-02-09_caixa_ramps luva 1 [1x].stl;1;50x88x20
+06 Eletronica e display;DL1-02-09_caixa_ramps luva 2 [1x].stl;1;52x88x20
+06 Eletronica e display;DL1-02-09_caixa_ramps luva 3 [1x].stl;1;36x63x20
+06 Eletronica e display;DL1-02-09_caixa_ramps luva 4 [1x].stl;1;36x49x20
+06 Eletronica e display;DL1-02-09_caixa_ramps parte 1de6 [1x].stl;1;65x59x38
+06 Eletronica e display;DL1-02-09_caixa_ramps parte 2de6 [1x].stl;1;65x36x54
+06 Eletronica e display;DL1-02-09_caixa_ramps parte 3de6 [1x].stl;1;74x44x12
+06 Eletronica e display;DL1-02-09_caixa_ramps parte 4de6 [1x].stl;1;74x51x54
+06 Eletronica e display;DL1-02-09_caixa_ramps parte 5de6 [1x].stl;1;51x59x38
+06 Eletronica e display;DL1-02-09_caixa_ramps parte 6de6 [1x].stl;1;51x36x54
+06 Eletronica e display;DL1-02-10_porta_fechada luva 1 [1x].stl;1;43x92x20
+06 Eletronica e display;DL1-02-10_porta_fechada luva 2 [1x].stl;1;43x92x20
+06 Eletronica e display;DL1-02-10_porta_fechada luva 3 [1x].stl;1;2x40x20
+06 Eletronica e display;DL1-02-10_porta_fechada parte 1de6 [1x].stl;1;71x46x57
+06 Eletronica e display;DL1-02-10_porta_fechada parte 2de6 [1x].stl;1;71x49x33
+06 Eletronica e display;DL1-02-10_porta_fechada parte 3de6 [1x].stl;1;62x48x44
+06 Eletronica e display;DL1-02-10_porta_fechada parte 4de6 [1x].stl;1;62x47x26
+06 Eletronica e display;DL1-02-10_porta_fechada parte 5de6 [1x].stl;1;58x46x57
+06 Eletronica e display;DL1-02-10_porta_fechada parte 6de6 [1x].stl;1;58x49x33
+06 Eletronica e display;DL1-02-11 [1x].stl;1;44x67x6
+06 Eletronica e display;DL1-02-15 luva 1 [1x].stl;1;73x45x20
+06 Eletronica e display;DL1-02-15 parte 1de2 [1x].stl;1;46x54x76
+06 Eletronica e display;DL1-02-15 parte 2de2 [1x].stl;1;46x47x83
+06 Eletronica e display;DL1-05-01_cabo [1x].stl;1;99x87x52
+06 Eletronica e display;DL1-05-02 luva 1 [1x].stl;1;26x102x20
+06 Eletronica e display;DL1-05-02 luva 2 [1x].stl;1;10x8x20
+06 Eletronica e display;DL1-05-02 luva 3 [1x].stl;1;11x23x20
+06 Eletronica e display;DL1-05-02 parte 1de4 [1x].stl;1;62x56x27
+06 Eletronica e display;DL1-05-02 parte 2de4 [1x].stl;1;53x60x14
+06 Eletronica e display;DL1-05-02 parte 3de4 [1x].stl;1;61x66x27
+06 Eletronica e display;DL1-05-02 parte 4de4 [1x].stl;1;67x53x14
+06 Eletronica e display;DL1-05-03 [1x].stl;1;16x16x8
+06 Eletronica e display;DL1-05-04 [1x].stl;1;22x22x13
+06 Eletronica e display;DL1-05-05 [1x].stl;1;22x33x3
+07 Roldanas V (X, Y e Z) - Resina;buchaX_excentrica_espacador [1x].stl;1;16x14x9
+07 Roldanas V (X, Y e Z) - Resina;buchaY_excentrica_espacador [2x].stl;2;16x14x14
+07 Roldanas V (X, Y e Z) - Resina;buchaZ_excentrica [2x].stl;2;16x14x16
+07 Roldanas V (X, Y e Z) - Resina;roldanaV_rolamento_1peca_resina [15x].stl;15;34x34x9
+08 Parafusos e porcas impressos;barril_M10_D14x19 [8x].stl;8;19x14x14
+08 Parafusos e porcas impressos;barril_M10_D14x30 [12x].stl;12;30x14x14
+08 Parafusos e porcas impressos;barril_M6_D9x10 [2x].stl;2;10x9x9
+08 Parafusos e porcas impressos;barril_M6_D9x16 [8x].stl;8;16x9x9
+08 Parafusos e porcas impressos;barril_M6_D9x19 [4x].stl;4;19x9x9
+08 Parafusos e porcas impressos;parafuso_M10x40 [24x].stl;24;16x12x46
+08 Parafusos e porcas impressos;parafuso_M10x45 [6x].stl;6;16x12x51
+08 Parafusos e porcas impressos;parafuso_M10x55 [18x].stl;18;16x12x61
+08 Parafusos e porcas impressos;parafuso_M10x60 [4x].stl;4;16x12x66
+08 Parafusos e porcas impressos;parafuso_M6x22 [2x].stl;2;10x8x26
+08 Parafusos e porcas impressos;parafuso_M6x30 [14x].stl;14;10x8x34
+08 Parafusos e porcas impressos;parafuso_M6x35 [10x].stl;10;10x8x39
+08 Parafusos e porcas impressos;parafuso_M6x40 [3x].stl;3;10x8x44
+08 Parafusos e porcas impressos;parafuso_M6x45 [4x].stl;4;10x8x49
+08 Parafusos e porcas impressos;parafuso_M6x50 [4x].stl;4;10x8x54
+08 Parafusos e porcas impressos;parafuso_M6x60 [2x].stl;2;10x8x64
+08 Parafusos e porcas impressos;parafuso_M6x65 [4x].stl;4;10x8x69
+08 Parafusos e porcas impressos;parafuso_M6x70 [2x].stl;2;10x8x74
+08 Parafusos e porcas impressos;porca_M10 [32x].stl;32;16x18x8
+08 Parafusos e porcas impressos;porca_M6 [31x].stl;31;10x12x5
+09 Esteira porta-cabos;bandejaX luva 1 [1x].stl;1;14x29x20
+09 Esteira porta-cabos;bandejaX luva 2 [1x].stl;1;14x29x20
+09 Esteira porta-cabos;bandejaX parte 1de3 [1x].stl;1;83x35x19
+09 Esteira porta-cabos;bandejaX parte 2de3 [1x].stl;1;84x35x19
+09 Esteira porta-cabos;bandejaX parte 3de3 [1x].stl;1;83x35x19
+09 Esteira porta-cabos;bandejaY_F parte 1de2 [1x].stl;1;60x87x76
+09 Esteira porta-cabos;bandejaY_F parte 2de2 [1x].stl;1;60x86x76
+09 Esteira porta-cabos;bandejaY_T parte 1de2 [1x].stl;1;60x73x76
+09 Esteira porta-cabos;bandejaY_T parte 2de2 [1x].stl;1;60x73x76
+09 Esteira porta-cabos;bracoEsteiraX [1x].stl;1;21x82x13
+09 Esteira porta-cabos;elo_esteira [23x].stl;23;26x23x10
+09 Esteira porta-cabos;pontaFixa_esteira [2x].stl;2;29x23x10
+09 Esteira porta-cabos;suporteEsteiraY [1x].stl;1;34x34x25

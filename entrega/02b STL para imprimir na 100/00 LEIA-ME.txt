@@ -1,0 +1,20 @@
+CoreXY 200 - STL cortados pra imprimir na CoreXY 100 (area 100x100x100)
+
+Mesmas pastas e quantidades da "02 STL para imprimir". O que ja cabia foi copiado igual.
+46 pecas foram cortadas em partes de ate 95 mm: "nome parte 1de3 [1x].stl". Cada parte sai com a mesma orientacao da peca inteira.
+Fuso e porca - Resina e 07 Roldanas (resina) nao foram cortados: vao na impressora de resina.
+
+PINOS (pasta 00 Pinos, quantidade com sobra no nome):
+  pino 4, 3 e 2 mm: entram nos furos das faces de corte (furo = pino + 0,4). Colar com cola de PLA/super bonder junto.
+  pino D do fuso: entra no furo central do fuso; o lado chato trava o giro e a rosca continua alinhada.
+    Lixar a emenda da rosca ate a porca passar lisa.
+
+PAREDE FINA (sem lugar pra pino, ver cortes.txt):
+  "nome luva N [1x].stl": luva de emenda que entra por dentro das duas partes (alinha e reforca). Imprimir em pe, colar.
+  torreTras_D: a parte de baixo ja sai com o encaixe macho em cima; a de cima encaixa por fora.
+  So cola (nao coube luva): 1 corte da caixa RAMPS (Y=40) e as bandejaY_F/T.
+
+FILAMENTO (3 paredes, 10% gyroid, PLA): ~4,8 kg (~1.600 m), 600 pecas FDM. Conta com sobra de brim/purga: 5 rolos de 1 kg.
+
+Trilhos X/Y/Z: a emenda fica no caminho da roldana. Colar bem alinhado (usar uma regua) e lixar o V na emenda.
+Gerado por 05 Scripts (WSL)\cortar_na_100.py

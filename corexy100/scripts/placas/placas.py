@@ -4,7 +4,7 @@
 import sys, os, json, uuid, zipfile, struct, numpy as np, trimesh
 
 SRC, DST = (sys.argv[1], sys.argv[2]) if len(sys.argv) > 2 else (os.environ["SRC"], os.environ.get("DST", "."))
-REF = "/mnt/c/Users/lucas/Downloads/ACE+GEN2+KobraX+Printhead+Jig+v1.03+KIT+Standing+Dock-new.3mf"   # projeto Kobra X 0.4 (Slicer Next 2.0)
+REF = "/mnt/c/Users/lucas/Documents/Curto Circuito/Kobra X/Modelos 3MF/ACE+GEN2+KobraX+Printhead+Jig+v1.03+KIT+Standing+Dock-new.3mf"   # projeto Kobra X 0.4 (Slicer Next 2.0)
 W = H = 260.0                                   # mesa Kobra X
 BORDA, ESP = 4.0, 10.0                          # margem da mesa e espaco entre pecas: brim de 4 mm de cada lado + 2 (brim encostado = conflito no fatiador)
 ESP_PARAF = 5.0                                 # parafusos/porcas: sem brim (deitados na face chata)

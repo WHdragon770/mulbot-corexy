@@ -5,28 +5,13 @@ EXATAMENTE como foi planejado. Siga na ordem. Não mude parâmetros sem motivo: 
 resultado abaixo foram medidos com eles.
 
 ---------------------------------------------------------------------
-0. ATENÇÃO: A MÁQUINA MUDOU DEPOIS DO ROTEIRO (21/10/2026) — LER ANTES DE TUDO
+0. ESTADO (28/10/2026): PODE RENDERIZAR DIRETO
 ---------------------------------------------------------------------
-O vídeo foi roteirizado na versão de 20/10 de manhã. Depois disso a máquina ganhou:
-  a) reprojeto SEM SUPORTE: base Z em 2 peças (baseZInf/baseZSup), braço do fim de curso X separado
-     (bracoFimCursoX), duto, braço da mesa, suporte do pórtico, torres;
-  b) ESTEIRA PORTA-CABOS no lugar do cabo solto da cabeça: eloX_0..10 (atrás da viga X, grupo do pórtico),
-     eloY_0..11 (por fora do lado direito, quadro), bandejaX, bandejaY_F/T, pontaFixaX/Y, bracoEsteiraX (carro),
-     suporteEsteiraY (pórtico), caboEsteira_XY / caboEsteira_Y (só visual). Ver folha CXY-11.
-O final/corexy_montagem_leve.blend e o out/cxy.json deste repositório JÁ SÃO da versão nova.
-O que está DESATUALIZADO e precisa ser refeito antes do render:
-  1) out/anim/poses  (máquina funcionando): os elos de cada pose são diferentes (a esteira dobra conforme X/Y).
-     Gerar com scripts/video/poses.py, que roda o scripts/cxy.py em 60 poses. O cxy.py precisa do ambiente
-     do projeto (modelos da Mulbot DL1 e caminhos /home/lucas/...): se não tiver, peça ao Aleixo as poses
-     prontas em vez de tentar recriar o ambiente.
-  2) out/anim/cabos  (cena da passagem de cabos): o cabo da cabeça agora sai da torre de trás DIREITA
-     (ponto "cabeca (esteira)" em out/cabos_pontos.json). Gerar com scripts/video/cabos_caminhos.py.
-  3) out/anim/custo.json: rodar o modo info + custo.py de novo (comando na seção 6) depois de 1 e 2.
-  4) scripts/video/anima2.py: as peças novas precisam cair numa etapa da montagem. Sugestão: elos, pontas fixas,
-     bandejas e cabos da esteira numa etapa própria "Esteira porta-cabos" logo depois de "Extrusora direta";
-     bracoEsteiraX junto com "Carro X e hotend". Conferir com o modo previa antes do Cycles.
-  5) os elos da esteira Y são do QUADRO (não se mexem com o pórtico na vista explodida) e os da X são do PÓRTICO.
-Sem esses passos o vídeo sai com a esteira parada, dura, atravessando a viga nas poses de funcionamento.
+A máquina ganhou a esteira porta-cabos e o reprojeto sem suporte depois do roteiro de 20/10. Tudo já foi
+refeito e está neste repositório: out/anim/poses (60 poses com a esteira), out/anim/cabos, out/anim/custo.json,
+out/cabos_pontos.json e scripts/video/anima2.py (peças da esteira na etapa "Eletronica e display"; câmeras
+gerais da 200 afastadas com K = 1.3; close das rodas Y pelo lado E). Não precisa rodar poses.py nem
+cabos_caminhos.py. Conferido com 16 quadros de prévia em 28/10.
 
 ---------------------------------------------------------------------
 1. O QUE É O VÍDEO

@@ -48,6 +48,7 @@ cent = {o.name: centro(o) for o in objs}
 CHAO = -25.0                                   # onde ficava o chao: na explodida nenhuma peca desce abaixo disso
 zmin = {o.name: min((o.matrix_world @ Vector(v)).z for v in o.bound_box) for o in objs}
 grupo = {o.name: o.users_collection[0].name for o in objs}
+grupo = {n: ("Eletronica e display" if g == "Outros" else g) for n, g in grupo.items()}   # esteira veio em "Outros" no blend da 200
 C = Vector((0, 15, 280))
 base = [o for o in objs if grupo[o.name] != FIX]
 etapa = {}
@@ -214,9 +215,9 @@ for k in range(len(PZ)):
 # ---------------- camera: tomadas em sequencia com transicao suave ----------------
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); sc.collection.objects.link(cam); sc.camera = cam
 cam.data.clip_start = 2; cam.data.clip_end = 50000; cam.data.sensor_width = 36
-K = 1.0                                         # 200 (100: 0.75, tomadas gerais mais perto)
+K = 1.3                                         # 200: tomadas gerais 1000-2000 mais longe (1.0 cortava a maquina embaixo); 100: 0.75
 def orbita(alvo, dist, alt, ang0, ang1, lens=40):
-    if dist >= 1000: dist, alt = dist * K, alt * K
+    if 1000 <= dist < 2000: dist, alt = dist * K, alt * K   # explodida (2300) fica igual
     def f(u):
         t = math.radians(ang0 + (ang1 - ang0) * u)
         return (Vector((alvo[0] + dist * math.sin(t), alvo[1] - dist * math.cos(t), alvo[2] + alt)), Vector(alvo), lens)
@@ -226,7 +227,7 @@ def centro_etapa(i):
     return sum(ps, Vector()) / len(ps)
 TOMADAS = [(1, F_A0, lambda u: (Vector((-500, -1500, 1500 - 600 * u)), Vector((0, 15, 120 + 80 * u)), 35))]
 for i in range(len(ETAPAS)):
-    c_ = centro_etapa(i); c_ = (c_ * 0.6 + C * 0.4)
+    c_ = centro_etapa(i); c_ = (c_ * 0.4 + C * 0.6)   # 200: 0.6/0.4 subia demais e cortava embaixo
     TOMADAS.append((F_A0 + i * DUR_ET, F_A0 + (i + 1) * DUR_ET, orbita(c_, 1350, 520, -40 + 38 * i, -22 + 38 * i, 40)))
 def alvo_sub():                                 # roldana V e polia louca do portico direito, ja na posicao explodida
     ps = [cent[n] + EX[n] for n in ("rodaY_D0", "loucaPortico_A_D_poliaLouca")]
@@ -238,7 +239,7 @@ TOMADAS += [(F_A1, F_D0, orbita(C, 1500, 600, 302, 395, 38)),
             (F_D0 + 3 * DET, F_D0 + 4 * DET, lambda u: (Vector((0, 20, 1650)), Vector((0, 21, 400)), 32 + 4 * u)),   # correias de cima
             (F_D0 + 4 * DET, F_CB0, orbita((-150, 250, 150), 650, 220, 150, 205, 40)),              # caixa da RAMPS e fonte
             (F_CB0, F_W0, orbita((-20, 90, 260), 1350, 430, 205, 255, 38)),                        # passagem de cabos
-            (F_W0, F_W1, orbita((0, 30, 380), 1050, 380, -25, 25, 40)),                              # funcionando
+            (F_W0, F_W1, orbita((0, 30, 300), 1050, 380, -25, 25, 40)),                              # funcionando
             (F_W1, F_SUB, orbita(C, 2300, 900, 40, 110, 38)),                                       # explodida
             (F_SUB, F_SUB + DUR_SUB, orbita(alvo_sub(), 420, 150, 55, 85, 50)),                      # close: roldana e polia abertas
             (F_SUB + DUR_SUB, F_E3, orbita(C, 2300, 900, 120, 220, 38)),

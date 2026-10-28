@@ -269,7 +269,7 @@ LEG += [(F_A1 + 6, F_D0 - 6, "Montada", "área de impressão 100 x 100 x 100 mm"
         (F_D0 + 6, F_D0 + DET - 6, "Guia em V impressa", "roldana de resina com 10 roletes impressos junto, 1 peça só"),
         (F_D0 + DET + 6, F_D0 + 2 * DET - 6, "Carro X", "hotend, extrusora direta, torre das correias e fim de curso numa peça"),
         (F_P + 6, F_P + DET - 6, "Presilha do vidro", "meia volta solta, meia volta trava"),
-        (F_D0 + 3 * DET + 6, F_D0 + 4 * DET - 6, "CoreXY", "2 correias de 1418 mm, motores A e B parados no quadro"),
+        (F_D0 + 3 * DET + 6, F_D0 + 4 * DET - 6, "CoreXY", "2 correias de 1044 mm, motores A e B parados no quadro"),
         (F_D0 + 4 * DET + 6, F_CB0 - 6, "Eletrônica", "RAMPS, Mega e fonte na caixa de trás"),
         (F_CB0 + 10, F_W0 - 8, "Passagem de cabos", f"{len(CABOS)} cabos por dentro do quadro oco até a caixa da RAMPS"),
         (F_W0 + 6, F_W1 - 6, "Funcionando", "X e Y pela soma das 2 correias, Z pelos 2 fusos"),

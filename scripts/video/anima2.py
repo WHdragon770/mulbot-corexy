@@ -308,6 +308,9 @@ else:
     sc.view_settings.view_transform = 'Standard'; sc.view_settings.look = 'None'
     sh.show_shadows = False; sc.render.film_transparent = False
     sc.render.resolution_x, sc.render.resolution_y = 640, 360
+    if os.environ.get("CXY_RES"):              # pranchas de conferencia: resolucao maior e AA de 8 amostras
+        sc.render.resolution_x, sc.render.resolution_y = map(int, os.environ["CXY_RES"].split("x")); sc.display.render_aa = '8'; sc.render.film_transparent = True
+        sc.render.image_settings.color_mode = 'RGBA'
 sc.render.image_settings.file_format = 'PNG'
 sc.render.use_overwrite = False; sc.render.use_placeholder = True      # resumivel: pula quadro que ja existe
 sc.render.filepath = f"{OUTD}/f"

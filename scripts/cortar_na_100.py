@@ -10,6 +10,7 @@ FOLGA = 0.2          # furo = pino + 2*FOLGA
 PAREDE = 1.2         # parede minima em volta do furo
 LUVA_E, LUVA_L = 2.0, 20.0   # corte sem lugar pra pino: luva por dentro da parede (espessura, comprimento total)
 LUVAS = []                   # (nome, manifold em pe) das luvas soltas
+INFO = {}                    # cortes.json (pros desenhos de emenda): por peca, partes com deslocamento, pinos e luvas no lugar
 RD, PINO_L = 4.6, 24.0   # fuso: pino em D no furo central (igual ao fuso de resina em 2 metades, zv.divide_fuso)
 SRC, DST = sys.argv[1], sys.argv[2]
 
@@ -117,6 +118,7 @@ def cortar(m, nome, pinos_tot, rel):
     for pos, pin in cortes:
         if pin is None and 'fuso' in nome and eixo == 2:
             c = tm.bounds.mean(0)
+            INFO.setdefault(nome, {}).setdefault('pinos', []).append(dict(d='D', L=PINO_L, eixo=2, p=[float(c[0]), float(c[1]), float(pos)]))
             m = m - furo_d(c, pos, FOLGA, PINO_L + 2)
             pinos_tot['D'] = pinos_tot.get('D', 0) + 1
             rel.append(f"  {nome}: corte em Z={pos:.0f}, pino em D no furo central")
@@ -133,10 +135,12 @@ def cortar(m, nome, pinos_tot, rel):
                 rel.append(f"  {nome}: corte em Z={pos:.0f}, encaixe macho na parte de baixo")
             else:
                 LUVAS.append((nome, lu))
+                INFO.setdefault(nome, {}).setdefault('luvas_lugar', []).append(lu.translate([0, 0, -LUVA_L / 2]).transform(T[:3, :4]))
                 rel.append(f"  {nome}: corte em {'XYZ'[eixo]}={pos:.0f}, luva de emenda por dentro")
             continue
         d, prof, pts = pin
         for q in pts: m = m - cil(eixo, q, d / 2 + FOLGA, 2 * prof)
+        INFO.setdefault(nome, {}).setdefault('pinos', []).extend(dict(d=d, L=2 * prof - 0.6, eixo=eixo, p=[float(v) for v in q]) for q in pts)
         pinos_tot[d] = pinos_tot.get(d, 0) + len(pts)
         rel.append(f"  {nome}: corte em {'XYZ'[eixo]}={pos:.0f}, {len(pts)} pino(s) {d:.0f} mm")
     partes, resto = [], m
@@ -169,14 +173,18 @@ def main():
         for d, c in tot.items(): pinos_tot[d] = pinos_tot.get(d, 0) + c * q
         partes = [p for p in partes if p.volume() > 1]
         for i, p in enumerate(partes, 1):
-            t = para_tm(p); t.apply_translation([-t.bounds[0][0], -t.bounds[0][1], -t.bounds[0][2]])
+            t = para_tm(p); INFO.setdefault(base, {}).setdefault('partes', []).append(dict(arq=f"{base} parte {i}de{len(partes)} [{q}x].stl", off=[float(v) for v in t.bounds[0]]))
+            t.apply_translation([-t.bounds[0][0], -t.bounds[0][1], -t.bounds[0][2]])
             t.export(os.path.join(os.path.dirname(dest), f"{base} parte {i}de{len(partes)} [{q}x].stl"))
             assert t.extents.max() <= MAXL + 0.5, (base, i, t.extents)
         luv = [l for n_, l in LUVAS if n_ == base]
         for i, l in enumerate(luv, 1):
-            t = para_tm(l); t.apply_translation(-t.bounds[0])
+            t = para_tm(l); INFO[base].setdefault('luvas', []).append(f"{base} luva {i} [{q}x].stl"); t.apply_translation(-t.bounds[0])
             t.export(os.path.join(os.path.dirname(dest), f"{base} luva {i} [{q}x].stl"))
-        ncort += 1
+        ncort += 1; INFO[base].update(pasta=os.path.dirname(r), qtd=q, ext=[float(v) for v in tm.extents])
+        for k, l in enumerate(INFO[base].pop('luvas_lugar', []), 1):   # luva no lugar (coordenadas da peca inteira) pro desenho
+            fl = os.path.join(DST, '00 Pinos', f'_lugar {base} luva {k}.stl'); os.makedirs(os.path.dirname(fl), exist_ok=True); para_tm(l).export(fl)
+            INFO[base].setdefault('luvas_stl', []).append(fl)
         print(f"{base}: {len(partes)} partes", flush=True)
     pd = os.path.join(DST, '00 Pinos'); os.makedirs(pd, exist_ok=True)
     if 'D' in pinos_tot:
@@ -188,6 +196,7 @@ def main():
         para_tm(p).export(os.path.join(pd, f"pino {d:.0f}x{2*prof-0.6:.1f} mm [{c + c // 10 + 2}x].stl"))
     with open(os.path.join(DST, 'cortes.txt'), 'w') as fh:
         fh.write(f"{ncort} pecas cortadas em partes <= {MAXL:.0f} mm\n" + "\n".join(rel) + "\n")
+    import json; json.dump(INFO, open(os.path.join(DST, 'cortes.json'), 'w'), ensure_ascii=False, indent=1)
     print("pinos:", pinos_tot)
 
 main()

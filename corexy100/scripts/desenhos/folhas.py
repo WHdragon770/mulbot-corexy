@@ -50,7 +50,7 @@ DESC = {"baseFrente": "Base da frente", "baseTras": "Base de trás", "baseLatF":
         "DL1-06-02_L14.0": "Eixo da polia A, 14 mm", "DL1-06-03_L10.0": "Eixo da polia B, 10 mm", "DL1-06-03_L14.0": "Eixo da polia B, 14 mm",
         "DL1-06-04": "Gaiola das esferas", "nema17": "Motor de passo NEMA 17", "lite6": "Hotend E3D Lite6 1,75 mm",
         "ventoinha5015": "Ventoinha radial 5015, 12 V", "endstop": "Fim de curso mecânico", "ezr_corpo": "Extrusora EZR (Bondtech)",
-        "bowden_direta": "Tubo PTFE 4x2 mm, ~88 mm", "correiaA": "Correia A, 1418 mm", "correiaB": "Correia B, 1418 mm",
+        "bowden_direta": "Tubo PTFE 4x2 mm, ~88 mm", "correiaA": "Correia A, 1044 mm", "correiaB": "Correia B, 1044 mm",
         "mega": "Arduino Mega 2560", "ramps": "RAMPS 1.4 + 4 drivers", "fonte_rs150": "Fonte 12 V 150 W",
         "iec_c14": "Tomada IEC C14 com chave", "lcd": "Display RepRapDiscount 128x64", "vidro": "Vidro 235 x 235 mm (Ender 3)",
         "mola": "Mola de compressão 7,5 x 20 mm"}
@@ -113,7 +113,7 @@ FOLHAS = [
     dict(id="CXY-06", arquivo="CoreXY - correias e polias", titulo="COREXY: CORREIAS E POLIAS", pref=("motorA", "motorB", "loucaFrente", "loucaPortico", "correiaA", "correiaB"),
          vistas=[dict(dir=[1, -1.2, 1.1]), dict(dir=[0.0001, -0.0001, 1], legenda="VISTA DE CIMA: CAMINHO DAS CORREIAS")],
          notas=["Correia A (de cima) no motor A (trás direito); correia B (de baixo) no motor B (trás esquerdo).",
-                "As 2 correias têm 1418 mm. As pontas prendem na torre do carro X, dando a volta no pino."],
+                "As 2 correias têm 1044 mm. As pontas prendem na torre do carro X, dando a volta no pino."],
          extra=[("Esfera de aço 4,5 mm (polia louca)", "Comprada", 12 * 8, "esfera_4.5")]),
     dict(id="CXY-08", arquivo="Roldana V", titulo="ROLDANA V (X, Y E Z)", pref=(), objetos=lambda: roldana_itens(),
          vistas=[dict(dir=[1, -1.3, 0.55], margem=1.25, legenda="MONTAGEM (EXPLODIDA NO EIXO)"),
@@ -353,7 +353,7 @@ def notas(dr, x0, nts):
 def carimbo(img, dr, fid, titulo):
     dr.rectangle((M0 / 2, M0 / 2, SW - M0 / 2, SH - M0 / 2), outline="black", width=3)
     x0 = SW - CAR - M0 / 2; dr.line((x0, M0 / 2, x0, SH - M0 / 2), fill="black", width=3)
-    blocos = [("MULBOT COREXY 200³", 46, True, 900), ("versão CoreXY da Mulbot DL1", 26, False, 520),
+    blocos = [("MULBOT COREXY 100³", 46, True, 900), ("versão CoreXY da Mulbot DL1", 26, False, 520),
               (f"{datetime.date.today():%d/%m/%Y}", 26, False, 260), (f"FOLHA: {fid}", 34, True, 330), (f"TÍTULO: {titulo}", 34, True, 0)]
     y = M0 / 2
     for i, (t, s, b, h) in enumerate(blocos):
@@ -440,7 +440,7 @@ def capa(fd):
     W0, H0 = SW - CAR - COLW - 3 * M0, SH - 2 * M0 - 260
     k = min(W0 / her.size[0], H0 / her.size[1]); her = her.resize((int(her.size[0] * k), int(her.size[1] * k)), Image.LANCZOS)
     img.paste(her, (M0 + (W0 - her.size[0]) // 2, M0 + 230 + (H0 - her.size[1]) // 2))
-    dr.text((M0 + 30, M0 + 20), "MULBOT COREXY 200³", font=fonte(110, True), fill="#b3261e")
+    dr.text((M0 + 30, M0 + 20), "MULBOT COREXY 100³", font=fonte(110, True), fill="#b3261e")
     dr.text((M0 + 36, M0 + 160), "versão CoreXY da Mulbot DL1: guia em V impressa, extrusora direta, quadro oco com passagem de cabos", font=fonte(36), fill="black")
     lin = [(f["id"], f["titulo"]) for f in FOLHAS if f["id"] != fd["id"]]
     tabela(dr, SW - CAR - M0 - COLW, M0, "FOLHAS DE MONTAGEM", [("FOLHA", 220), ("TÍTULO", 960)], lin, hl=56)
@@ -448,7 +448,7 @@ def capa(fd):
     carimbo(img, dr, fd["id"], fd["titulo"])
     fn_out = f"{OUT}/{fd['id']} - {fd['arquivo']}.png"; img.save(fn_out, dpi=(300, 300)); print(fn_out); return fn_out
 FOLHAS.append(dict(id="CXY-00", arquivo="Capa e indice", titulo="CAPA E ÍNDICE", desenho=capa,
-     notas=["Área de impressão 200 x 200 x 200 mm. Quadro, guias e fixadores impressos (M10 no chassi, M6 nas médias).",
+     notas=["Área de impressão 100 x 100 x 100 mm. Quadro, guias e fixadores impressos (M10 no chassi, M6 nas médias).",
             "Peças: pasta 02 STL para imprimir (separada pelos mesmos conjuntos destas folhas).",
             "Mulbot DL1 original: 3D Printing World. Esta versão CoreXY muda quadro, eixos, mesa e cabos."]))
 FOLHAS.sort(key=lambda f: f["id"])

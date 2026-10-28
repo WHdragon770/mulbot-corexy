@@ -87,6 +87,7 @@ def aplica(G):
                         if bb[t] - aa[t] < 0.5: continue
                     nov.append((aa, bb))
             caixas = nov
+        if not caixas: return mf.Manifold()                        # caixa inteira dentro do septo da emenda (janela pequena): nada a cortar
         # poste da frente: teto de 1 agua alta do lado de dentro (x perto de 0): o cabo passa por ali, acima dos escareados da viga Y
         alto = np.zeros(3) if peca.startswith("posteFrente") else None
         c = uniao([semsup.telhado(a, b, up, alto=alto) for a, b in caixas])
@@ -142,7 +143,8 @@ def aplica(G):
     pas(cx((131.5, 168, 344), (139.5, YFR1 + 4, 358)), ["torreTras_D", "travTras"])             # torre -> travessa de tras
     pas(cx((-130, yfz - 5, Z0 - 3), (-122, yfz + 5, Z0 + 5)), ["trilhoY_E"], False)              # fim de curso Z
     pas(cx((-128, YFR1 - 4, 60), (-114, YFR1 + 2, 80)), ["posteTras_E"], False)                  # -> janela de baixo da caixa da RAMPS
-    pas(cx((114, YFR1 - 4, 60), (125, YFR1 + 2, 120)), ["posteTras_D"], False)                   # fonte (protecao aberta do lado do quadro)
+    for z in np.arange(60, 120, 12):                                # fonte (protecao aberta do lado do quadro): 5 janelas de 9.5 com pilar
+        pas(cx((114, YFR1 - 4, z), (125, YFR1 + 2, z + 9.5)), ["posteTras_D"], False)   # (1 janela de 60 deixava a parede de cima em balanco na impressao)
     pas(cx((134, 155, 370), (146, 161, 382)), ["torreTras_D"], False)                            # motor A (corpo embaixo da placa)
     pas(cx((-140, 161, G["ZB"] + G["POLIA_FACE"] - 8), (-128, 169, G["ZB"] + G["POLIA_FACE"] + 1)), ["torreTras_E"], False)  # motor B (atravessa a placa)
     pas(cx((-116, 155, 338), (-110, 161, 352)), ["torreTras_E"], False)                         # fim de curso Y

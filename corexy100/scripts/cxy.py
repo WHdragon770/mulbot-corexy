@@ -288,7 +288,7 @@ for lado, sx in (("D", 1), ("E", -1)):
         junta_barril(pf, tY, (X(XR), YY0 - 16, z), (0, 1, 0), 45, (1, 0, 0), 19.05, cb=YY0 - 16 - YFR0)
         junta_barril(pt, tY, (X(XR), YFR1, z), (0, -1, 0), 60, (1, 0, 0), 19.05)
     # postes -> vigas laterais (de baixo para cima, barril no poste)
-    for y, vg in ((YFR0 + 19, bz), (YFR1 - 22, "baseLatT_" + lado)):     # 100: poste da frente direto na base Z
+    for y, vg in ((YFR0 + 15, bz), (YFR1 - 22, "baseLatT_" + lado)):     # 100: poste da frente direto na base Z (+15: anel do rebaixo fecha antes da passagem do cabo do motor Z)
         junta_barril(vg, pf if y < 0 else pt, (X(XR), y, 7), (0, 0, 1), 55, (1, 0, 0), 30, cb=7)
     # vigas de frente/tras -> vigas laterais (de fora para dentro, barril na viga transversal)
     junta_barril(bz, "baseFrente", (X(XP1), YFR0 + 15, 15), (-sx, 0, 0), 55, (0, 0, 1), 30)
@@ -362,6 +362,12 @@ def braco_mesa():
     xk = 92.3 * EM + 12.3 + 2.0                               # 100: knobs dos cantos (y -56..-32) -> braco largo (y ate -31) so depois deles
     m += caixa((XZ - 25.4, yp, 25.4), (XZ - 16, yf, 42))     # alma
     m += caixa((xk, yp, 32), (XZ - 16, -31, 42)) + caixa((xh0 - 7, -31.2, 32), (xk + 2, 28, 42))   # braco horizontal sob a mesa
+    # apoio p/ imprimir (+Y pra cima, face yp na mesa): a parte larga ficava ~45 mm em balanco; pilar antes do knob + V a 45 graus
+    # tangente ao knob (centro ck,-ck, raio 12.3 + 1 de folga) + aba ate o braco estreito
+    ck, rk = 92.3 * EM, 13.3; yv = -ck + rk * np.sqrt(2); yl = yv - rk
+    m += caixa((xh0 - 7, yp, 32), (ck - rk, -31.2, 42)) + caixa((ck + rk, yp, 32), (xk + 0.1, -31.2, 42))
+    for xa in (ck - rk, ck + rk):
+        m += mf.Manifold.hull_points([(x, y, z) for x, y in ((xa, yl), (ck, yv), (ck, -31.2), (xa, -31.2)) for z in (32, 42)])
     m += caixa((xk, yp, 12), (XZ - 46 if GUIAZ == "v" else XZ - 28, -31, 32))   # nervura (curta: roldana de dentro passa); desce ate a face da placa: imprime deitado nela
     if GUIAZ != "v":
         for dx in (-CARRO_FX, CARRO_FX):                      # carro Z: furos ao longo de Y

@@ -5,7 +5,10 @@ W="/mnt/c/Users/lucas/Documents/Projetos 3D/CoreXY/CoreXY 100"; echo 1000 > /pro
 echo "0 6 copiando os STL" >> $P
 rm -rf $T/stl $T/orient $T/placas; cp -r "$W/02 STL para imprimir" $T/stl; rm -f $T/stl/*.csv
 echo "1 6 orientando as pecas" >> $P
-( cd $S; python3 orienta.py $T/stl $T/orient 2>&1 | grep -v Warn ) >> $L 2>&1 || { echo "ERRO orienta" >> $P; exit 1; }
+mkdir -p $T/orient; echo '{}' > $T/orient/orienta.json        # em lotes de 10 pecas, 1 processo por lote (tudo junto passa de 2 GB)
+ls $T/stl/*/*.stl $T/stl/*/*/*.stl | sed 's#.*/##; s# \[[0-9]*x\]\.stl##' | sort -u | xargs -d '\n' -n 10 | tr ' ' ',' | while read -r SO; do
+  ( cd $S; SO="$SO" python3 orienta.py $T/stl $T/orient 2>&1 | grep -v Warn; exit ${PIPESTATUS[0]} ) >> $L 2>&1 || { echo "ERRO orienta (lote $SO)" >> $P; exit 1; }
+done || exit 1
 echo "2 6 verificando sem suporte (ponte 10)" >> $P
 find $T/orient -name "*.stl" | grep -v -E "Resina|07 Rold" | sort | tr '\n' '\0' | (cd $S; PONTE=10 JSON=$T/semsup.json xargs -0 python3 semsup_check.py) 2>&1 | grep -v Warn | grep ilha > $T/semsup.txt
 echo "3 6 placas 3MF + resina" >> $P

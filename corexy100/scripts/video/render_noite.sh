@@ -7,7 +7,7 @@ CX=${CXY_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}; export CXY_DIR=$CX; MODO=${
 Q=$CX/out/anim/quadros_$MODO; PR=$CX/out/anim/progresso_$MODO.txt; LOG=$CX/out/anim/render_$MODO.log
 BL=${BLENDER:-$HOME/.local/opt/blender-4.2.3-linux-x64/blender}; [ -x "$BL" ] || BL=blender
 [ -d "$HOME/.local/opt/blibs/root/usr/lib/x86_64-linux-gnu" ] && export LD_LIBRARY_PATH=$HOME/.local/opt/blibs/root/usr/lib/x86_64-linux-gnu
-WIN="/mnt/c/Users/lucas/Documents/Projetos 3D/CoreXY/CoreXY 200"          # copia pro Windows do Aleixo, so se existir
+WIN="/mnt/c/Users/lucas/Documents/Projetos 3D/CoreXY/CoreXY 100"          # copia pro Windows do Aleixo, so se existir
 BLEND=$CX/final/corexy_montagem_leve.blend
 mkdir -p $Q
 if [ -n "$1" ]; then                                   # espera ate a hora marcada
@@ -38,7 +38,7 @@ mkdir -p $CX/final/video; SAI=$CX/final/video/corexy_video_$MODO.mp4
 python3 scripts/video/monta.py $Q $SAI >> $LOG 2>&1 || { echo "ERRO monta.py" > $PR; exit 1; }
 if [ -d "$WIN" ]; then
   mkdir -p "$WIN/04 Video"
-  if [ $MODO = cycles ]; then cp $SAI "$WIN/04 Video/Mulbot CoreXY 200 - video de montagem.mp4"
+  if [ $MODO = cycles ]; then cp $SAI "$WIN/04 Video/Mulbot CoreXY 100 - video de montagem.mp4"
   else cp $SAI "$WIN/04 Video/PREVIA - video de montagem (rascunho rapido).mp4"; fi
 fi
 echo "FIM Video pronto: $SAI" > $PR

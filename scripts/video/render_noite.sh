@@ -20,8 +20,8 @@ TOT=$(python3 -c "import json;print(json.load(open('$CX/out/anim/linha.json'))['
 rm -f $PR.eta; python3 scripts/video/estimativa.py $Q --vigiar $PR >> $LOG 2>&1 &     # termino pelo peso de cada quadro
 for ((a=1; a<=TOT; a+=120)); do
   b=$((a+119)); [ $b -gt $TOT ] && b=$TOT
-  feitos=$(find $Q/ -name 'f*.png' -size +0 | wc -l)
-  [ $feitos -ge $b ] && [ -s $Q/f$(printf %04d $b).png ] && continue
+  falta=0; for ((i=a; i<=b; i++)); do [ -s $Q/f$(printf %04d $i).png ] || { falta=1; break; }; done
+  [ $falta = 0 ] && continue                          # bloco completo (confere quadro a quadro, nao so a contagem)
   ( while true; do                                    # progresso enquanto o bloco roda
       n=$(find $Q/ -name 'f*.png' -size +0 | wc -l)
       eta=""; [ -s $PR.eta ] && eta=" - termina ~$(cat $PR.eta)"

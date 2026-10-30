@@ -1,0 +1,7 @@
+0 6 copiando os STL
+1 6 orientando as pecas
+2 6 verificando sem suporte (ponte 10)
+3 6 placas 3MF + resina
+4 6 previas das placas
+5 6 fatiando no Slicer Next
+FIM Placas da CoreXY 100 em 06 Placas de impressao: 11 3MF, 1 com ilha

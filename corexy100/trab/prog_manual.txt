@@ -1,0 +1,2 @@
+0 1 gerando o PDF (capa, guias, lista, folhas, detalhes)
+FIM Manual completo da CoreXY 100: PDF 25 páginas em 03 Desenhos de montagem

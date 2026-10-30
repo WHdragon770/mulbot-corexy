@@ -1,0 +1,50 @@
+CABEM: 55  NAO CABEM: 48  (area 100x100x100)
+
+ 146 x   30 x   30  01 Quadro/baseFrente_D [1x].stl
+ 236 x   30 x   30  01 Quadro/baseFrente_E [1x].stl
+ 176 x   30 x   30  01 Quadro/baseLatT_D [1x].stl
+ 176 x   30 x   30  01 Quadro/baseLatT_E [1x].stl
+ 191 x   30 x   30  01 Quadro/baseTras_D [1x].stl
+ 191 x   30 x   30  01 Quadro/baseTras_E [1x].stl
+ 235 x   66 x   30  01 Quadro/posteFrenteInf_D [1x].stl
+ 235 x   66 x   30  01 Quadro/posteFrenteInf_E [1x].stl
+ 236 x   66 x   30  01 Quadro/posteFrenteSup_D [1x].stl
+ 236 x   66 x   30  01 Quadro/posteFrenteSup_E [1x].stl
+ 226 x   30 x   29  01 Quadro/posteTrasInf_D [1x].stl
+ 226 x   30 x   29  01 Quadro/posteTrasInf_E [1x].stl
+ 227 x   30 x   29  01 Quadro/posteTrasSup_D [1x].stl
+ 227 x   30 x   29  01 Quadro/posteTrasSup_E [1x].stl
+ 134 x   50 x   40  01 Quadro/torreFrente_D [1x].stl
+ 134 x   50 x   40  01 Quadro/torreFrente_E [1x].stl
+ 106 x   66 x   51  01 Quadro/torreTras_D [1x].stl
+ 230 x   60 x   14  01 Quadro/travFrente_D [1x].stl
+ 230 x   60 x   14  01 Quadro/travFrente_E [1x].stl
+ 236 x   50 x   14  01 Quadro/travTras_D [1x].stl
+ 236 x   50 x   14  01 Quadro/travTras_E [1x].stl
+ 115 x   82 x   69  02 Eixo Y e portico/suportePortico_D [1x].stl
+ 115 x   86 x   82  02 Eixo Y e portico/suportePortico_E [1x].stl
+ 290 x   80 x   25  02 Eixo Y e portico/trilhoY_D [1x].stl
+ 290 x   80 x   25  02 Eixo Y e portico/trilhoY_E [1x].stl
+ 103 x   60 x   35  03 Eixo X e cabeca/carroX [1x].stl
+ 290 x   26 x   25  03 Eixo X e cabeca/trilhoX [1x].stl
+ 231 x  231 x   10  04 Eixo Z e mesa/DL1-03-04_110 [1x].stl
+ 250 x   27 x   27  04 Eixo Z e mesa/Fuso e porca - FDM/fusoZ_250mm [2x].stl
+ 125 x   27 x   27  04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)/fusoZ_metade_baixo_125mm [2x].stl
+ 125 x   18 x   18  04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)/fusoZ_metade_cima_125mm [2x].stl
+ 212 x   56 x   43  04 Eixo Z e mesa/baseZInf_D [1x].stl
+ 212 x   56 x   43  04 Eixo Z e mesa/baseZInf_E [1x].stl
+ 142 x   62 x   56  04 Eixo Z e mesa/baseZSup_D [1x].stl
+ 142 x   62 x   56  04 Eixo Z e mesa/baseZSup_E [1x].stl
+ 171 x   88 x   83  04 Eixo Z e mesa/bracoMesa_D [1x].stl
+ 171 x   88 x   83  04 Eixo Z e mesa/bracoMesa_E [1x].stl
+ 108 x   52 x   10  04 Eixo Z e mesa/chapaZY_D [1x].stl
+ 108 x   52 x   10  04 Eixo Z e mesa/chapaZY_E [1x].stl
+ 275 x   84 x   25  04 Eixo Z e mesa/trilhoZ_D [1x].stl
+ 275 x   84 x   25  04 Eixo Z e mesa/trilhoZ_E [1x].stl
+ 190 x   95 x   54  06 Eletronica e display/DL1-02-09_caixa_ramps [1x].stl
+ 190 x   95 x   73  06 Eletronica e display/DL1-02-10_porta_fechada [1x].stl
+ 101 x   83 x   46  06 Eletronica e display/DL1-02-15 [1x].stl
+ 129 x  127 x   27  06 Eletronica e display/DL1-05-02 [1x].stl
+ 250 x   35 x   19  09 Esteira porta-cabos/bandejaX [1x].stl
+ 173 x   76 x   60  09 Esteira porta-cabos/bandejaY_F [1x].stl
+ 146 x   76 x   60  09 Esteira porta-cabos/bandejaY_T [1x].stl

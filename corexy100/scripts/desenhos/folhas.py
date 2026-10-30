@@ -95,12 +95,12 @@ FOLHAS = [
     dict(id="CXY-02", arquivo="Eixo Y e portico", titulo="EIXO Y E PÓRTICO", pref=("trilhoY", "suportePortico", "rodaY", "buchaY", "fimCursoY"),
          vistas=[dict(dir=[1, -1.2, 0.9]), dict(dir=[1, -0.7, -0.35], centro=[176, 47.6, 432], escala=150, legenda="DETALHE: CARRO Y DIREITO (RODAS)")],
          notas=["Carro Y: 2 roldanas fixas por dentro + 1 excêntrica por fora (bucha espaçadora, chave 14).",
-                "Fim de curso Y fica na torre de trás esquerda: a lingueta do suporte aperta com Y = +152."]),
+                "Fim de curso Y fica na torre de trás esquerda: a lingueta do suporte aperta com Y = +102."]),
     dict(id="CXY-03", arquivo="Eixo X e cabeca", titulo="EIXO X E CABEÇA", pref=("trilhoX", "carroX", "bracoFimCursoX", "rodaX", "buchaX", "hotend", "presilhaHotend", "ventoinha5015",
                                                       "dutoCoreXY", "suporteExtrusoraDireta", "ezr", "motorE", "bowden", "fimCursoX"),
          vistas=[dict(dir=[0.9, -1.2, 0.7]), dict(dir=[-0.8, 1.2, 0.6], centro=[0, 47.6, 505], escala=210, legenda="DETALHE: CARRO X POR TRÁS")],
          notas=["Carro X: 2 roldanas fixas embaixo + 1 excêntrica em cima, atrás da torre das correias.",
-                "Fim de curso X: na parede do suporte esquerdo, o braço do carro aperta com X = -101,5."]),
+                "Fim de curso X: na parede do suporte esquerdo, o braço do carro aperta com X = -51,5."]),
     dict(id="CXY-04", arquivo="Eixo Z", titulo="EIXO Z", pref=("baseZ", "trilhoZ", "chapaZY", "bracoMesa", "rodaZ", "buchaZ", "fusoZ", "porcaZ", "motorZ", "fimCursoZ"),
          vistas=[dict(dir=[1, -1.1, 0.7], desloca={"motorZ": [0, 0, -110]}), dict(dir=[1, -0.9, 0.5], centro=[176, -40, 60], escala=190, legenda="DETALHE: BASE Z DIREITA")],
          notas=["Fuso e porca: imprimir a versão FDM OU a de resina (2 metades + pino D).",
@@ -131,7 +131,7 @@ FOLHAS = [
     dict(id="CXY-11", arquivo="Esteira porta-cabos", titulo="ESTEIRA PORTA-CABOS (CABEÇA)",
          pref=("eloX", "eloY", "pontaFixaX", "pontaFixaY", "bandejaX", "bandejaY", "bracoEsteiraX", "suporteEsteiraY", "caboEsteira"),
          vistas=[dict(dir=[0.9, -1.2, 0.8]), dict(dir=[1, -0.9, 0.55], centro=[232, 40, 462], escala=150, legenda="DETALHE: ESTEIRA Y (LADO DIREITO, POR FORA)")],
-         notas=["Esteira X atrás da viga X (11 elos) e esteira Y por fora do lado direito (12 elos): o mesmo elo nas 2. Imprimir em PETG, em pé.",
+         notas=["Esteira X atrás da viga X (8 elos) e esteira Y por fora do lado direito (9 elos): o mesmo elo nas 2. Imprimir em PETG, em pé.",
                 "Pino de cada junta: pedaço de filamento 1,75 mm (2 por junta, 4 mm), entra apertado na placa de fora; derreter a ponta.",
                 "Bandeja X: 4x M3x10 em insertos na viga X. Suporte Y: 2x M3x10 em insertos no suporte do pórtico D. Pontas fixas: 2x M3x10 + porca.",
                 "Braço do carro: o M3 da direita do suporte da extrusora vira M3x18. O cabo sai da esteira Y e entra na torre de trás direita."]),
@@ -370,7 +370,8 @@ def carimbo(img, dr, fid, titulo):
 LIG = [  # conector RAMPS, aparelho, rota (CXY-10)
     ("X", "Motor A (trás direito)", 2), ("Y", "Motor B (trás esquerdo)", 3), ("Z (2 conectores)", "Motores Z esq. e dir.", 4),
     ("E0", "Motor E (extrusora direta)", 9), ("D10", "Aquecedor do hotend 12 V", 9), ("D9", "Ventoinha 5015 (peça)", 9),
-    ("D8", "Ventoinha do dissipador (ou 12 V direto)", 9), ("T0", "Termistor do hotend", 9), ("X-MIN", "Fim de curso X", 9),
+    ("D8", "Mesa aquecida 120 x 120 12 V", 7), ("T0", "Termistor do hotend", 9), ("T1", "Termistor da mesa", 7),
+    ("12 V direto", "Ventoinha do dissipador", 9), ("X-MIN", "Fim de curso X", 9),
     ("Y-MAX", "Fim de curso Y", 8), ("Z-MIN", "Fim de curso Z", 7), ("EXP1 / EXP2", "Display (adaptador + 2 cabos flat)", 6),
     ("12 V 11 A / 5 A", "Fonte 12 V 150 W", 5), ("-", "Tomada IEC C14 com chave > fonte (L, N, terra)", 5)]
 def ligacoes(fd):
@@ -401,7 +402,7 @@ def ligacoes(fd):
     # 1o os fios (ficam por baixo das caixas e conectores)
     XB = RX + RW + 330
     for y in YM: fios((RX + RW - 70, y), (XB, y), MOT)
-    fios((RX + RW - 70, 1690), (XB, 1690), ["#111", "#111"])
+    for y in (1630, 1760): fios((RX + RW - 70, y), (XB, y), ["#111", "#111"])
     for x in XT: fios((x, RY + 30), (x, 540), PWR); fios((x, RY + RH - 30), (x, 2060), SIN)
     fios((520, 990), (RX + 70, 990), PWR + PWR, esp=8); fios((520, 1420), (RX + 70, 1420), ["#888", "#888"], esp=14)
     fios((300, 640), (300, 880), ["#8a5a00", "#1f5fd6", "#1a8f2e"], esp=8)
@@ -409,14 +410,14 @@ def ligacoes(fd):
     for t, yy, ff in (("RAMPS 1.4", RY + RH / 2 - 60, fg), ("+ Arduino Mega 2560", RY + RH / 2, fb)):
         tw = dr.textlength(t, font=ff); dr.text((RX + (RW - tw) / 2 - 40, yy), t, font=ff, fill="white")
     for n, y in zip(("X", "Y", "Z", "E0"), YM): pino(n, RX + RW - 70, y)
-    pino("T0", RX + RW - 70, 1690)
+    pino("T0", RX + RW - 70, 1630); pino("T1", RX + RW - 70, 1760)
     for n, x in zip(("D10", "D9", "D8"), XT): pino(n, x, RY + 30)
     for n, x in zip(("X-MIN", "Y-MAX", "Z-MIN"), XT): pino(n, x, RY + RH - 30)
     pino("12V", RX + 70, 990); pino("EXP1/2", RX + 90, 1420)
     for t, y in zip(("MOTOR A\n(trás direito)", "MOTOR B\n(trás esquerdo)", "MOTOR Z ESQ.\n+ MOTOR Z DIR.", "MOTOR E\n(extrusora)"), YM):
         caixa_(XB, y - 85, 380, 170, t, "#d9d9d9")
-    caixa_(XB, 1620, 380, 140, "TERMISTOR\n(hotend)", "#e8e0c8")
-    for t, x in zip(("AQUECEDOR\nHOTEND", "VENTOINHA\n5015 (peça)", "VENT. DO\nDISSIPADOR"), XT): caixa_(x - 118, 390, 236, 150, t, "#f5c9b8")
+    caixa_(XB, 1570, 380, 120, "TERMISTOR\n(hotend)", "#e8e0c8"); caixa_(XB, 1700, 380, 120, "TERMISTOR\n(mesa)", "#e8e0c8")
+    for t, x in zip(("AQUECEDOR\nHOTEND", "VENTOINHA\n5015 (peça)", "MESA AQUEC.\n120x120 12V"), XT): caixa_(x - 118, 390, 236, 150, t, "#f5c9b8")
     for t, x in zip(("FIM DE\nCURSO X", "FIM DE\nCURSO Y", "FIM DE\nCURSO Z"), XT): caixa_(x - 118, 2060, 236, 140, t, "#f5d2d2")
     caixa_(80, 880, 440, 220, "FONTE 12 V\n150 W", "#e6e6e6")
     caixa_(80, 1310, 440, 220, "DISPLAY\nRepRapDiscount", "#c8d4f0", sub="adaptador + 2 flat")
@@ -431,9 +432,9 @@ def ligacoes(fd):
 FOLHAS.append(dict(id="CXY-09", arquivo="Diagrama de ligacao", titulo="DIAGRAMA DE LIGAÇÃO", desenho=ligacoes,
      notas=["Firmware (Marlin): #define COREXY. Motor A no driver X, motor B no driver Y.",
             "Teste: G1 X+10 tem que andar só em X pra direita. Se andar em Y, troque os cabos A e B; se andar ao contrário, inverta INVERT_X_DIR / INVERT_Y_DIR.",
-            "Fins de curso: X no MIN (X = -101,5), Y no MAX (Y = +152), Z no MIN (topo do curso da mesa).",
+            "Fins de curso: X no MIN (X = -51,5), Y no MAX (Y = +102), Z no MIN (topo do curso da mesa).",
             "Os 2 motores Z vão nos 2 conectores do Z (em paralelo), sem driver extra.",
-            "Sem mesa aquecida: a saída D8 fica pra ventoinha do dissipador (E0_AUTO_FAN_PIN 8) ou ligue a ventoinha direto em 12 V."]))
+            "Mesa aquecida 120 x 120 12 V (padrão da 100) na saída D8 + termistor no T1 (TEMP_SENSOR_BED 1). A fonte de 150 W segura. Ventoinha do dissipador direto em 12 V."]))
 def capa(fd):
     img = Image.new("RGB", (SW, SH), "white"); dr = ImageDraw.Draw(img)
     her = Image.open("/home/lucas/corexy100/final/render/heroi.png").convert("RGB")

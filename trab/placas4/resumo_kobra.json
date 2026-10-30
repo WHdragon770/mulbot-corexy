@@ -1,0 +1,57 @@
+[
+ [
+  "01 Quadro - PLA.3mf",
+  4,
+  24
+ ],
+ [
+  "01 Quadro - DL1-01-08 - TPU.3mf",
+  1,
+  6
+ ],
+ [
+  "02 Eixo Y e portico - PLA.3mf",
+  2,
+  4
+ ],
+ [
+  "03 Eixo X e cabeca - PLA.3mf",
+  1,
+  6
+ ],
+ [
+  "04 Eixo Z e mesa - PLA.3mf",
+  5,
+  31
+ ],
+ [
+  "05 Motores e polias - PLA.3mf",
+  1,
+  40
+ ],
+ [
+  "05 Motores e polias - DL1-04-08 - PETG.3mf",
+  1,
+  2
+ ],
+ [
+  "06 Eletronica e display - PLA.3mf",
+  1,
+  9
+ ],
+ [
+  "08 Parafusos e porcas impressos - PLA.3mf",
+  2,
+  186
+ ],
+ [
+  "09 Esteira porta-cabos - PLA.3mf",
+  1,
+  7
+ ],
+ [
+  "09 Esteira porta-cabos - elo_esteira - PETG.3mf",
+  1,
+  23
+ ]
+]

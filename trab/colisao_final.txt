@@ -1,0 +1,5 @@
+correiaA: 1418 mm
+correiaB: 1418 mm
+export /home/lucas/corexy/out/cxy.json 420 | pecas novas: 52 | fixadores: 194
+    144.0 mm3  caboEsteira_XY  x  bracoEsteiraX   pose (100, -52.37, 0)
+pares com interferencia: 1 | poses: 22 | solidos montados: 93 de 420

@@ -1,0 +1,24 @@
+1 12 fatiando 01 Quadro - DL1-01-08 - TPU
+2 12 fatiando 01 Quadro - PLA
+3 12 fatiando 02 Eixo Y e portico - PLA
+4 12 fatiando 03 Eixo X e cabeca - PLA
+5 12 fatiando 04 Eixo Z e mesa - PLA
+6 12 fatiando 05 Motores e polias - DL1-04-08 - PETG
+7 12 fatiando 05 Motores e polias - PLA
+8 12 fatiando 06 Eletronica e display - PLA
+9 12 fatiando 08 Parafusos e porcas impressos - PLA
+10 12 fatiando 09 Esteira porta-cabos - PLA
+11 12 fatiando 09 Esteira porta-cabos - elo_esteira - PETG
+FIM Placas da CoreXY fatiadas: 01 Quadro - DL1-01-08 - TPU|0|1 01 Quadro - PLA|0|3 02 Eixo Y e portico - PLA|0|1 03 Eixo X e cabeca - PLA|0|1 04 Eixo Z e mesa - PLA|0|3 05 Motores e polias - DL1-04-08 - PETG|0|1 05 Motores e polias - PLA|0|1 06 Eletronica e display - PLA|0|1 08 Parafusos e porcas impressos - PLA|0|2 09 Esteira porta-cabos - PLA|0|1 09 Esteira porta-cabos - elo_esteira - PETG|0|1 
+1 12 fatiando 01 Quadro - DL1-01-08 - TPU
+2 12 fatiando 01 Quadro - PLA
+3 12 fatiando 02 Eixo Y e portico - PLA
+4 12 fatiando 03 Eixo X e cabeca - PLA
+5 12 fatiando 04 Eixo Z e mesa - PLA
+6 12 fatiando 05 Motores e polias - DL1-04-08 - PETG
+7 12 fatiando 05 Motores e polias - PLA
+8 12 fatiando 06 Eletronica e display - PLA
+9 12 fatiando 08 Parafusos e porcas impressos - PLA
+10 12 fatiando 09 Esteira porta-cabos - PLA
+11 12 fatiando 09 Esteira porta-cabos - elo_esteira - PETG
+FIM Placas da CoreXY fatiadas: 01 Quadro - DL1-01-08 - TPU|0|1 01 Quadro - PLA|0|3 02 Eixo Y e portico - PLA|0|1 03 Eixo X e cabeca - PLA|0|1 04 Eixo Z e mesa - PLA|0|3 05 Motores e polias - DL1-04-08 - PETG|0|1 05 Motores e polias - PLA|0|1 06 Eletronica e display - PLA|0|1 08 Parafusos e porcas impressos - PLA|0|2 09 Esteira porta-cabos - PLA|0|1 09 Esteira porta-cabos - elo_esteira - PETG|0|1 

@@ -1,0 +1,9 @@
+posteFrenteInf_D.stl: 0 ilha(s) sem apoio, 0 mm3
+posteFrenteInf_E.stl: 0 ilha(s) sem apoio, 0 mm3
+posteTrasInf_D.stl: 0 ilha(s) sem apoio, 0 mm3
+posteTrasInf_E.stl: 0 ilha(s) sem apoio, 0 mm3
+baseZInf_D.stl: 0 ilha(s) sem apoio, 0 mm3
+baseZInf_E.stl: 0 ilha(s) sem apoio, 0 mm3
+baseZSup_D.stl: 0 ilha(s) sem apoio, 0 mm3
+bracoMesa_D.stl: 0 ilha(s) sem apoio, 0 mm3
+bracoMesa_E.stl: 0 ilha(s) sem apoio, 0 mm3

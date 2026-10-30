@@ -1,0 +1,11 @@
+ar 3128 cm3 | sonda 4.5 mm | voxel 1.0 mm
+  RAMPS                OK
+  motorZ_E             OK
+  motorZ_D             OK
+  fonte                OK
+  display              OK
+  fimCursoZ            OK
+  fimCursoY            OK
+  motorA               OK
+  motorB               OK
+  cabeca (esteira)     OK

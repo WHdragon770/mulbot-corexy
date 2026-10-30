@@ -1,0 +1,9 @@
+00:04.688  blend            | Read blend: "\\wsl.localhost\Ubuntu\home\lucas\corexy\final\corexy_montagem_leve.blend"
+\\wsl.localhost\Ubuntu\home\lucas\corexy\scripts\render_final.py:20: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  w = bpy.data.worlds.new("w"); sc.world = w; w.use_nodes = True
+\\wsl.localhost\Ubuntu\home\lucas\corexy\scripts\render_final.py:31: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  chao = bpy.context.active_object; m = bpy.data.materials.new("chao"); m.use_nodes = True
+00:30.625  render           | Saved: 'C:\teste_gpu\heroi.png'
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

@@ -1,0 +1,11 @@
+01 Quadro - DL1-01-08 - TPU|0|1
+01 Quadro - PLA|0|4
+02 Eixo Y e portico - PLA|0|2
+03 Eixo X e cabeca - PLA|0|1
+04 Eixo Z e mesa - PLA|0|5
+05 Motores e polias - DL1-04-08 - PETG|0|1
+05 Motores e polias - PLA|0|1
+06 Eletronica e display - PLA|0|1
+08 Parafusos e porcas impressos - PLA|0|2
+09 Esteira porta-cabos - PLA|0|1
+09 Esteira porta-cabos - elo_esteira - PETG|0|1

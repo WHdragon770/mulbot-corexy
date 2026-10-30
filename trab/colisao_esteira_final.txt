@@ -1,0 +1,1 @@
+esteira: pares com interferencia: 0 | poses: 22 | elos: 23

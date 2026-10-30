@@ -1,0 +1,1328 @@
+{
+ "01 Quadro/DL1-01-08": {
+  "conj": "01 Quadro",
+  "nome": "DL1-01-08",
+  "qtd": 6,
+  "ext": [
+   20.0,
+   20.0,
+   10.0
+  ],
+  "modo": "repo Mulbot",
+  "contato": 247,
+  "balanco": 5
+ },
+ "03 Eixo X e cabeca/DL1-04-07": {
+  "conj": "03 Eixo X e cabeca",
+  "nome": "DL1-04-07",
+  "qtd": 1,
+  "ext": [
+   38.1,
+   12.7,
+   12.7
+  ],
+  "modo": "repo Mulbot",
+  "contato": 212,
+  "balanco": 143
+ },
+ "04 Eixo Z e mesa/DL1-03-04_110": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "DL1-03-04_110",
+  "qtd": 1,
+  "ext": [
+   100.9,
+   100.9,
+   9.5
+  ],
+  "modo": "auto cont=3905 bal=0",
+  "contato": 3905,
+  "balanco": 0
+ },
+ "04 Eixo Z e mesa/DL1-03-05": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "DL1-03-05",
+  "qtd": 4,
+  "ext": [
+   24.6,
+   24.6,
+   12.7
+  ],
+  "modo": "repo Mulbot",
+  "contato": 329,
+  "balanco": 3
+ },
+ "04 Eixo Z e mesa/DL1-03-08": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "DL1-03-08",
+  "qtd": 4,
+  "ext": [
+   19.0,
+   18.9,
+   7.9
+  ],
+  "modo": "repo Mulbot",
+  "contato": 146,
+  "balanco": 232
+ },
+ "05 Motores e polias/DL1-04-08": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-04-08",
+  "qtd": 2,
+  "ext": [
+   17.0,
+   17.0,
+   25.6
+  ],
+  "modo": "repo Mulbot",
+  "contato": 132,
+  "balanco": 92
+ },
+ "06 Eletronica e display/DL1-02-09_caixa_ramps": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-02-09_caixa_ramps",
+  "qtd": 1,
+  "ext": [
+   190.5,
+   53.7,
+   95.2
+  ],
+  "modo": "manual +cunhas",
+  "contato": 8102,
+  "balanco": 4861
+ },
+ "06 Eletronica e display/DL1-02-10_porta_fechada": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-02-10_porta_fechada",
+  "qtd": 1,
+  "ext": [
+   190.5,
+   73.0,
+   95.2
+  ],
+  "modo": "manual",
+  "contato": 4550,
+  "balanco": 961
+ },
+ "06 Eletronica e display/DL1-02-11": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-02-11",
+  "qtd": 1,
+  "ext": [
+   67.3,
+   44.5,
+   5.6
+  ],
+  "modo": "repo Mulbot",
+  "contato": 1526,
+  "balanco": 0
+ },
+ "06 Eletronica e display/DL1-02-15": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-02-15",
+  "qtd": 1,
+  "ext": [
+   101.4,
+   45.8,
+   82.6
+  ],
+  "modo": "repo Mulbot",
+  "contato": 4191,
+  "balanco": 1187
+ },
+ "05 Motores e polias/DL1-06-01": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-06-01",
+  "qtd": 8,
+  "ext": [
+   20.6,
+   20.6,
+   36.2
+  ],
+  "modo": "repo Mulbot",
+  "contato": 42,
+  "balanco": 166
+ },
+ "05 Motores e polias/DL1-06-02_L10.0": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-06-02_L10.0",
+  "qtd": 4,
+  "ext": [
+   16.4,
+   16.4,
+   10.0
+  ],
+  "modo": "auto cont=129 bal=27",
+  "contato": 129,
+  "balanco": 27
+ },
+ "05 Motores e polias/DL1-06-02_L14.0": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-06-02_L14.0",
+  "qtd": 4,
+  "ext": [
+   16.4,
+   16.4,
+   14.0
+  ],
+  "modo": "auto cont=129 bal=36",
+  "contato": 129,
+  "balanco": 36
+ },
+ "05 Motores e polias/DL1-06-03_L10.0": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-06-03_L10.0",
+  "qtd": 4,
+  "ext": [
+   16.4,
+   16.4,
+   10.0
+  ],
+  "modo": "auto cont=140 bal=48",
+  "contato": 140,
+  "balanco": 48
+ },
+ "05 Motores e polias/DL1-06-03_L14.0": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-06-03_L14.0",
+  "qtd": 4,
+  "ext": [
+   16.4,
+   16.4,
+   14.0
+  ],
+  "modo": "auto cont=140 bal=48",
+  "contato": 140,
+  "balanco": 48
+ },
+ "06 Eletronica e display/DL1-05-01_cabo": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-05-01_cabo",
+  "qtd": 1,
+  "ext": [
+   99.1,
+   86.9,
+   52.0
+  ],
+  "modo": "auto cont=7732 bal=641",
+  "contato": 7732,
+  "balanco": 641
+ },
+ "06 Eletronica e display/DL1-05-02": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-05-02",
+  "qtd": 1,
+  "ext": [
+   99.1,
+   93.1,
+   26.7
+  ],
+  "modo": "repo Mulbot",
+  "contato": 3790,
+  "balanco": 30
+ },
+ "06 Eletronica e display/DL1-05-03": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-05-03",
+  "qtd": 1,
+  "ext": [
+   15.7,
+   15.7,
+   7.5
+  ],
+  "modo": "repo Mulbot",
+  "contato": 164,
+  "balanco": 0
+ },
+ "06 Eletronica e display/DL1-05-04": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-05-04",
+  "qtd": 1,
+  "ext": [
+   21.9,
+   21.9,
+   12.6
+  ],
+  "modo": "repo Mulbot",
+  "contato": 259,
+  "balanco": 65
+ },
+ "06 Eletronica e display/DL1-05-05": {
+  "conj": "06 Eletronica e display",
+  "nome": "DL1-05-05",
+  "qtd": 1,
+  "ext": [
+   33.0,
+   21.8,
+   2.8
+  ],
+  "modo": "repo Mulbot",
+  "contato": 368,
+  "balanco": 0
+ },
+ "01 Quadro/baseFrente_D": {
+  "conj": "01 Quadro",
+  "nome": "baseFrente_D",
+  "qtd": 1,
+  "ext": [
+   96.0,
+   30.0,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2541,
+  "balanco": 2044
+ },
+ "05 Motores e polias/DL1-06-04": {
+  "conj": "05 Motores e polias",
+  "nome": "DL1-06-04",
+  "qtd": 16,
+  "ext": [
+   16.4,
+   16.4,
+   8.0
+  ],
+  "modo": "repo Mulbot",
+  "contato": 52,
+  "balanco": 44
+ },
+ "08 Parafusos e porcas impressos/barril_M10_D14x19": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "barril_M10_D14x19",
+  "qtd": 8,
+  "ext": [
+   14.0,
+   14.0,
+   19.0
+  ],
+  "modo": "auto cont=154 bal=142",
+  "contato": 154,
+  "balanco": 142
+ },
+ "08 Parafusos e porcas impressos/barril_M10_D14x30": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "barril_M10_D14x30",
+  "qtd": 8,
+  "ext": [
+   14.0,
+   14.0,
+   30.0
+  ],
+  "modo": "auto cont=154 bal=142",
+  "contato": 154,
+  "balanco": 142
+ },
+ "08 Parafusos e porcas impressos/barril_M6_D9x10": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "barril_M6_D9x10",
+  "qtd": 2,
+  "ext": [
+   9.0,
+   9.0,
+   10.0
+  ],
+  "modo": "auto cont=64 bal=45",
+  "contato": 64,
+  "balanco": 45
+ },
+ "08 Parafusos e porcas impressos/barril_M6_D9x16": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "barril_M6_D9x16",
+  "qtd": 8,
+  "ext": [
+   9.0,
+   9.0,
+   16.0
+  ],
+  "modo": "auto cont=64 bal=58",
+  "contato": 64,
+  "balanco": 58
+ },
+ "08 Parafusos e porcas impressos/barril_M6_D9x19": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "barril_M6_D9x19",
+  "qtd": 4,
+  "ext": [
+   9.0,
+   9.0,
+   19.0
+  ],
+  "modo": "auto cont=64 bal=58",
+  "contato": 64,
+  "balanco": 58
+ },
+ "09 Esteira porta-cabos/bandejaX": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "bandejaX",
+  "qtd": 1,
+  "ext": [
+   150.0,
+   34.5,
+   19.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5162,
+  "balanco": 38
+ },
+ "09 Esteira porta-cabos/bandejaY_F": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "bandejaY_F",
+  "qtd": 1,
+  "ext": [
+   173.0,
+   60.0,
+   76.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 4480,
+  "balanco": 686
+ },
+ "09 Esteira porta-cabos/bandejaY_T": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "bandejaY_T",
+  "qtd": 1,
+  "ext": [
+   96.0,
+   60.0,
+   76.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2496,
+  "balanco": 686
+ },
+ "01 Quadro/baseFrente_E": {
+  "conj": "01 Quadro",
+  "nome": "baseFrente_E",
+  "qtd": 1,
+  "ext": [
+   186.0,
+   30.0,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5241,
+  "balanco": 4424
+ },
+ "01 Quadro/baseLatT_D": {
+  "conj": "01 Quadro",
+  "nome": "baseLatT_D",
+  "qtd": 1,
+  "ext": [
+   126.0,
+   30.0,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3324,
+  "balanco": 2988
+ },
+ "01 Quadro/baseLatT_E": {
+  "conj": "01 Quadro",
+  "nome": "baseLatT_E",
+  "qtd": 1,
+  "ext": [
+   126.0,
+   30.0,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3324,
+  "balanco": 2988
+ },
+ "01 Quadro/baseTras_D": {
+  "conj": "01 Quadro",
+  "nome": "baseTras_D",
+  "qtd": 1,
+  "ext": [
+   141.0,
+   30.0,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3892,
+  "balanco": 3243
+ },
+ "01 Quadro/baseTras_E": {
+  "conj": "01 Quadro",
+  "nome": "baseTras_E",
+  "qtd": 1,
+  "ext": [
+   141.0,
+   30.0,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3892,
+  "balanco": 3243
+ },
+ "04 Eixo Z e mesa/baseZInf_D": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "baseZInf_D",
+  "qtd": 1,
+  "ext": [
+   212.0,
+   56.0,
+   43.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 7526,
+  "balanco": 3765
+ },
+ "04 Eixo Z e mesa/baseZInf_E": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "baseZInf_E",
+  "qtd": 1,
+  "ext": [
+   212.0,
+   56.0,
+   43.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 7526,
+  "balanco": 3765
+ },
+ "04 Eixo Z e mesa/baseZSup_D": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "baseZSup_D",
+  "qtd": 1,
+  "ext": [
+   142.0,
+   56.0,
+   62.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 7369,
+  "balanco": 129
+ },
+ "04 Eixo Z e mesa/baseZSup_E": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "baseZSup_E",
+  "qtd": 1,
+  "ext": [
+   142.0,
+   56.0,
+   62.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 7369,
+  "balanco": 129
+ },
+ "09 Esteira porta-cabos/bracoEsteiraX": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "bracoEsteiraX",
+  "qtd": 1,
+  "ext": [
+   83.9,
+   19.6,
+   13.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 750,
+  "balanco": 9
+ },
+ "03 Eixo X e cabeca/bracoFimCursoX": {
+  "conj": "03 Eixo X e cabeca",
+  "nome": "bracoFimCursoX",
+  "qtd": 1,
+  "ext": [
+   37.0,
+   32.0,
+   12.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 392,
+  "balanco": 19
+ },
+ "03 Eixo X e cabeca/carroX": {
+  "conj": "03 Eixo X e cabeca",
+  "nome": "carroX",
+  "qtd": 1,
+  "ext": [
+   102.8,
+   34.2,
+   60.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 1431,
+  "balanco": 1343
+ },
+ "04 Eixo Z e mesa/bracoMesa_D": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "bracoMesa_D",
+  "qtd": 1,
+  "ext": [
+   141.6,
+   88.0,
+   83.1
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 6052,
+  "balanco": 362
+ },
+ "04 Eixo Z e mesa/bracoMesa_E": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "bracoMesa_E",
+  "qtd": 1,
+  "ext": [
+   141.6,
+   88.0,
+   83.1
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 6052,
+  "balanco": 362
+ },
+ "04 Eixo Z e mesa/calcoFimCursoZ": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "calcoFimCursoZ",
+  "qtd": 1,
+  "ext": [
+   35.0,
+   16.0,
+   3.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 542,
+  "balanco": 0
+ },
+ "04 Eixo Z e mesa/chapaZY_D": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "chapaZY_D",
+  "qtd": 1,
+  "ext": [
+   108.0,
+   52.0,
+   10.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5264,
+  "balanco": 0
+ },
+ "04 Eixo Z e mesa/chapaZY_E": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "chapaZY_E",
+  "qtd": 1,
+  "ext": [
+   108.0,
+   52.0,
+   10.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5264,
+  "balanco": 0
+ },
+ "07 Roldanas V (X, Y e Z) - Resina/buchaX_excentrica_espacador": {
+  "conj": "07 Roldanas V (X, Y e Z) - Resina",
+  "nome": "buchaX_excentrica_espacador",
+  "qtd": 1,
+  "ext": [
+   16.2,
+   14.0,
+   9.0
+  ],
+  "modo": "auto cont=82 bal=57",
+  "contato": 82,
+  "balanco": 57
+ },
+ "07 Roldanas V (X, Y e Z) - Resina/buchaY_excentrica_espacador": {
+  "conj": "07 Roldanas V (X, Y e Z) - Resina",
+  "nome": "buchaY_excentrica_espacador",
+  "qtd": 2,
+  "ext": [
+   16.2,
+   14.0,
+   14.0
+  ],
+  "modo": "auto cont=82 bal=57",
+  "contato": 82,
+  "balanco": 57
+ },
+ "07 Roldanas V (X, Y e Z) - Resina/buchaZ_excentrica": {
+  "conj": "07 Roldanas V (X, Y e Z) - Resina",
+  "nome": "buchaZ_excentrica",
+  "qtd": 2,
+  "ext": [
+   16.2,
+   14.0,
+   15.5
+  ],
+  "modo": "auto cont=139 bal=0",
+  "contato": 139,
+  "balanco": 0
+ },
+ "03 Eixo X e cabeca/dutoCoreXY": {
+  "conj": "03 Eixo X e cabeca",
+  "nome": "dutoCoreXY",
+  "qtd": 1,
+  "ext": [
+   83.0,
+   59.0,
+   22.3
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3400,
+  "balanco": 292
+ },
+ "04 Eixo Z e mesa/Fuso e porca - FDM/fusoZ_250mm": {
+  "conj": "04 Eixo Z e mesa/Fuso e porca - FDM",
+  "nome": "fusoZ_250mm",
+  "qtd": 2,
+  "ext": [
+   27.0,
+   27.0,
+   150.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 374,
+  "balanco": 2236
+ },
+ "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)/fusoZ_metade_baixo_125mm": {
+  "conj": "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)",
+  "nome": "fusoZ_metade_baixo_125mm",
+  "qtd": 2,
+  "ext": [
+   27.0,
+   27.0,
+   125.0
+  ],
+  "modo": "manual",
+  "contato": 374,
+  "balanco": 1877
+ },
+ "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)/fusoZ_metade_cima_125mm": {
+  "conj": "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)",
+  "nome": "fusoZ_metade_cima_125mm",
+  "qtd": 2,
+  "ext": [
+   18.2,
+   18.2,
+   25.0
+  ],
+  "modo": "manual",
+  "contato": 162,
+  "balanco": 401
+ },
+ "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)/fusoZ_pino_D": {
+  "conj": "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)",
+  "nome": "fusoZ_pino_D",
+  "qtd": 2,
+  "ext": [
+   24.0,
+   9.2,
+   7.8
+  ],
+  "modo": "auto cont=158 bal=0",
+  "contato": 158,
+  "balanco": 0
+ },
+ "04 Eixo Z e mesa/localizador_aq120": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "localizador_aq120",
+  "qtd": 4,
+  "ext": [
+   44.7,
+   40.2,
+   11.9
+  ],
+  "modo": "auto cont=634 bal=245",
+  "contato": 634,
+  "balanco": 245
+ },
+ "08 Parafusos e porcas impressos/parafuso_M10x40": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M10x40",
+  "qtd": 24,
+  "ext": [
+   46.0,
+   16.0,
+   12.2
+  ],
+  "modo": "auto cont=153 bal=74",
+  "contato": 153,
+  "balanco": 74
+ },
+ "08 Parafusos e porcas impressos/parafuso_M10x45": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M10x45",
+  "qtd": 6,
+  "ext": [
+   51.0,
+   16.0,
+   12.2
+  ],
+  "modo": "auto cont=162 bal=81",
+  "contato": 162,
+  "balanco": 81
+ },
+ "08 Parafusos e porcas impressos/parafuso_M10x55": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M10x55",
+  "qtd": 14,
+  "ext": [
+   61.0,
+   16.0,
+   12.2
+  ],
+  "modo": "auto cont=183 bal=94",
+  "contato": 183,
+  "balanco": 94
+ },
+ "09 Esteira porta-cabos/elo_esteira": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "elo_esteira",
+  "qtd": 17,
+  "ext": [
+   26.5,
+   23.0,
+   10.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 173,
+  "balanco": 95
+ },
+ "08 Parafusos e porcas impressos/parafuso_M10x60": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M10x60",
+  "qtd": 4,
+  "ext": [
+   66.0,
+   16.0,
+   12.2
+  ],
+  "modo": "auto cont=192 bal=101",
+  "contato": 192,
+  "balanco": 101
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x22": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x22",
+  "qtd": 2,
+  "ext": [
+   26.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=51 bal=25",
+  "contato": 51,
+  "balanco": 25
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x30": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x30",
+  "qtd": 14,
+  "ext": [
+   34.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=59 bal=31",
+  "contato": 59,
+  "balanco": 31
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x35": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x35",
+  "qtd": 10,
+  "ext": [
+   39.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=63 bal=35",
+  "contato": 63,
+  "balanco": 35
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x40": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x40",
+  "qtd": 3,
+  "ext": [
+   44.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=68 bal=38",
+  "contato": 68,
+  "balanco": 38
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x45": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x45",
+  "qtd": 4,
+  "ext": [
+   49.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=73 bal=42",
+  "contato": 73,
+  "balanco": 42
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x50": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x50",
+  "qtd": 4,
+  "ext": [
+   54.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=77 bal=46",
+  "contato": 77,
+  "balanco": 46
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x60": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x60",
+  "qtd": 2,
+  "ext": [
+   64.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=86 bal=53",
+  "contato": 86,
+  "balanco": 53
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x65": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x65",
+  "qtd": 4,
+  "ext": [
+   69.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=91 bal=57",
+  "contato": 91,
+  "balanco": 57
+ },
+ "08 Parafusos e porcas impressos/parafuso_M6x70": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "parafuso_M6x70",
+  "qtd": 2,
+  "ext": [
+   74.0,
+   10.5,
+   7.8
+  ],
+  "modo": "auto cont=95 bal=61",
+  "contato": 95,
+  "balanco": 61
+ },
+ "01 Quadro/posteFrenteInf_D": {
+  "conj": "01 Quadro",
+  "nome": "posteFrenteInf_D",
+  "qtd": 1,
+  "ext": [
+   135.0,
+   30.0,
+   28.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3150,
+  "balanco": 3709
+ },
+ "01 Quadro/posteFrenteInf_E": {
+  "conj": "01 Quadro",
+  "nome": "posteFrenteInf_E",
+  "qtd": 1,
+  "ext": [
+   135.0,
+   30.0,
+   28.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3150,
+  "balanco": 3709
+ },
+ "01 Quadro/posteFrenteSup_D": {
+  "conj": "01 Quadro",
+  "nome": "posteFrenteSup_D",
+  "qtd": 1,
+  "ext": [
+   235.6,
+   30.0,
+   28.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5704,
+  "balanco": 5636
+ },
+ "01 Quadro/posteFrenteSup_E": {
+  "conj": "01 Quadro",
+  "nome": "posteFrenteSup_E",
+  "qtd": 1,
+  "ext": [
+   235.6,
+   30.0,
+   28.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5704,
+  "balanco": 5636
+ },
+ "01 Quadro/posteTrasInf_D": {
+  "conj": "01 Quadro",
+  "nome": "posteTrasInf_D",
+  "qtd": 1,
+  "ext": [
+   126.0,
+   29.4,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3362,
+  "balanco": 2994
+ },
+ "01 Quadro/posteTrasInf_E": {
+  "conj": "01 Quadro",
+  "nome": "posteTrasInf_E",
+  "qtd": 1,
+  "ext": [
+   126.0,
+   29.4,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3362,
+  "balanco": 2939
+ },
+ "04 Eixo Z e mesa/Fuso e porca - FDM/porcaZ_DL1-04-06_rosca_nova": {
+  "conj": "04 Eixo Z e mesa/Fuso e porca - FDM",
+  "nome": "porcaZ_DL1-04-06_rosca_nova",
+  "qtd": 2,
+  "ext": [
+   50.8,
+   31.8,
+   20.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 1057,
+  "balanco": 384
+ },
+ "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)/porcaZ_DL1-04-06_rosca_nova": {
+  "conj": "04 Eixo Z e mesa/Fuso e porca - Resina (alternativa)",
+  "nome": "porcaZ_DL1-04-06_rosca_nova",
+  "qtd": 2,
+  "ext": [
+   50.8,
+   31.8,
+   20.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 1064,
+  "balanco": 379
+ },
+ "08 Parafusos e porcas impressos/porca_M10": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "porca_M10",
+  "qtd": 32,
+  "ext": [
+   18.5,
+   16.0,
+   8.0
+  ],
+  "modo": "manual",
+  "contato": 100,
+  "balanco": 168
+ },
+ "08 Parafusos e porcas impressos/porca_M6": {
+  "conj": "08 Parafusos e porcas impressos",
+  "nome": "porca_M6",
+  "qtd": 31,
+  "ext": [
+   11.5,
+   10.0,
+   5.0
+  ],
+  "modo": "manual",
+  "contato": 41,
+  "balanco": 63
+ },
+ "09 Esteira porta-cabos/pontaFixa_esteira": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "pontaFixa_esteira",
+  "qtd": 2,
+  "ext": [
+   29.0,
+   23.0,
+   10.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 441,
+  "balanco": 84
+ },
+ "01 Quadro/posteTrasSup_D": {
+  "conj": "01 Quadro",
+  "nome": "posteTrasSup_D",
+  "qtd": 1,
+  "ext": [
+   227.3,
+   29.4,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 6410,
+  "balanco": 6138
+ },
+ "01 Quadro/posteTrasSup_E": {
+  "conj": "01 Quadro",
+  "nome": "posteTrasSup_E",
+  "qtd": 1,
+  "ext": [
+   227.3,
+   29.4,
+   30.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 6410,
+  "balanco": 6138
+ },
+ "01 Quadro/torreFrente_D": {
+  "conj": "01 Quadro",
+  "nome": "torreFrente_D",
+  "qtd": 1,
+  "ext": [
+   133.8,
+   50.0,
+   40.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5683,
+  "balanco": 432
+ },
+ "01 Quadro/torreFrente_E": {
+  "conj": "01 Quadro",
+  "nome": "torreFrente_E",
+  "qtd": 1,
+  "ext": [
+   133.8,
+   50.0,
+   40.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 5683,
+  "balanco": 432
+ },
+ "02 Eixo Y e portico/suportePortico_D": {
+  "conj": "02 Eixo Y e portico",
+  "nome": "suportePortico_D",
+  "qtd": 1,
+  "ext": [
+   121.6,
+   69.0,
+   69.4
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 1966,
+  "balanco": 1220
+ },
+ "02 Eixo Y e portico/suportePortico_E": {
+  "conj": "02 Eixo Y e portico",
+  "nome": "suportePortico_E",
+  "qtd": 1,
+  "ext": [
+   121.6,
+   69.0,
+   86.5
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 1966,
+  "balanco": 1220
+ },
+ "03 Eixo X e cabeca/suporteExtrusoraDireta": {
+  "conj": "03 Eixo X e cabeca",
+  "nome": "suporteExtrusoraDireta",
+  "qtd": 1,
+  "ext": [
+   60.0,
+   46.6,
+   48.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2765,
+  "balanco": 58
+ },
+ "04 Eixo Z e mesa/presilha_disco_aq": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "presilha_disco_aq",
+  "qtd": 4,
+  "ext": [
+   21.6,
+   21.6,
+   28.5
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 90,
+  "balanco": 370
+ },
+ "07 Roldanas V (X, Y e Z) - Resina/roldanaV_rolamento_1peca_resina": {
+  "conj": "07 Roldanas V (X, Y e Z) - Resina",
+  "nome": "roldanaV_rolamento_1peca_resina",
+  "qtd": 15,
+  "ext": [
+   34.0,
+   34.0,
+   9.0
+  ],
+  "modo": "auto cont=735 bal=41",
+  "contato": 735,
+  "balanco": 41
+ },
+ "09 Esteira porta-cabos/suporteEsteiraY": {
+  "conj": "09 Esteira porta-cabos",
+  "nome": "suporteEsteiraY",
+  "qtd": 1,
+  "ext": [
+   34.0,
+   34.0,
+   25.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 355,
+  "balanco": 124
+ },
+ "01 Quadro/torreTras_D": {
+  "conj": "01 Quadro",
+  "nome": "torreTras_D",
+  "qtd": 1,
+  "ext": [
+   66.0,
+   51.0,
+   105.9
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2717,
+  "balanco": 1133
+ },
+ "01 Quadro/torreTras_E": {
+  "conj": "01 Quadro",
+  "nome": "torreTras_E",
+  "qtd": 1,
+  "ext": [
+   66.0,
+   51.0,
+   93.6
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2621,
+  "balanco": 1055
+ },
+ "01 Quadro/travFrente_D": {
+  "conj": "01 Quadro",
+  "nome": "travFrente_D",
+  "qtd": 1,
+  "ext": [
+   180.0,
+   14.0,
+   60.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2454,
+  "balanco": 172
+ },
+ "01 Quadro/travFrente_E": {
+  "conj": "01 Quadro",
+  "nome": "travFrente_E",
+  "qtd": 1,
+  "ext": [
+   180.0,
+   14.0,
+   60.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2454,
+  "balanco": 172
+ },
+ "01 Quadro/travTras_D": {
+  "conj": "01 Quadro",
+  "nome": "travTras_D",
+  "qtd": 1,
+  "ext": [
+   186.0,
+   14.0,
+   50.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2538,
+  "balanco": 1748
+ },
+ "01 Quadro/travTras_E": {
+  "conj": "01 Quadro",
+  "nome": "travTras_E",
+  "qtd": 1,
+  "ext": [
+   186.0,
+   14.0,
+   50.0
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 2538,
+  "balanco": 1748
+ },
+ "02 Eixo Y e portico/trilhoY_D": {
+  "conj": "02 Eixo Y e portico",
+  "nome": "trilhoY_D",
+  "qtd": 1,
+  "ext": [
+   240.0,
+   25.0,
+   80.1
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 4572,
+  "balanco": 9246
+ },
+ "02 Eixo Y e portico/trilhoY_E": {
+  "conj": "02 Eixo Y e portico",
+  "nome": "trilhoY_E",
+  "qtd": 1,
+  "ext": [
+   240.0,
+   25.0,
+   80.1
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 4492,
+  "balanco": 8738
+ },
+ "03 Eixo X e cabeca/trilhoX": {
+  "conj": "03 Eixo X e cabeca",
+  "nome": "trilhoX",
+  "qtd": 1,
+  "ext": [
+   190.0,
+   25.0,
+   26.5
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 4510,
+  "balanco": 2306
+ },
+ "04 Eixo Z e mesa/trilhoZ_D": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "trilhoZ_D",
+  "qtd": 1,
+  "ext": [
+   175.0,
+   25.0,
+   84.1
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3334,
+  "balanco": 1828
+ },
+ "04 Eixo Z e mesa/trilhoZ_E": {
+  "conj": "04 Eixo Z e mesa",
+  "nome": "trilhoZ_E",
+  "qtd": 1,
+  "ext": [
+   175.0,
+   25.0,
+   84.1
+  ],
+  "modo": "fixa (impressao_rot)",
+  "contato": 3334,
+  "balanco": 1828
+ }
+}

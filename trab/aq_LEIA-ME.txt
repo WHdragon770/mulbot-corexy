@@ -1,0 +1,57 @@
+MESA AQUECIDA - CoreXY 200x200x200 (opcional)
+=============================================
+Duas opcoes desenhadas. A area de impressao continua 200x200x200 e o vidro continua o de 235x235 (Ender 3).
+A placa de aluminio (3 mm) fica embaixo do vidro, dentro dos 4 localizadores. O topo do vidro ficou na mesma altura
+de antes em relacao ao bico: o resto da mesa (suporte, braco, molas) desceu 3 mm.
+
+  220 - 12V   placa de aluminio 220x220x3 12 V    -> RECOMENDADA (a eletronica toda continua 12 V)
+  235 - 24V   placa de aluminio 235x235x3 24 V (mesa da Ender 3), do tamanho exato do vidro
+
+ONDE COMPRAR (Mercado Livre, consultado em 21/10/2026)
+  220 12V: https://www.mercadolivre.com.br/mesa-aquecida-de-aluminio-12v-2202203mm/up/MLBU4535408530
+  235 24V: https://www.mercadolivre.com.br/cama-aquecida-para-impressora-3d-creality-ender-3-v2-220w-24v-repla/up/MLBU5213705791
+           https://www.mercadolivre.com.br/mesa-aquecida-para-impressora-3d-creality--235x235mm/up/MLBU5045066727
+           https://www.mercadolivre.com.br/substituicao-da-impressora-3d-de-cama-aquecida-para-creality/p/MLB2029575142
+           https://www.mercadolivre.com.br/cama-aquecida-ender-3-v2-220w-24v-impressora-3d-cama-quente/up/MLBU5526280671
+
+O QUE MUDA NA MAQUINA (as duas opcoes)
+  1. Mesa: placa de aluminio entre o localizador e o vidro.
+  2. Localizador da mesa (4x) novo, no lugar do DL1-03-06: bordas 3 mm mais altas pra continuar travando o vidro.
+     Na 220 ele tem um calco em L que segura o canto da placa e apoia o canto do vidro (a placa e menor que o vidro).
+  3. Presilha do vidro (botao, 4x) com o pescoco 3 mm mais comprido.
+  4. Calco de 3 mm embaixo do fim de curso do Z (a mesa desceu 3 mm, o fim de curso desce junto; sem ele o vidro bate no bico).
+  5. Fonte de 360 W no lugar da RS-150-12 (150 W nao segura mesa + motores + hotend):
+        220: fonte 12 V 30 A (S-360-12)     235: fonte 24 V 15 A (S-360-24)     as duas medem 215 x 115 x 50 mm
+     Protecao da fonte nova (protecaoFonte360) no lugar da DL1-02-15: tomada IEC em pe na lateral, passagem de cabo,
+     2x M4 nas laterais da fonte e 4 colunas por fora pro modulo MOSFET.
+  6. Modulo MOSFET da mesa (placa 60 x 50, furos M3 a 52 x 42; tipo "modulo MOSFET mesa aquecida 3D") preso na protecao.
+     A RAMPS so manda o sinal (saida D8); a corrente da mesa vai direto da fonte pro modulo. O D8 da RAMPS aguenta ~11 A, a mesa puxa mais.
+
+ATENCAO NA OPCAO 235 (24 V)
+  A maquina inteira passa a ser 24 V: RAMPS 1.4 em 24 V precisa tirar o diodo D1 (senao o regulador do Mega queima),
+  conferir se os capacitores da RAMPS sao de 35 V, trocar o cartucho do hotend por 24 V e as ventoinhas por 24 V
+  (ou um step-down 24->12 V pras ventoinhas). Se nao quiser mexer nisso, use a 220 (12 V).
+
+MATERIAL
+  Localizador encosta na placa quente: imprimir em ASA ou ABS (PETG so se a mesa ficar em ate ~70 graus).
+  Presilha, calco do fim de curso e protecao da fonte: o material de sempre.
+  Tudo sem suporte (conferido: 0 ilhas, ponte max. 10 mm). STL ja deitados na posicao de impressao.
+
+FIRMWARE (Marlin)
+  TEMP_SENSOR_BED 1 (termistor 100k NTC 3950, o padrao dessas mesas)
+  BED_MAXTEMP 100 (por causa dos localizadores impressos)
+  PIDTEMPBED ligado e rodar M303 E-1 S60 C8 depois de montar, salvar com M500
+  Z: nao muda nada (o topo do vidro ficou no mesmo lugar e o fim de curso desceu junto). Conferir o Z offset no papel.
+
+CHECAGEM
+  0 colisoes da mesa nova (mesa em 0, 100 e 200 mm), fonte/protecao/MOSFET sem colisao.
+  Curso do Z: a mesa ainda desce pelo menos 5 mm alem dos 200 antes do braco encostar na base do Z (antes eram ~14).
+
+PASTAS
+  220 - 12V / 235 - 24V
+     STL para imprimir ... so as pecas que mudam (quantidade no nome); o resto e igual ao 02 STL para imprimir
+     Imagens ............. canto da mesa, mesa inteira, fonte + MOSFET, calco do fim de curso, maquina inteira
+     corexy_mesa_aquecida_XXX.glb ... maquina inteira com a mesa aquecida (abre no visualizador 3D do Windows)
+
+Scripts (WSL): scripts/mesa_aquecida.py, scripts/fonte_maior.py; gerar com MESA=220 ou MESA=235 antes do cxy.py
+(MESA=fria ou sem MESA = maquina como antes).

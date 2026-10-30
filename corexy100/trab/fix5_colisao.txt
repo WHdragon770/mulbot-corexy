@@ -1,0 +1,6 @@
+cabos: 16 cavidades, 30 passagens | pecas impressas novas 5631 -> 3965 cm3 (-1666)
+sem suporte: furos em gota 125
+correiaA: 1044 mm
+correiaB: 1044 mm
+export /home/lucas/corexy100/out/cxy.json 406 | pecas novas: 51 | fixadores: 186
+pares com interferencia: 0 | poses: 22 | solidos montados: 98 de 406
